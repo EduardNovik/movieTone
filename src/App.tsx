@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import Header from './components/Header';
+import Layout from './components/Layout';
 
 function App() {
-  const [cc, setCc] = useState(0);
-
-  useEffect(() => {
-    console.log(cc);
-    
-  }, []);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!{cc}</h1>
-    </>
+    <Layout>
+      <Header />
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    </Layout>
   );
 }
 
