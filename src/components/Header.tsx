@@ -1,4 +1,5 @@
 import React from 'react';
+import { ModeToggle } from './mode-toggle';
 
 const Header = () => {
   return (
@@ -11,7 +12,7 @@ const Header = () => {
       <div className="flex text-white gap-8">
         <p>tab3</p>
         <p>tab4</p>
-        <p>color mode</p>
+        <ModeToggle />
       </div>
     </header>
   );
