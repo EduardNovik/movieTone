@@ -1,9 +1,8 @@
-import React from 'react';
 import { ModeToggle } from './mode-toggle';
 
 const Header = () => {
   return (
-    <header className="flex flex-row w-full justify-between">
+    <header className="flex flex-row w-full justify-between p-4">
       <div className="flex text-white gap-8">
         <p>tab1</p>
         <p>tab2</p>
