@@ -56,10 +56,10 @@ extends: [
 'prettier'
 ],
 
--and we can check if there no conflict btw eslint and prettier with this:
+-and now we can check if there no conflict btw eslint and prettier with this:
 npx eslint-config-prettier .\src\main.tsx
 
--we can create script for prettier in packjson:
+-we can create script for prettier in packagejson:
 "scripts": {
 "dev": "vite",
 "build": "tsc && vite build",
@@ -67,3 +67,32 @@ npx eslint-config-prettier .\src\main.tsx
 "preview": "vite preview",
 "format": "prettier --write ./src"
 },
+
+3. first try was with react-router-dom (example below),
+   const router = createBrowserRouter([
+   {
+   path: '/',
+   element: <App />,
+   errorElement: <Error />,
+   // children: [
+   // {
+   // path: 'contacts/:contactId',
+   // element: <Contact />,
+   // },
+   // ],
+   },
+   {
+   path: '/spacecraft',
+   element: <Spacecraft />,
+   },
+   ]);
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+<React.StrictMode>
+<RouterProvider router={router} />
+</React.StrictMode>,
+);
+
+but I've decidet to use tanstack router
+
+- npm install @tanstack/react-router@beta

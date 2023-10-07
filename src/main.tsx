@@ -2,30 +2,67 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Error from '@/pages/Error.tsx';
-import Spacecraft from './pages/Spacecraft.tsx';
+import {
+  Outlet,
+  RouterProvider,
+  Link,
+  Router,
+  Route,
+  RootRoute,
+} from '@tanstack/react-router';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <Error />,
-    // children: [
-    //   {
-    //     path: 'contacts/:contactId',
-    //     element: <Contact />,
-    //   },
-    // ],
-  },
-  {
-    path: '/spacecraft',
-    element: <Spacecraft />,
-  },
-]);
+const rootRoute = new RootRoute({
+  component: Root,
+});
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-);
+function Root() {
+  return (
+    <div>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <hr />
+      <Outlet />
+    </div>
+  );
+}
+
+const indexRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: Index,
+});
+
+function Index() {
+  return <App />;
+}
+
+const aboutRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: About,
+});
+
+function About() {
+  return <div>Hello from About!</div>;
+}
+
+const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
+
+const router = new Router({ routeTree });
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+// Render our app!
+const rootElement = document.getElementById('root')!;
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>,
+  );
+}
