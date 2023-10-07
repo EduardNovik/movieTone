@@ -2,12 +2,16 @@ import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import { ThemeProvider } from '@/components/theme-provider';
 
-function App() {
+interface AppProps {
+  children: React.ReactNode;
+}
+
+function App({ children }: AppProps) {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Layout>
         <Header />
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        {children}
       </Layout>
     </ThemeProvider>
   );
