@@ -1,21 +1,23 @@
 import { ModeToggle } from './mode-toggle';
 import { Link } from '@tanstack/react-router';
+import Logo from '@/assets/logo5.png';
 
 const Header = () => {
   return (
-    <header className="flex flex-row w-full justify-between p-4">
-      <div className="flex text-white gap-8">
+    <header className="flex flex-row w-full justify-between p-4 border-b-gray-500 border-b-[1px] ">
+      <div className="flex dark:text-white gap-8 items-center">
         <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link to="/">Spacecraft</Link>
       </div>
 
-      <Link to="/" className="text-white">
-        Logo
+      <Link to="/" className="dark:text-white items-center flex">
+        <img src={Logo} className="h-12 w-auto"></img>
       </Link>
 
-      <div className="flex text-white gap-8">
-        <p>tab3</p>
-        <p>tab4</p>
+      <div className="flex  gap-8 items-center dark:text-white">
+        <Link to="/about">Liked</Link>
+        <Link to="/about">About</Link>
+        <Link to="/">Login</Link>
         <ModeToggle />
       </div>
     </header>

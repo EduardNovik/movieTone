@@ -1,6 +1,7 @@
 import App from './App.tsx';
 import Home from '@/pages/Home.tsx';
 import About from './pages/About.tsx';
+import ErrorPage from './pages/Error.tsx';
 import './index.css';
 import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
@@ -14,24 +15,11 @@ const rootRoute = new RootRoute({
   ),
 });
 
-// function Root() {
-//   return (
-//     <App>
-//       <Outlet />
-//       <TanStackRouterDevtools />
-//     </App>
-//   );
-// }
-
 const homeRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/',
   component: () => <Home />,
 });
-
-// function HomeFunc() {
-//   return <Home />;
-// }
 
 const aboutRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -39,11 +27,13 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-// function AboutFunc() {
-//   return <div>Hello from About!</div>;
-// }
+const errorRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '*',
+  component: () => <ErrorPage />,
+});
 
-const routeTree = rootRoute.addChildren([homeRoute, aboutRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, aboutRoute, errorRoute]);
 
 const router = new Router({ routeTree });
 

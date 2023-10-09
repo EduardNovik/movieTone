@@ -9,10 +9,8 @@ interface AppProps {
 function App({ children }: AppProps) {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Layout>
-        <Header />
-        {children}
-      </Layout>
+      <Header />
+      <Layout>{children}</Layout>
     </ThemeProvider>
   );
 }
