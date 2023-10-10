@@ -230,6 +230,7 @@ also add this to vite.config.ts:
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
+import 'dotenv/config'; (important to have this)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -253,7 +254,7 @@ Authorization: import.meta.env.AUTHORIZATION,
 },
 
 6. Server fetch and client fetch
-   But you need to make sure that you are using node-fetch and dotenv on server not on the client(for client we have axios)
+   But you need to make sure that you are using node-fetch on server not on the client(for client we have axios)
 
 import fetch from 'node-fetch';
 import { config } from 'dotenv';
