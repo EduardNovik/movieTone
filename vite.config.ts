@@ -10,4 +10,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    'import.meta.env.API': JSON.stringify(process.env.API),
+    'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
+  },
 });
