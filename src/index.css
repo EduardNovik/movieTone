@@ -2,37 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.order_bundle_block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-@media screen and (max-width: 1024px) {
-  .order_bundle_block {
-    flex-direction: column;
-  }
-}
-h2.order_header {
-  font-size: 32px;
-  font-family: 'Nexa Heavy';
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  padding: 0px;
-}
-@media screen and (max-width: 1024px) {
-  h2.order_header {
-    font-size: 24px;
-  }
-  p.order_subheader {
-    font-size: 16px;
-  }
-}
-p.order_subheader {
-  font-size: 20px;
-  font-family: 'Lato';
-  padding: 0px;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
