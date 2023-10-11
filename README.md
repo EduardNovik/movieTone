@@ -79,3 +79,148 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+turbo.json:
+
+{
+"$schema": "https://turbo.build/schema.json",
+"globalDependencies": ["**/.env.*local"],
+"pipeline": {
+"build": {
+"dependsOn": ["^build"],
+"outputs": ["dist/**"]
+},
+"lint": {},
+"dev": {
+"cache": false,
+"persistent": true
+}
+}
+}
+
+in fe tsconfig:
+{
+"extends": "tsconfig/vite.json",
+"include": ["src"]
+}
+
+---in packages tsconfig:
+
+add vite.json to tsconfig:
+{
+"extends": "./base.json",
+"compilerOptions": {
+"target": "ESNext",
+"useDefineForClassFields": true,
+"module": "ESNext",
+"lib": ["ESNext", "DOM"],
+"sourceMap": true,
+"resolveJsonModule": true,
+"noEmit": true,
+"noUnusedLocals": true,
+"noUnusedParameters": true,
+"noImplicitReturns": true
+},
+"exclude": ["node_modules"]
+}
+
+base.json:
+{
+"$schema": "https://json.schemastore.org/tsconfig",
+"display": "Default",
+"compilerOptions": {
+"composite": false,
+"declaration": true,
+"declarationMap": true,
+"esModuleInterop": true,
+"forceConsistentCasingInFileNames": true,
+"inlineSources": false,
+"isolatedModules": true,
+"moduleResolution": "node",
+"noUnusedLocals": false,
+"noUnusedParameters": false,
+"preserveWatchOutput": true,
+"skipLibCheck": true,
+"strict": true
+},
+"exclude": ["node_modules"]
+}
+
+vite.json:
+new:
+{
+"extends": "./base.json",
+"compilerOptions": {
+"target": "ESNext",
+"useDefineForClassFields": true,
+"module": "ESNext",
+"lib": ["ESNext", "DOM"],
+"sourceMap": true,
+"resolveJsonModule": true,
+"noEmit": true,
+"noUnusedLocals": true,
+"noUnusedParameters": true,
+"noImplicitReturns": true
+},
+"exclude": ["node_modules"]
+}
+
+old:
+{
+"compilerOptions": {
+"target": "ES2020",
+"useDefineForClassFields": true,
+"lib": ["ES2020", "DOM", "DOM.Iterable"],
+"module": "ESNext",
+"skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+
+},
+"include": ["src"],
+"references": [{ "path": "./tsconfig.node.json" }]
+}
+
+---in fe package.json:
+{
+"name": "web",
+"private": true,
+"version": "0.0.0",
+"type": "module",
+"scripts": {
+"dev": "vite",
+"build": "tsc && vite build",
+"preview": "vite preview",
+"lint": "eslint \"src/\*_/_.ts\""
+},
+"dependencies": {
+"ui": "workspace:_"
+},
+"devDependencies": {
+"eslint": "^7.32.0",
+"eslint-config-custom": "workspace:_",
+"tsconfig": "workspace:\*",
+"typescript": "^4.9.4",
+"vite": "^4.0.3"
+}
+}
+
+removed
+// "eslint-config-prettier": "^9.0.0",
