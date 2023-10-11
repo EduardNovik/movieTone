@@ -16,8 +16,7 @@ const getMovieData = () => {
 };
 export default getMovieData;
 
-// Other option fo how to write axios code:
-
+// Other option fo how to write axios code
 // const getMovieData = () => {
 //   const url = 'https://api.themoviedb.org/3/authentication';
 //   const options = {
