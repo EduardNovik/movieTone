@@ -80,7 +80,13 @@ Learn more about the power of Turborepo:
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
 
-turbo.json:
+---[ADD_TURBOREPO]:
+
+I've decided to move to turborepo:
+
+-First step npx create-turbo@latest
+
+-then Ive changed turbo.json:
 
 {
 "$schema": "https://turbo.build/schema.json",
@@ -98,15 +104,20 @@ turbo.json:
 }
 }
 
-in fe tsconfig:
+---[ADD_TS]:
+
+1. In web folder in fe tsconfig:
+
 {
 "extends": "tsconfig/vite.json",
 "include": ["src"]
 }
 
----in packages tsconfig:
+2. in packages/tsconfig folder add
 
-add vite.json to tsconfig:
+vite.json:
+
+(from example)
 {
 "extends": "./base.json",
 "compilerOptions": {
@@ -124,7 +135,43 @@ add vite.json to tsconfig:
 "exclude": ["node_modules"]
 }
 
+(new)
+{
+"extends": "./base.json",
+"compilerOptions": {
+"target": "ES2020",
+"useDefineForClassFields": true,
+"lib": ["ES2020", "DOM", "DOM.Iterable"],
+"module": "ESNext",
+"skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "sourceMap": true,
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../../fe/web/src/*"]
+    }
+
+},
+"include": ["src"],
+"references": [{ "path": "./tsconfig.node.json" }],
+"exclude": ["node_modules"]
+}
+
 base.json:
+
 {
 "$schema": "https://json.schemastore.org/tsconfig",
 "display": "Default",
@@ -146,59 +193,107 @@ base.json:
 "exclude": ["node_modules"]
 }
 
-vite.json:
-new:
+3. in fe package.json:
+
 {
+"name": "NAME OF FOLDER WHERE YOU HAVE PACKAGEJSON",
+"private": true,
+"version": "0.0.0",
+"type": "module",
+"scripts": {
+"dev": "vite",
+"build": "tsc && vite build",
+"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+"preview": "vite preview",
+"format": "prettier --write ./src"
+},
+"dependencies": {
+"@radix-ui/react-dropdown-menu": "^2.0.6",
+"@radix-ui/react-slot": "^1.0.2",
+"@tanstack/react-router": "^0.0.1-beta.194",
+"@tanstack/router-devtools": "^0.0.1-beta.194",
+"axios": "^1.5.1",
+"class-variance-authority": "^0.7.0",
+"clsx": "^2.0.0",
+"dotenv": "^16.3.1",
+"localforage": "^1.10.0",
+"lucide-react": "^0.282.0",
+"match-sorter": "^6.3.1",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"sort-by": "^0.0.2",
+"tailwind-merge": "^1.14.0",
+"tailwindcss-animate": "^1.0.7",
+"zod": "^3.22.2"
+},
+"devDependencies": {
+"@types/node": "^20.8.2",
+"@types/react": "^18.2.15",
+"@types/react-dom": "^18.2.7",
+"@typescript-eslint/eslint-plugin": "^6.0.0",
+"@typescript-eslint/parser": "^6.0.0",
+"@vitejs/plugin-react-swc": "^3.3.2",
+"autoprefixer": "^10.4.16",
+"eslint-plugin-react-hooks": "^4.6.0",
+"eslint-plugin-react-refresh": "^0.4.3",
+"postcss": "^8.4.31",
+"prettier": "3.0.3",
+"tailwindcss": "^3.3.3",
+"eslint": "^8.50.0",
+"eslint-config-custom": "\*",
+"tsconfig": "\*",
+"typescript": "^5.0.2",
+"vite": "^4.4.5"
+}
+}
+
+removed
+// "eslint-config-prettier": "^9.0.0",
+
+4. in packages/tsconfig folder add react-library.json:
+
+{
+"$schema": "https://json.schemastore.org/tsconfig",
+"display": "React Library",
 "extends": "./base.json",
 "compilerOptions": {
-"target": "ESNext",
-"useDefineForClassFields": true,
+"jsx": "react-jsx",
+"lib": ["ES2015"],
 "module": "ESNext",
-"lib": ["ESNext", "DOM"],
-"sourceMap": true,
-"resolveJsonModule": true,
-"noEmit": true,
-"noUnusedLocals": true,
-"noUnusedParameters": true,
-"noImplicitReturns": true
-},
-"exclude": ["node_modules"]
+"target": "es6"
+}
 }
 
-old:
-{
-"compilerOptions": {
-"target": "ES2020",
-"useDefineForClassFields": true,
-"lib": ["ES2020", "DOM", "DOM.Iterable"],
-"module": "ESNext",
-"skipLibCheck": true,
+---[FIX_npm_i_issue]:
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+1. (npm ERR! code EUNSUPPORTEDPROTOCOL npm ERR! Unsupported URL Type "workspace:": workspace:\*)
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+! npm using asterics "_" so it should be -> tsconfig": "_",
+! pnpm using "workspace:_" so it should be -> tsconfig": "workspace:_",
 
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+in global package.json:
 
-},
-"include": ["src"],
-"references": [{ "path": "./tsconfig.node.json" }]
+"workspaces": [
+"fe/*",
+"packages/*"
+]
+
+in fe package.json:
+
+"devDependencies": {
+"eslint-config-custom": "\*",
+"tsconfig": "\*",
 }
 
----in fe package.json:
+2.  (error: PS F:\Frontend\Self Edu\Projects\movieTone\fe\web> npm i
+    npm ERR! Cannot set properties of null (setting 'dev'))
+
+the name in package.json should be the same as folder name where its located
+after I have changed the name to web which is folder name, my npm i
+and path of tsconfig start to work
+
+if it didnt help, then you can try to delete .turbo and run npm i again.
+
 {
 "name": "web",
 "private": true,
@@ -207,20 +302,64 @@ old:
 "scripts": {
 "dev": "vite",
 "build": "tsc && vite build",
+"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 "preview": "vite preview",
-"lint": "eslint \"src/\*_/_.ts\""
+"format": "prettier --write ./src"
 },
 "dependencies": {
-"ui": "workspace:_"
+"@radix-ui/react-dropdown-menu": "^2.0.6",
+"@radix-ui/react-slot": "^1.0.2",
+"@tanstack/react-router": "^0.0.1-beta.194",
+"@tanstack/router-devtools": "^0.0.1-beta.194",
+"axios": "^1.5.1",
+"class-variance-authority": "^0.7.0",
+"clsx": "^2.0.0",
+"dotenv": "^16.3.1",
+"localforage": "^1.10.0",
+"lucide-react": "^0.282.0",
+"match-sorter": "^6.3.1",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"sort-by": "^0.0.2",
+"tailwind-merge": "^1.14.0",
+"tailwindcss-animate": "^1.0.7",
+"zod": "^3.22.2"
 },
 "devDependencies": {
-"eslint": "^7.32.0",
-"eslint-config-custom": "workspace:_",
-"tsconfig": "workspace:\*",
-"typescript": "^4.9.4",
-"vite": "^4.0.3"
+"@types/node": "^20.8.2",
+"@types/react": "^18.2.15",
+"@types/react-dom": "^18.2.7",
+"@typescript-eslint/eslint-plugin": "^6.0.0",
+"@typescript-eslint/parser": "^6.0.0",
+"@vitejs/plugin-react-swc": "^3.3.2",
+"autoprefixer": "^10.4.16",
+"eslint-plugin-react-hooks": "^4.6.0",
+"eslint-plugin-react-refresh": "^0.4.3",
+"postcss": "^8.4.31",
+"prettier": "3.0.3",
+"tailwindcss": "^3.3.3",
+"eslint": "^8.50.0",
+"eslint-config-custom": "\*",
+"tsconfig": "../../packages/tsconfig/vite.json",
+"typescript": "^5.0.2",
+"vite": "^4.4.5"
 }
 }
 
-removed
-// "eslint-config-prettier": "^9.0.0",
+---[ADD_ESLINT]:
+
+in fe/web/.eslintrc.cjc:
+
+module.exports = {
+root: true,
+extends: ["custom"],
+};
+
+in package.json:
+
+"eslint-config-custom": "\*",
+
+---[ADD_SHADCN]:
+
+insted of using code of theme-provider we can install next-themes and import ThemeProvider and useTheme from there
+<ThemeProvider attribute="class">
