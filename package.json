@@ -15,7 +15,8 @@
   "name": "movieTone",
   "packageManager": "npm@8.15.0",
   "workspaces": [
-    "apps/*",
+    "fe/*",
+    "be/*",
     "packages/*"
   ]
 }
