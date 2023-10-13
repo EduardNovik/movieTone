@@ -359,7 +359,109 @@ in package.json:
 
 "eslint-config-custom": "\*",
 
+---[ADD_TAILWIND]:
+
+1.  in packages/taiwind-config:
+
+create taiwind-config folder in packages folder
+create package.json with:
+
+{
+"name": "tailwind-config",
+"version": "0.0.0",
+"private": true,
+"files": ["tailwind.config.js"]
+}
+
+create taiwind.config.js with:
+
+/** @type {import('tailwindcss').Config} \*/
+export default {
+darkMode: ["class"],
+content: [
+// packages content
+"../../packages/**/_.{js, ts, jsx,tsx}",
+// fe content
+"./src/\*\*/_.{js, ts, jsx,tsx}",
+],
+theme: {
+extend: {},
+},
+plugins: [require("tailwindcss-animate")],
+};
+
+2.  in packages/ui:
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+
+in taiwind.config.js add:
+
+/** @type {import('tailwindcss').Config} \*/
+module.exports = {
+content: ["./src/**/\*.{js,ts,jsx,tsx}"],
+presets: [require("../packages/tailwind-config/tailwind.config.js")],
+};
+
+in package.json add:
+
+"devDependencies": {
+"tailwind-config": "\*",
+}
+
+3.  in fe/web:
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+
+in package.json add:
+"devDependencies": {
+"tailwind-config": "\*",
+}
+
+in taiwind.config.js add:
+
+import tailwindConfig from '../../packages/tailwind-config/package.json';
+
+/_ eslint-disable import/no-default-export, import/no-anonymous-default-export _/
+/** @type {import('tailwindcss').Config} \*/
+export default {
+content: [
+'./index.html',
+'./src/**/_.{js,ts,jsx,tsx}',
+'../../packages/ui/src/\*\*/_.{js,ts,jsx,tsx}',
+],
+presets: [tailwindConfig],
+};
+
+in global.css/index.css add:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Done!
+
 ---[ADD_SHADCN]:
+
+1.
+
+PS F:\Frontend\Self Edu\Projects\movieTone\packages\ui> npx shadcn-ui@latest init
+√ Would you like to use TypeScript (recommended)? ... no / yes
+√ Which style would you like to use? » Default
+√ Which color would you like to use as base color? » Slate
+√ Where is your global CSS file? ... src/shared-global.css
+√ Would you like to use CSS variables for colors? ... no / yes
+√ Where is your tailwind.config.js located? ... ../taiwind-config/tailwind.config.js
+√ Configure the import alias for components: ... src/components
+√ Configure the import alias for utils: ... src/lib/utils
+√ Are you using React Server Components? ... no / yes
+√ Write configuration to components.json. Proceed? ... yes
+
+✔ Writing components.json...
+✔ Initializing project...
+✔ Installing dependencies...
+
+Success! Project initialization completed.
+
+2.
 
 insted of using code of theme-provider we can install next-themes and import ThemeProvider and useTheme from there
 <ThemeProvider attribute="class">
