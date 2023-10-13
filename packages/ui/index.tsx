@@ -5,5 +5,5 @@ export {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './src/components/dropdown-menu'
-export { Button } from "./src/components/button";
+} from "./src/components/ui/dropdown-menu";
+export { Button } from "./src/components/ui/button";
