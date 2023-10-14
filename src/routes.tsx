@@ -1,5 +1,5 @@
 import App from './App.tsx';
-import Home from '@/pages/Home.tsx';
+import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import ErrorPage from './pages/Error.tsx';
 import './index.css';

@@ -1,5 +1,5 @@
 {
-  "name": "spacex-app",
+  "name": "web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,22 +11,18 @@
     "format": "prettier --write ./src"
   },
   "dependencies": {
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-router": "^0.0.1-beta.194",
     "@tanstack/router-devtools": "^0.0.1-beta.194",
     "axios": "^1.5.1",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
     "localforage": "^1.10.0",
-    "lucide-react": "^0.282.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sort-by": "^0.0.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "ui": "*",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -38,12 +34,14 @@
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.50.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-custom": "*",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",
-    "prettier": "3.0.3",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
+    "tailwind-config": "*",
+    "tsconfig": "../../packages/tsconfig/vite.json",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }

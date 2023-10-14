@@ -1,4 +1,4 @@
-import getMovieData from '@/graphql/movieAPI';
+import getMovieData from '../graphql/movieAPI';
 
 getMovieData();
 const Home = () => {

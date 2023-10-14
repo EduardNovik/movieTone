@@ -1,6 +1,6 @@
-import Header from '@/components/Header';
-import Layout from '@/components/Layout';
-import { ThemeProvider } from '@/components/theme-provider';
+import Header from './components/Header';
+import Layout from './components/Layout';
+import { ThemeProvider } from 'next-themes';
 
 interface AppProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface AppProps {
 
 function App({ children }: AppProps) {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider attribute="class">
       <Header />
       <Layout>{children}</Layout>
     </ThemeProvider>
