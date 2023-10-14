@@ -382,7 +382,7 @@ content: [
 // packages content
 "../../packages/**/_.{js, ts, jsx,tsx}",
 // fe content
-"./src/\*\*/_.{js, ts, jsx,tsx}",
+"src/\*\*/_.{js, ts, jsx,tsx}",
 ],
 theme: {
 extend: {},
@@ -399,7 +399,7 @@ in taiwind.config.js add:
 /** @type {import('tailwindcss').Config} \*/
 module.exports = {
 content: ["./src/**/\*.{js,ts,jsx,tsx}"],
-presets: [require("../packages/tailwind-config/tailwind.config.js")],
+presets: [require("../tailwind-config/tailwind.config.js")],
 };
 
 in package.json add:
@@ -419,7 +419,7 @@ in package.json add:
 
 in taiwind.config.js add:
 
-import tailwindConfig from '../../packages/tailwind-config/package.json';
+import tailwindConfig from '../../packages/tailwind-config/tailwind.config.js';
 
 /_ eslint-disable import/no-default-export, import/no-anonymous-default-export _/
 /** @type {import('tailwindcss').Config} \*/
@@ -433,11 +433,37 @@ presets: [tailwindConfig],
 };
 
 in global.css/index.css add:
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '../../../packages/ui/src/shared-global.css';
 
 Done!
+
+There were some issues:
+in import path in fe/web/src/index.css (wrong path to shared-global.css)
+correct path is:
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '../../../packages/ui/src/shared-global.css';
+
+And also path issue for shared tailwind.config.js in fe/web/taiwind.config.js,
+correct path is:
+
+import tailwindConfig from '../../packages/tailwind-config/tailwind.config.js';
+
+/_ eslint-disable import/no-default-export, import/no-anonymous-default-export _/
+/** @type {import('tailwindcss').Config} \*/
+export default {
+content: [
+'./index.html',
+'./src/**/_.{js,ts,jsx,tsx}',
+'../../packages/ui/src/\*\*/_.{js,ts,jsx,tsx}',
+],
+presets: [tailwindConfig],
+};
 
 ---[ADD_SHADCN]:
 
