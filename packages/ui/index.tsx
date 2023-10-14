@@ -1,5 +1,4 @@
 // component exports
-export { Card } from "./card";
 export {
   DropdownMenu,
   DropdownMenuContent,
