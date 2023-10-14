@@ -1,0 +1,10 @@
+{
+  "extends": "tsconfig/vite.json",
+  "include": [
+    "src",
+    "../../packages/ui/src/components/dropdown-menu.tsx",
+    "../../packages/ui/src/components/button.tsx",
+    "../../packages/ui/src/lib",
+    "../../packages/ui/src/components/mode-toggle.tsx"
+  ]
+}
