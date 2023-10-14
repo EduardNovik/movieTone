@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # Turborepo starter
 
 This is an official starter Turborepo.
@@ -80,7 +82,7 @@ Learn more about the power of Turborepo:
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
 
----[FIRST_TRY_]:
+---[FIRST_TRY]:
 
 1. eslint is already in vite project dont need to install
 
@@ -745,3 +747,4 @@ Success! Project initialization completed.
 
 insted of using code of theme-provider we can install next-themes and import ThemeProvider and useTheme from there
 <ThemeProvider attribute="class">
+>>>>>>> d5710fa50c22c10c721e4fcfcb5c262ddd7ae693
