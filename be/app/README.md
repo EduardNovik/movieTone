@@ -1,0 +1,1 @@
+1. If we want to use TS with node we need to install ts-node for that
