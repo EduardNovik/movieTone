@@ -9,14 +9,9 @@
   "devDependencies": {
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
-    "tsconfig": "*",
+    "tsconfig": "workspace:*",
     "turbo": "latest"
   },
-  "name": "movieTone",
-  "packageManager": "npm@8.15.0",
-  "workspaces": [
-    "fe/*",
-    "be/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@8.6.10",
+  "name": "movieTone"
 }

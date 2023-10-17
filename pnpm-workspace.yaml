@@ -1,0 +1,7 @@
+packages:
+  - fe/web
+  - be/app
+  - packages/tsconfig
+  - packages/ui
+  - packages/tailwind-config
+  - packages/eslint-config-custom
