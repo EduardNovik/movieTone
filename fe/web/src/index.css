@@ -2,7 +2,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import '../../../packages/ui/src/shared-global.css';
+@import '../../../packages/ui/src/shared-globals.css';
 
 /* can be also */
 /* @import '../../../packages/ui/src/shared-global.css';

@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import Layout from './components/Layout';
-import { ThemeProvider } from 'ui/node_modules/next-themes';
+import { ThemeProvider } from 'ui';
 
 interface AppProps {
   children: React.ReactNode;
