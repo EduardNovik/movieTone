@@ -5,3 +5,4 @@ packages:
   - packages/ui
   - packages/tailwind-config
   - packages/eslint-config-custom
+  - packages/prisma-mongo
