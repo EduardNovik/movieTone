@@ -745,3 +745,10 @@ Success! Project initialization completed.
 
 insted of using code of theme-provider we can install next-themes and import ThemeProvider and useTheme from there
 <ThemeProvider attribute="class">
+
+
+---[ISSUE_WITH_SHADCN_COMPONENTS]:
+
+The problem was more likely with vite and its config and also with tsconfig.node.json 
+After installing vite and its packages it still didnt work but after adding tsconfig.node.json 
+the issue is gone. But the fun thing is that when Ive removed the vite everything are still working.
