@@ -29,6 +29,12 @@
 // }
 
 {
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@*": ["./src/*"]
+    }
+  },
   "extends": "tsconfig/vite.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
