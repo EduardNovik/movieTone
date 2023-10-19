@@ -746,9 +746,44 @@ Success! Project initialization completed.
 insted of using code of theme-provider we can install next-themes and import ThemeProvider and useTheme from there
 <ThemeProvider attribute="class">
 
-
 ---[ISSUE_WITH_SHADCN_COMPONENTS]:
 
-The problem was more likely with vite and its config and also with tsconfig.node.json 
-After installing vite and its packages it still didnt work but after adding tsconfig.node.json 
+The problem was more likely with vite and its config and also with tsconfig.node.json
+After installing vite and its packages it still didnt work but after adding tsconfig.node.json
 the issue is gone. But the fun thing is that when Ive removed the vite everything are still working.
+
+---[ISSUE_WITH_@_PATH]:
+
+-to fix that issue you need to have baseURL and path in tsconfig (in tsconfig @\*):
+{
+"compilerOptions": {
+"baseUrl": ".",
+"paths": {
+"@_": ["./src/_"]
+}
+},
+"extends": "tsconfig/vite.json",
+"include": ["."],
+"exclude": ["dist", "build", "node_modules"]
+}
+
+-Also if you are using vite you need to add path property there too (in viteconfig @):
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import 'dotenv/config';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+plugins: [react()],
+resolve: {
+alias: {
+'@': path.resolve(\_\_dirname, './src'),
+},
+},
+define: {
+'import.meta.env.API': JSON.stringify(process.env.API),
+'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
+},
+});
