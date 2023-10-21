@@ -1,6 +1,7 @@
-import getMovieData from '../graphql/movieAPI';
+// import getMovieData from '../graphql/movieAPI';
 
-getMovieData();
+// getMovieData();
+
 const Home = () => {
   return <div className="text-red-700">Home</div>;
 };

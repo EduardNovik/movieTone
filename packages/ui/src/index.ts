@@ -19,3 +19,4 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/dropdown-menu.tsx";
+export { useToast } from "./components/ui/use-toast.ts";
