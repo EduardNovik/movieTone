@@ -1,8 +1,17 @@
-import getMovieData from '../graphql/movieAPI';
+// import getMovieData from '../graphql/movieAPI';
 
-getMovieData();
+// getMovieData();
+
+import useSessionState from '../hooks/useSessionState';
+
 const Home = () => {
-  return <div className="text-red-700">Home</div>;
+  const { sessionStateStore } = useSessionState();
+
+  return sessionStateStore ? (
+    <div>{sessionStateStore}</div>
+  ) : (
+    <div>Not logged in</div>
+  );
 };
 
 export default Home;

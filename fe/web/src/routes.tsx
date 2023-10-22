@@ -27,17 +27,17 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-const loginRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: '/login',
-  component: () => <Home />,
-});
+// const loginRoute = new Route({
+//   getParentRoute: () => rootRoute,
+//   path: '/login',
+//   component: () => <Home />,
+// });
 
-const registerRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: '/register',
-  component: () => <Home />,
-});
+// const registerRoute = new Route({
+//   getParentRoute: () => rootRoute,
+//   path: '/register',
+//   component: () => <Home />,
+// });
 
 const errorRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -49,8 +49,8 @@ const routeTree = rootRoute.addChildren([
   homeRoute,
   aboutRoute,
   errorRoute,
-  loginRoute,
-  registerRoute,
+  // loginRoute,
+  // registerRoute,
 ]);
 
 const router = new Router({ routeTree });
