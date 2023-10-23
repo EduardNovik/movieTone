@@ -19,12 +19,15 @@
 //     "noUnusedLocals": true,
 //     "noUnusedParameters": true,
 //     "noFallthroughCasesInSwitch": true,
+
 //     "baseUrl": ".",
 //     "paths": {
 //       "@/*": ["./src/*"]
 //     }
 //   },
-//   "include": ["src"],
+//   "include": ["."],
+//   "exclude": ["dist", "build", "node_modules"],
+//   "extends": "tsconfig/vite.json",
 //   "references": [{ "path": "./tsconfig.node.json" }]
 // }
 
@@ -32,10 +35,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "extends": "tsconfig/vite.json",
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "build", "node_modules"],
+  "extends": "tsconfig/vite.json",
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
