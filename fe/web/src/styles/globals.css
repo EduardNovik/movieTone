@@ -5,4 +5,5 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "../../../../packages/ui/src/shared-global.css";
+@import "ui/src/shared-global.css";
+

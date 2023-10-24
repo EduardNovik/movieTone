@@ -21,12 +21,20 @@
 //   presets: [tailwindConfig],
 // };
 
-import type { Config } from "tailwindcss";
-import sharedConfig from "tailwind-config/tailwind.config.ts";
+// import type { Config } from "tailwindcss";
+// import sharedConfig from "tailwind-config/tailwind.config.ts";
 
-const config: Pick<Config, "prefix" | "presets"> = {
-  prefix: "ui-",
-  presets: [sharedConfig],
-};
+// const config: Pick<Config, "prefix" | "presets"> = {
+//   prefix: "ui-",
+//   presets: [sharedConfig],
+// };
 
-export default config;
+// export default config;
+
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["src/**/*.{js,ts,jsx,tsx}", "../../packages/ui/src/**/*.{ts,tsx}"],
+  presets: [require( "tailwind-config/tailwind.config.ts" )],
+}
+
