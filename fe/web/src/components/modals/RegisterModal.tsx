@@ -5,7 +5,6 @@ import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { useToast } from 'ui';
-import { signIn } from 'next-auth/react';
 
 const RegisterModal = () => {
   const loginModal = useLoginModalState();
@@ -31,7 +30,6 @@ const RegisterModal = () => {
       });
 
       toast({ title: 'Account created.' });
-      await signIn('credentials', { email, password });
 
       setEmail('');
       setPassword('');

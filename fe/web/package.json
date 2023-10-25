@@ -26,8 +26,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ui": "workspace:*",
     "zod": "^3.22.2",
-    "zustand": "^4.4.3",
-    "next-auth": "^4.24.3"
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^20.8.2",
