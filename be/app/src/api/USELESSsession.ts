@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import serverAuth from "../libs/serverAuth";
+import serverAuth from "../libs/USELESSserverAuth";
 
 const router = Router();
 
@@ -12,7 +12,6 @@ export default router.post("/", async (req: Request, res: Response) => {
     const { currentUser } = await serverAuth(req);
 
     return res.status(200).json({ session: currentUser });
-
   } catch (error) {
     console.log(error);
     return res.status(401).json({ error: "Not signed in" });

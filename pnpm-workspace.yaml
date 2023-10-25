@@ -1,6 +1,7 @@
 packages:
   - fe/web
   - be/app
+  - app
   - packages/tsconfig
   - packages/ui
   - packages/tailwind-config

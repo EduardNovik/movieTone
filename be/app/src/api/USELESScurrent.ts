@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import serverAuth from "../libs/serverAuth";
+import serverAuth from "../libs/USELESSserverAuth";
 
 const router = Router();
 

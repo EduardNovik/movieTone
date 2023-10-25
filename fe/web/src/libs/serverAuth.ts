@@ -1,9 +1,8 @@
-import { Request } from "express";
+import { NextApiRequest } from "next";
+import prisma from "@/libs/prismadb";
 import { getSession } from "next-auth/react";
 
-import prisma from "../libs/prismadb";
-
-const serverAuth = async (req: Request) => {
+const serverAuth = async (req: NextApiRequest) => {
   const session = await getSession({ req });
 
   if (!session?.user?.email) {
@@ -24,3 +23,5 @@ const serverAuth = async (req: Request) => {
 };
 
 export default serverAuth;
+
+// It take a look into db and compare user from db with sessuion user
