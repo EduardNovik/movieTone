@@ -32,11 +32,11 @@
 import bycrypt from "bcrypt";
 import { Request, Response } from "express";
 import { Router } from "express";
-import prisma from "../libs/prismadb";
+import prisma from "../libs/USELESSprismadb";
 
 const router = Router();
 
-export default router.post("/", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -60,3 +60,5 @@ export default router.post("/", async (req: Request, res: Response) => {
     return res.status(400).end();
   }
 });
+
+export default router;

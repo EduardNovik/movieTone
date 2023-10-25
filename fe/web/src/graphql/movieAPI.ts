@@ -1,18 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
 const getMovieData = () => {
-  const url = 'https://api.themoviedb.org/3/authentication';
+  const url = "https://api.themoviedb.org/3/authentication";
   const options = {
-    method: 'GET',
+    method: "GET",
     url,
     headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.AUTHORIZATION}`,
+      Accept: "application/json",
+      Authorization: `Bearer ${process.env.AUTHORIZATION}`,
     },
   };
   return axios(options)
-    .then(res => console.log(res.data))
-    .catch(err => console.error('error:' + err));
+    .then((res) => console.log(res.data))
+    .catch((err) => console.error("error:" + err));
 };
 export default getMovieData;
 

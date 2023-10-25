@@ -787,3 +787,47 @@ define: {
 'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
 },
 });
+
+[MOVE_TO_NEXTJS]
+
+In order to have the ability to use auth.js(nextAuth.js) I've decided to move to Next.js
+It was quite tricky compared to vite ( I had some trouble with importing stuff from the Tailwind package and importing UI components to fe/web, but then how I realize late or it should be imported from dist folder as a built js version of the component)
+
+==============
+
+web:dev: postcss.config.js is treated as an ES module file as it is a .js file whose nearest parent package.json contains "type": "module" which declares all .js files in that package scope as ES modules.
+
+postscss need to be cjs if we using modules
+
+==============
+next config should include image optimization false if we are using export
+
+/\*_ @type {import('next').NextConfig} _/
+const nextConfig = {
+output: "export",
+reactStrictMode: true,
+images: {
+unoptimized: true,
+},
+};
+
+export default nextConfig;
+
+===============
+
+imports doesnt work in twconfig.TS in next and as a result we cant use preset inside twconfig ts
+this is wrong approach for next:
+---wrong
+import tailwindConfig from "../../packages/tailwind-config/package.json";
+
+/_ eslint-disable import/no-default-export, import/no-anonymous-default-export _/
+/** @type {import('tailwindcss').Config} \*/
+export default {
+content: [
+"./src/**/_.{js,ts,jsx,tsx}",
+"../../packages/ui/src/\*\*/_.{js,ts,jsx,tsx}",
+],
+presets: [tailwindConfig],
+};
+
+we need to rename twconfig.TS to twconfig.CJS and then use modules and require inside it:

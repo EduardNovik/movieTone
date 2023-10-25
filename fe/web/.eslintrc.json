@@ -1,0 +1,8 @@
+{
+  "extends": "next/core-web-vitals"
+}
+// not extend yet
+// module.exports = {
+//   root: true,
+//   extends: ["eslint-config-custom"],
+// };

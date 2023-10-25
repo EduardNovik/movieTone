@@ -19,23 +19,49 @@
 //     "noUnusedLocals": true,
 //     "noUnusedParameters": true,
 //     "noFallthroughCasesInSwitch": true,
+
 //     "baseUrl": ".",
 //     "paths": {
 //       "@/*": ["./src/*"]
 //     }
 //   },
-//   "include": ["src"],
+//   "include": ["."],
+//   "exclude": ["dist", "build", "node_modules"],
+//   "extends": "tsconfig/vite.json",
 //   "references": [{ "path": "./tsconfig.node.json" }]
 // }
 
+
+// {
+//   "compilerOptions": {
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     }
+//   },
+//   "include": ["."],
+//   "exclude": ["dist", "build", "node_modules"],
+//   "extends": "tsconfig/vite.json",
+//   "references": [{ "path": "./tsconfig.node.json" }]
+// }
+
+
 {
+  "include": ["src", "tsup.config.ts", "vite.config.ts"],
   "compilerOptions": {
+    "module": "ES2020",
+    "lib": ["dom", "esnext"],
+    "declaration": false,
+    "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@*": ["./src/*"]
-    }
-  },
-  "extends": "tsconfig/vite.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
+  }
 }

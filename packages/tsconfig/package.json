@@ -6,5 +6,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["base.json", "react-library.json", "vite.json"]
+  "files": [
+    "base.json",
+    "vite.json",
+    "react-library.json",
+    "next.json"
+  ]
 }

@@ -1,7 +1,7 @@
-export { Button, buttonVariants } from "./components/button.tsx";
-export type { ButtonProps } from "./components/button.tsx";
+export { Button, buttonVariants } from "./components/button";
+export type { ButtonProps } from "./components/button";
 export { ThemeProvider } from "next-themes";
-export { ModeToggle } from "./components/mode-toggle.tsx";
+export { ModeToggle } from "./components/mode-toggle";
 export {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,5 +18,5 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./components/dropdown-menu.tsx";
-export { useToast } from "./components/ui/use-toast.ts";
+} from "./components/dropdown-menu";
+export { useToast } from "./components/use-toast";

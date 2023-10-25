@@ -1,26 +1,17 @@
 {
   "extends": "./base.json",
   "compilerOptions": {
-    "target": "ES2020",
+    "jsx": "react",
+    "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
-
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM"],
     "sourceMap": true,
-
-    "strict": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noImplicitReturns": true
   },
-  "include": ["src"],
   "exclude": ["node_modules"]
 }
