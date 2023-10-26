@@ -1,10 +1,10 @@
 import Modal from '../Modal';
-import useRegisterModalState from '../../hooks/useRegisterModalState';
 import useLoginModalState from '../../hooks/useLoginModalState';
+import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { useToast } from 'ui';
+import { useToast } from '@movieTone/ui';
 
 const RegisterModal = () => {
   const loginModal = useLoginModalState();

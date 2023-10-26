@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "imports": {
+    "@*": "./src/*"
+  },
   "scripts": {
     "dev": "vite --port 3000",
     "build": "tsc && vite build",
@@ -24,7 +27,7 @@
     "swr": "^2.2.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "ui": "workspace:*",
+    "@movieTone/ui": "workspace:*",
     "zod": "^3.22.2",
     "zustand": "^4.4.3"
   },
@@ -37,16 +40,15 @@
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.50.0",
-    "eslint-config-custom": "workspace:*",
+    "@movieTone/eslint-config": "workspace:*",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
-    "tailwind-config": "workspace:*",
+    "@movieTone/tailwind-config": "workspace:*",
     "tailwindcss": "^3.3.3",
-    "tsconfig": "workspace:*",
+    "@movieTone/tsconfig": "workspace:*",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "next": "~13.5.4"
+    "vite": "^4.4.5"
   }
 }

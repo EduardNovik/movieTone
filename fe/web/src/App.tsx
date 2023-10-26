@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import Layout from './components/Layout';
-import { ThemeProvider } from 'ui';
+import { ThemeProvider } from '@movieTone/ui';
 import LoginModal from './components/modals/LoginModal';
 import RegisterModal from './components/modals/RegisterModal';
 

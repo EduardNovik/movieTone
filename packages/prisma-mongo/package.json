@@ -1,5 +1,5 @@
 {
-  "name": "prisma-mongo",
+  "name": "@movieTone/prisma-mongo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

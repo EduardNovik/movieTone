@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  db-core:
+    image: postgres:15.4
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: movieTonedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - be-core-data:/var/lib/postgresql/data
+    networks:
+      - core_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "supertokensdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  supertokens-core:
+    image: registry.supertokens.io/supertokens/supertokens-postgresql:7.0
+    depends_on:
+      db-core:
+        condition: service_healthy
+    ports:
+      - 3567:3567
+    environment:
+      POSTGRESQL_CONNECTION_URI: "postgresql://root:root@db-core:5432/supertokensdb"
+      API_KEYS: "core-secret-key-supertokensdb"
+      LOG_LEVEL: "warn"
+    networks:
+      - core_network
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  be-core-data:
+
+networks:
+  core_network:
+    driver: bridge
