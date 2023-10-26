@@ -1,4 +1,4 @@
-import { ModeToggle } from 'ui';
+import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 
 import Logo from '@/assets/logo5.png';

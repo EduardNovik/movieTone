@@ -4,5 +4,6 @@ packages:
   - packages/tsconfig
   - packages/ui
   - packages/tailwind-config
-  - packages/eslint-config-custom
+  - packages/eslint-config
   - packages/prisma-mongo
+  - packages/database-schema

@@ -1,11 +1,10 @@
 import Modal from '../Modal';
-import useRegisterModalState from '../../hooks/useRegisterModalState';
 import useLoginModalState from '../../hooks/useLoginModalState';
+import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { useToast } from 'ui';
-import { signIn } from 'next-auth/react';
+import { useToast } from '@movieTone/ui';
 
 const RegisterModal = () => {
   const loginModal = useLoginModalState();
@@ -31,7 +30,6 @@ const RegisterModal = () => {
       });
 
       toast({ title: 'Account created.' });
-      await signIn('credentials', { email, password });
 
       setEmail('');
       setPassword('');

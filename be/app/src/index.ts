@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import currentRoute from "./api/current";
-import registerRoute from "./api/register";
+// import currentRoute from "./api/current";
+// import registerRoute from "./api/register";
 // import sessionRoute from "./api/session";
 // import loginRoute from "./api/login";
 
@@ -24,7 +24,7 @@ app.get("/api", (req: Request, res: Response) => {
 });
 
 // Routes
-app.use("/api/current", currentRoute);
-app.use("/api/register", registerRoute);
+// app.use("/api/current", currentRoute);
+// app.use("/api/register", registerRoute);
 // app.use("/api/auth", loginRoute);
 // app.use("/api/auth", registerRoute);

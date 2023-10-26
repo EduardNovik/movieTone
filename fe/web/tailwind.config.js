@@ -3,7 +3,7 @@
 // module.exports = config;
 
 // new version:
-import tailwindConfig from '../../packages/tailwind-config/tailwind.config.js';
+import tailwindConfig from '@movieTone/tailwind-config/tailwind.config.js';
 
 /* eslint-disable import/no-default-export, import/no-anonymous-default-export */
 /** @type {import('tailwindcss').Config} */
