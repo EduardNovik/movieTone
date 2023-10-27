@@ -787,3 +787,24 @@ define: {
 'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
 },
 });
+
+not only in viteconfig but also in tsconfig and in package.json (add imports:)
+
+---[ISSUE_WITH_DOCKER_ON_WINDOWS]:
+
+In order to make docker compose work correctly we tried at first install docker UI,
+but it causes the problem with docker that was installed for other project by using command line. So whenever we removed volumes with docker compose down -v it was just removed it from
+second docker (UI version) so that is why we still can connect to db of other project on WSL.
+
+Fix:
+
+1. Remove docker UI
+2. install docker with command line :
+
+### On Windows WSL
+
+[Setup Docker on Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+
+Done!
+Now we can connect normaly to docker and also supertokes is running cause its using db which
+was created with docker compose.

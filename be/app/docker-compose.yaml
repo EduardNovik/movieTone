@@ -3,8 +3,8 @@ services:
   db-core:
     image: postgres:15.4
     environment:
-      POSTGRES_USER: login
-      POSTGRES_PASSWORD: login
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
       POSTGRES_DB: movietonedb
     ports:
       - "5432:5432"
@@ -15,7 +15,7 @@ services:
       - core_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "login", "-d", "supertokensdb"]
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "supertokensdb"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -28,7 +28,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: "postgresql://login:login@db-core:5432/supertokensdb"
+      POSTGRESQL_CONNECTION_URI: "postgresql://root:root@db-core:5432/supertokensdb"
       API_KEYS: "core-secret-key-supertokensdb"
       LOG_LEVEL: "warn"
     networks:
@@ -46,64 +46,3 @@ volumes:
 networks:
   core_network:
     driver: bridge
-
-
-
-
-
-
-# version: '3'
-
-# services:
-#   # Note: If you are assigning a custom name to your db service on the line below, make sure it does not contain underscores
-#   db:
-#     image: 'postgres:latest'
-#     environment:
-#       POSTGRES_USER: supertokens_user 
-#       POSTGRES_PASSWORD: somePassword 
-#       POSTGRES_DB: supertokens
-#     ports:
-#       - 5432:5432
-#     networks:
-#       - app_network
-#     restart: unless-stopped
-#     healthcheck:
-#       test: ['CMD', 'pg_isready', '-U', 'supertokens_user', '-d', 'supertokens']
-#       interval: 5s
-#       timeout: 5s
-#       retries: 5
-
-#   supertokens:
-#     image: registry.supertokens.io/supertokens/supertokens-postgresql:7.0
-#     depends_on:
-#       db:
-#         condition: service_healthy
-#     ports:
-#       - 3567:3567
-#     environment:
-#       POSTGRESQL_CONNECTION_URI: "postgresql://supertokens_user:somePassword@db:5432/supertokens"
-#     networks:
-#       - app_network
-#     restart: unless-stopped
-#     healthcheck:
-#       test: >
-#         bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-
-# networks:
-#   app_network:
-#     driver: bridge
-
-
-# -----------
-# docker exec -it app-db-core-1 /bin/bash
-# root@2582cb023799:/# psql -U log -d movieTonedb
-# psql (15.4 (Debian 15.4-2.pgdg120+1))
-# Type "help" for help.
-
-# movieTonedb=#
-
-
-# SELECT usename, usesuper, usecreatedb, valuntil FROM pg_user;

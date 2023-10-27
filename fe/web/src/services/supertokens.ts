@@ -5,9 +5,9 @@ import Session from 'supertokens-auth-react/recipe/session';
 SuperTokens.init({
   appInfo: {
     appName: 'movietonefe',
-    apiDomain: 'http://localhost:3000/',
+    apiDomain: window.origin,
     websiteDomain: window.origin,
-    apiBasePath: '/auth',
+    apiBasePath: '/api/auth',
     websiteBasePath: '/login',
   },
   recipeList: [
