@@ -15,4 +15,13 @@ export default defineConfig({
     'import.meta.env.API': JSON.stringify(process.env.API),
     'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        rewrite: aPath => aPath.replace(/^\/api/, ''),
+      },
+    },
+  },
 });
