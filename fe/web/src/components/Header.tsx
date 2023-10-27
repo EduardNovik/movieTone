@@ -24,7 +24,6 @@ const Header = () => {
         </Link>
 
         <div className="flex  gap-8 items-center dark:text-white">
-          <Link to="/login">Login2</Link>
           <Link to="/about">Liked</Link>
           <Link to="/about">About</Link>
           <span

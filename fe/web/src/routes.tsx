@@ -2,10 +2,10 @@ import App from './App.tsx';
 import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import ErrorPage from './pages/Error.tsx';
-import Login from './pages/Login.tsx';
-import './index.css';
 import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import Verify from './pages/login/Verify.tsx';
+import './index.css';
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -28,17 +28,11 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-const loginRoute = new Route({
+const verifyRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/login',
-  component: () => <Login />,
+  path: '/verify',
+  component: () => <Verify />,
 });
-
-// const registerRoute = new Route({
-//   getParentRoute: () => rootRoute,
-//   path: '/register',
-//   component: () => <Home />,
-// });
 
 const errorRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -50,8 +44,7 @@ const routeTree = rootRoute.addChildren([
   homeRoute,
   aboutRoute,
   errorRoute,
-  loginRoute,
-  // registerRoute,
+  verifyRoute,
 ]);
 
 const router = new Router({ routeTree });

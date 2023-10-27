@@ -36,28 +36,9 @@ async function sendMagicLink(email: string) {
 const LoginModal = () => {
   const loginModal = useLoginModalState();
   const registerModal = useRegisterModalState();
-
   const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-
-  // const onSubmit = useCallback(async () => {
-  //   try {
-  //     setIsLoading(true);
-
-  //     // LOG IN
-  //     void sendMagicLink(email);
-
-  //     loginModal.onClose();
-  //     toast({ title: 'Account created.' });
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast({ variant: 'destructive', title: 'Something went wrong.' });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }, [loginModal]);
 
   const onSubmit = () => {
     try {
@@ -87,15 +68,9 @@ const LoginModal = () => {
         placeholder="Email"
         onChange={e => setEmail(e.target.value)}
         value={email}
+        name="email"
         disabled={isLoading}
       />
-      {/* <Input
-        placeholder="Password"
-        type="password"
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-        disabled={isLoading}
-      /> */}
     </div>
   );
 
