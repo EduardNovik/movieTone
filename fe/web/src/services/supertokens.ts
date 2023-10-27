@@ -8,7 +8,7 @@ SuperTokens.init({
     apiDomain: window.origin,
     websiteDomain: window.origin,
     apiBasePath: '/api/auth',
-    websiteBasePath: '/login',
+    websiteBasePath: '/',
   },
   recipeList: [
     Passwordless.init({
