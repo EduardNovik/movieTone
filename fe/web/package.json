@@ -14,6 +14,7 @@
     "format": "prettier --write ./src"
   },
   "dependencies": {
+    "@movieTone/ui": "workspace:*",
     "@tanstack/react-router": "^0.0.1-beta.194",
     "@tanstack/router-devtools": "^0.0.1-beta.194",
     "axios": "^1.5.1",
@@ -24,14 +25,17 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sort-by": "^0.0.2",
+    "supertokens-auth-react": "^0.35.6",
     "swr": "^2.2.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "@movieTone/ui": "workspace:*",
     "zod": "^3.22.2",
     "zustand": "^4.4.3"
   },
   "devDependencies": {
+    "@movieTone/eslint-config": "workspace:*",
+    "@movieTone/tailwind-config": "workspace:*",
+    "@movieTone/tsconfig": "workspace:*",
     "@types/node": "^20.8.2",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -40,14 +44,11 @@
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.50.0",
-    "@movieTone/eslint-config": "workspace:*",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
-    "@movieTone/tailwind-config": "workspace:*",
     "tailwindcss": "^3.3.3",
-    "@movieTone/tsconfig": "workspace:*",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }

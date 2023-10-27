@@ -19,4 +19,17 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/dropdown-menu.tsx";
+
+export type { ToastProps, ToastActionElement } from "./components/ui/toast.tsx";
 export { useToast } from "./components/ui/use-toast.ts";
+export { Toaster } from "./components/ui/toaster.tsx";
+
+export {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+} from "./components/ui/toast.tsx";

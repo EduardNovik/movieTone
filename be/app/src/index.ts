@@ -1,5 +1,10 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import supertokens from "supertokens-node";
+import Session from "supertokens-node/recipe/session";
+import Passwordless from "supertokens-node/recipe/passwordless";
+import { middleware } from "supertokens-node/framework/express";
+import { errorHandler } from "supertokens-node/framework/express";
 // import currentRoute from "./api/current";
 // import registerRoute from "./api/register";
 // import sessionRoute from "./api/session";
@@ -8,12 +13,40 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(express.json());
-
-app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
+supertokens.init({
+  framework: "express",
+  supertokens: {
+    // https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
+    connectionURI: "http://localhost:3567",
+    apiKey: process.env.SUPERTOKENS_API_KEY,
+  },
+  appInfo: {
+    // learn more about this on https://supertokens.com/docs/session/appinfo
+    appName: "movietonebe",
+    apiDomain: "http://localhost:4000",
+    websiteDomain: "http://localhost:3000",
+    apiBasePath: "/auth",
+    websiteBasePath: "/login",
+  },
+  recipeList: [
+    Passwordless.init({
+      flowType: "MAGIC_LINK",
+      contactMethod: "EMAIL",
+    }),
+    Session.init(), // initializes session features
+  ],
 });
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  })
+);
+
+// IMPORTANT: CORS should be before the below line.
+app.use(middleware());
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify("ROOT OF THE SERVER"));
@@ -21,6 +54,17 @@ app.get("/", (req: Request, res: Response) => {
 
 app.get("/api", (req: Request, res: Response) => {
   res.send(JSON.stringify("ZALUPKA"));
+});
+
+// your own error handler
+// app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+//     // TODO
+// });
+
+app.use(errorHandler());
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
 });
 
 // Routes
