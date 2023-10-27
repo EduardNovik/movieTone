@@ -5,12 +5,27 @@ import Session from "supertokens-node/recipe/session";
 import Passwordless from "supertokens-node/recipe/passwordless";
 import { middleware } from "supertokens-node/framework/express";
 import { errorHandler } from "supertokens-node/framework/express";
+import { createSchema, createYoga } from "graphql-yoga";
 // import currentRoute from "./api/current";
 // import registerRoute from "./api/register";
 // import sessionRoute from "./api/session";
 // import loginRoute from "./api/login";
 
+const schema = createSchema({
+  typeDefs: /* GraphQL */ `
+    type Query {
+      hello: String!
+    }
+  `,
+  resolvers: {
+    Query: {
+      hello: () => "WTF!",
+    },
+  },
+});
+
 const app = express();
+const yoga = createYoga({ schema });
 const port = process.env.PORT || 4000;
 
 supertokens.init({
@@ -18,7 +33,7 @@ supertokens.init({
   supertokens: {
     // https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
     connectionURI: "http://localhost:3567",
-    apiKey: process.env.SUPERTOKENS_API_KEY,
+    apiKey: "core-secret-key-supertokensdb",
   },
   appInfo: {
     // learn more about this on https://supertokens.com/docs/session/appinfo
@@ -37,6 +52,7 @@ supertokens.init({
   ],
 });
 
+app.use("/graphql", yoga);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -67,7 +83,7 @@ app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
 
-// Routes
+// Routes-----------
 // app.use("/api/current", currentRoute);
 // app.use("/api/register", registerRoute);
 // app.use("/api/auth", loginRoute);
