@@ -1,7 +1,7 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 
-import Logo from '@/assets/logo5.png';
+import Logo from '../assets/iconfinder1.png';
 import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 
@@ -16,7 +16,7 @@ const Header = () => {
       <div className="container py-1 flex flex-row justify-between">
         <div className="flex dark:text-white gap-8 items-center">
           <Link to="/">Home</Link>
-          <Link to="/">Spacecraft</Link>
+          <Link to="/latest">Latest</Link>
         </div>
 
         <Link to="/" className="dark:text-white items-center flex">
@@ -24,13 +24,13 @@ const Header = () => {
         </Link>
 
         <div className="flex  gap-8 items-center dark:text-white">
-          <Link to="/about">Liked</Link>
+          <Link to="/watchlist">Watchlist</Link>
           <Link to="/about">About</Link>
           <span
             className="cursor-pointer hover:underline"
             onClick={openLoginModal}
           >
-            Login
+            Sign in
           </span>
           <ModeToggle />
         </div>

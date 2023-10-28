@@ -7,7 +7,7 @@ async function hasInitialMagicLinkBeenSent() {
   return (await getLoginAttemptInfo()) !== undefined;
 }
 
-const Verify = () => {
+const VerifyLog = () => {
   const navigate = useNavigate();
 
   const handleMagicLinkClicked = useCallback(async () => {
@@ -55,4 +55,4 @@ const Verify = () => {
   return <div>Verify</div>;
 };
 
-export default Verify;
+export default VerifyLog;
