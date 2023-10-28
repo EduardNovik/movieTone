@@ -1,11 +1,13 @@
+import './index.css';
 import App from './App.tsx';
-import Home from './pages/Home.tsx';
-import About from './pages/About.tsx';
-import ErrorPage from './pages/Error.tsx';
+import { Home } from './pages/home';
+import { About } from './pages/about';
+import { ErrorPage } from './pages/404';
 import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import Verify from './pages/login/Verify.tsx';
-import './index.css';
+import { VerifyLog } from './pages/login';
+import { Latest } from './pages/latest';
+import { Watchlist } from './pages/watchlist';
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -22,6 +24,18 @@ const homeRoute = new Route({
   component: () => <Home />,
 });
 
+const latestRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/latest',
+  component: () => <Latest />,
+});
+
+const watchlistRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/watchlist',
+  component: () => <Watchlist />,
+});
+
 const aboutRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/about',
@@ -31,7 +45,7 @@ const aboutRoute = new Route({
 const verifyRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/verify',
-  component: () => <Verify />,
+  component: () => <VerifyLog />,
 });
 
 const errorRoute = new Route({
@@ -42,6 +56,8 @@ const errorRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  latestRoute,
+  watchlistRoute,
   aboutRoute,
   errorRoute,
   verifyRoute,
