@@ -790,6 +790,12 @@ define: {
 
 not only in viteconfig but also in tsconfig and in package.json (add imports:)
 
+---[ISSUE_WITH_IMPORT_FROM_WORKSPACE]:
+
+typical issue when vs code doesnt see packagese imported from lets say @movitone/tsconfig
+The issue can be in package.json, you need to add there type:"module" and it will resolve
+the problem and also resolves for some other imports that normaly should be require(commonJS)
+
 ---[ISSUE_WITH_DOCKER_ON_WINDOWS]:
 
 In order to make docker compose work correctly we tried at first install docker UI,

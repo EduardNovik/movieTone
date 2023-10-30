@@ -1,0 +1,11 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/**/node_modules"],
+  "delay": 500,
+  "verbose": false,
+  "events": {
+    "restart": "echo 'App restarted due to:\n'$FILENAME'\"'"
+  },
+  "signal": "SIGKILL",
+  "watch": ["./**/*.ts"]
+}

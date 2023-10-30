@@ -1,4 +1,5 @@
 {
+  "name": "movieTone",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -12,6 +13,5 @@
     "@movieTone/tsconfig": "workspace:*",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.6.10",
-  "name": "movieTone"
+  "packageManager": "pnpm@8.6.10"
 }

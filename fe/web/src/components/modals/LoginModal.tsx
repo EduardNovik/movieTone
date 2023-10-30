@@ -21,14 +21,9 @@ async function sendMagicLink(email: string) {
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
-      // this may be a custom error message sent from the API by you,
-      // or if the input email / phone number is not valid.
-      // window.alert(err.message);
       console.log(err);
     } else {
-      // window.alert('Oops! Something went wrong.');
       console.log('Oops! Something went wrong.');
-      console.log('ASS');
     }
   }
 }
