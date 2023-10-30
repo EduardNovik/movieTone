@@ -1,12 +1,12 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import type { Request, Response } from "express";
 import cors from "cors";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import Passwordless from "supertokens-node/recipe/passwordless";
-import { middleware } from "supertokens-node/framework/express";
-import { errorHandler } from "supertokens-node/framework/express";
+import { middleware, errorHandler } from "supertokens-node/framework/express";
 import { createSchema, createYoga } from "graphql-yoga";
-// import currentRoute from "./api/current";
+import registrationRoute from "./service/registration";
 // import registerRoute from "./api/register";
 // import sessionRoute from "./api/session";
 // import loginRoute from "./api/login";
@@ -84,7 +84,7 @@ app.listen(port, () => {
 });
 
 // Routes-----------
-// app.use("/api/current", currentRoute);
+app.use("/registration", registrationRoute);
 // app.use("/api/register", registerRoute);
 // app.use("/api/auth", loginRoute);
 // app.use("/api/auth", registerRoute);

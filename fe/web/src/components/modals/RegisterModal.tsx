@@ -14,7 +14,6 @@ const RegisterModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(async () => {
@@ -22,11 +21,10 @@ const RegisterModal = () => {
       setIsLoading(true);
 
       //REGISTER AND LOG IN
-      axios.post('http://localhost:4000/api/register', {
+      axios.post('http://localhost:4000/registration', {
         email,
         password,
         name,
-        username,
       });
 
       toast({ title: 'Account created.' });
@@ -34,7 +32,6 @@ const RegisterModal = () => {
       setEmail('');
       setPassword('');
       setName('');
-      setUsername('');
       registerModal.onClose();
     } catch (error) {
       console.log(error);
@@ -42,7 +39,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal, email, password, name, username]);
+  }, [registerModal, email, password, name]);
 
   const onToggle = useCallback(() => {
     if (isLoading) {
@@ -56,21 +53,15 @@ const RegisterModal = () => {
     <div className="flex flex-col gap-4">
       <Input
         disabled={isLoading}
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <Input
-        disabled={isLoading}
         placeholder="Name"
         value={name}
         onChange={e => setName(e.target.value)}
       />
       <Input
         disabled={isLoading}
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
       />
       <Input
         disabled={isLoading}
