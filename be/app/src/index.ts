@@ -6,7 +6,7 @@ import Session from "supertokens-node/recipe/session";
 import Passwordless from "supertokens-node/recipe/passwordless";
 import { middleware, errorHandler } from "supertokens-node/framework/express";
 import { createSchema, createYoga } from "graphql-yoga";
-import registrationRoute from "./service/registration";
+// import registrationRoute from "./service/registration.ts";
 // import registerRoute from "./api/register";
 // import sessionRoute from "./api/session";
 // import loginRoute from "./api/login";
@@ -26,7 +26,7 @@ const schema = createSchema({
 
 const app = express();
 const yoga = createYoga({ schema });
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 
 supertokens.init({
   framework: "express",
@@ -84,7 +84,7 @@ app.listen(port, () => {
 });
 
 // Routes-----------
-app.use("/registration", registrationRoute);
+// app.use("/registration", registrationRoute);
 // app.use("/api/register", registerRoute);
 // app.use("/api/auth", loginRoute);
 // app.use("/api/auth", registerRoute);

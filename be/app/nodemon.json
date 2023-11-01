@@ -7,5 +7,9 @@
     "restart": "echo 'App restarted due to:\n'$FILENAME'\"'"
   },
   "signal": "SIGKILL",
-  "watch": ["./**/*.ts"]
+  "watch": ["./**/*.ts"],
+  "env": {
+    "DB_URL": "postgresql://root:root@localhost:5432/movietonedb",
+    "PORT": "4000"
+  }
 }

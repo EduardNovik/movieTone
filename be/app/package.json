@@ -1,52 +1,45 @@
 {
   "name": "@movieTone/app",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "private": true,
   "imports": {
     "#*": "./src/*"
   },
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "scripts": {
-    "start": "node ./dist/index.ts",
+    "start": "run-s doc-up dev:db-migration dev",
     "dev": "nodemon ./src/index.ts",
-    "build": "tsc -p .",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "dup": "docker-compose up -d",
-    "ddown": "docker-compose down -v",
-    "dev:db-migration": "NODE_ENV=development pnpm db-migration",
-    "db-migration": "node --loader @swc-node/register/esm ./scripts/migrate.ts"
+    "doc-up": "docker-compose up -d",
+    "doc-down": "docker-compose down -v",
+    "db-migration": "node --loader @swc-node/register/esm ./scripts/migrate.ts",
+    "db-migration2": "nodemon ./scripts/migrate.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@movieTone/database-schema": "workspace:*",
     "@movieTone/eslint-config": "workspace:*",
-    "@swc-node/core": "^1.10.6",
-    "@swc-node/register": "^1.6.8",
-    "@swc/core": "^1.3.95",
     "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
-    "@types/node": "^20.8.7",
-    "bcrypt": "^5.1.1",
+    "@types/node": "^20.8.10",
     "cors": "^2.8.5",
     "drizzle-orm": "~0.28.6",
     "drizzle-zod": "^0.5.1",
-    "eslint": "^8.52.0",
     "express": "^4.18.2",
     "graphql": "^16.8.1",
     "graphql-yoga": "^5.0.0",
     "nodemon": "^3.0.1",
-    "postgres": "~3.4.1",
-    "supertokens-node": "^16.3.4",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
+    "postgres": "~3.4.2",
+    "supertokens-node": "^16.4.0",
     "zod": "~3.22.4"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.1",
+    "@swc-node/core": "^1.10.6",
+    "@swc-node/register": "^1.6.8",
+    "@swc/core": "^1.3.95",
+    "dotenv": "~16.3.1",
     "drizzle-kit": "~0.19.13",
-    "eslint": "~8.51.0"
+    "eslint": "~8.52.0",
+    "npm-run-all": "~4.1.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
