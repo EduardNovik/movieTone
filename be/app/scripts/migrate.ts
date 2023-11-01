@@ -2,15 +2,12 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import * as console from "node:console";
 import postgres from "postgres";
-import * as z from "zod";
 
-const stringSchema = z.string();
-
-const dbURL = stringSchema.parse(process.env.DB_URL);
-const migrationConnection = postgres(dbURL, {
+const migrationConnection = postgres("postgresql://root:root@localhost:5432/movietonedb", {
   max: 1,
   onnotice: () => {},
 });
+
 const connection = drizzle(migrationConnection);
 
 void migrate(connection, {

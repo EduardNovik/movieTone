@@ -3,10 +3,9 @@
   "name": "@movieTone/database-schema",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "type": "module",
   "engines": {
