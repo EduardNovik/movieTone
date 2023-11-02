@@ -5,6 +5,7 @@
   "imports": {
     "#*": "./src/*"
   },
+  "type": "module",
   "scripts": {
     "start": "run-s doc-up dev:db-migration dev",
     "dev": "nodemon ./src/index.ts",

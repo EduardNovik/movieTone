@@ -1,16 +1,15 @@
 import Modal from '../Modal';
 import useLoginModalState from '../../hooks/useLoginModalState';
-import useRegisterModalState from '../../hooks/useRegisterModalState';
 
 import Input from '../Input';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useToast } from '@movieTone/ui';
 
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
 
 async function sendMagicLink(email: string) {
   try {
-    let response = await createCode({
+    const response = await createCode({
       email,
     });
     if (response.status === 'SIGN_IN_UP_NOT_ALLOWED') {
@@ -30,7 +29,6 @@ async function sendMagicLink(email: string) {
 
 const LoginModal = () => {
   const loginModal = useLoginModalState();
-  const registerModal = useRegisterModalState();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -52,11 +50,6 @@ const LoginModal = () => {
     }
   };
 
-  const onToggle = useCallback(() => {
-    loginModal.onClose();
-    registerModal.onOpen();
-  }, [loginModal, registerModal]);
-
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
@@ -68,25 +61,29 @@ const LoginModal = () => {
       />
     </div>
   );
+  // const onToggle = useCallback(() => {
+  //   loginModal.onClose();
+  //   registerModal.onOpen();
+  // }, [loginModal, registerModal]);
 
-  const footerContent = (
-    <div className="text-neutral-400 text-center mt-4">
-      <p>
-        First time using Twitter?
-        <span
-          onClick={onToggle}
-          className="
-            text-white 
-            cursor-pointer 
-            hover:underline
-          "
-        >
-          {' '}
-          Create an account
-        </span>
-      </p>
-    </div>
-  );
+  // const footerContent = (
+  //   <div className="text-neutral-400 text-center mt-4">
+  //     <p>
+  //       First time using Twitter?
+  //       <span
+  //         onClick={onToggle}
+  //         className="
+  //           text-white
+  //           cursor-pointer
+  //           hover:underline
+  //         "
+  //       >
+  //         {' '}
+  //         Create an account
+  //       </span>
+  //     </p>
+  //   </div>
+  // );
 
   return (
     <Modal
@@ -97,7 +94,6 @@ const LoginModal = () => {
       onClose={loginModal.onClose}
       onSubmit={onSubmit}
       body={bodyContent}
-      footer={footerContent}
     />
   );
 };
