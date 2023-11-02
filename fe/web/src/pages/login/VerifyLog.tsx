@@ -27,7 +27,7 @@ const VerifyLog = () => {
         // }
         // window.location.assign('/home');
         console.log('LOGGED!');
-        void navigate({ to: '/about' });
+        void navigate({ to: '/register' });
       } else {
         // this can happen if the magic link has expired or is invalid
         // or if it was denied due to security reasons in case of automatic account linking

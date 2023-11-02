@@ -1,5 +1,4 @@
 import Modal from '../Modal';
-import useLoginModalState from '../../hooks/useLoginModalState';
 import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
@@ -7,7 +6,6 @@ import axios from 'axios';
 import { useToast } from '@movieTone/ui';
 
 const RegisterModal = () => {
-  const loginModal = useLoginModalState();
   const registerModal = useRegisterModalState();
   const { toast } = useToast();
 
@@ -41,14 +39,6 @@ const RegisterModal = () => {
     }
   }, [registerModal, email, password, name]);
 
-  const onToggle = useCallback(() => {
-    if (isLoading) {
-      return;
-    }
-    registerModal.onClose();
-    loginModal.onOpen();
-  }, [isLoading, registerModal, loginModal]);
-
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
@@ -72,24 +62,31 @@ const RegisterModal = () => {
       />
     </div>
   );
+  // const onToggle = useCallback(() => {
+  //   if (isLoading) {
+  //     return;
+  //   }
+  //   registerModal.onClose();
+  //   loginModal.onOpen();
+  // }, [isLoading, registerModal, loginModal]);
 
-  const footerContent = (
-    <div className="text-neutral-400 text-center mt-4">
-      <p>
-        Already have an account?
-        <span
-          className="
-        text-white
-        cursor-pointer
-        hover:underline
-        "
-          onClick={onToggle}
-        >
-          Sign in
-        </span>
-      </p>
-    </div>
-  );
+  // const footerContent = (
+  //   <div className="text-neutral-400 text-center mt-4">
+  //     <p>
+  //       Already have an account?
+  //       <span
+  //         className="
+  //       text-white
+  //       cursor-pointer
+  //       hover:underline
+  //       "
+  //         onClick={onToggle}
+  //       >
+  //         Sign in
+  //       </span>
+  //     </p>
+  //   </div>
+  // );
 
   return (
     <Modal
@@ -100,7 +97,6 @@ const RegisterModal = () => {
       onClose={registerModal.onClose}
       onSubmit={onSubmit}
       body={bodyContent}
-      footer={footerContent}
     />
   );
 };

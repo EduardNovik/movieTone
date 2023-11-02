@@ -3,13 +3,10 @@
   "ignore": [".git", "node_modules/**/node_modules"],
   "delay": 500,
   "verbose": false,
+  "exec": "node --experimental-specifier-resolution=node --loader ts-node/esm",
   "events": {
     "restart": "echo 'App restarted due to:\n'$FILENAME'\"'"
   },
   "signal": "SIGKILL",
-  "watch": ["./**/*.ts"],
-  "env": {
-    "DB_URL": "postgresql://root:root@localhost:5432/movietonedb",
-    "PORT": "4000"
-  }
+  "watch": ["./**/*.ts"]
 }

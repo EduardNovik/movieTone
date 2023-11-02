@@ -1,6 +1,6 @@
 import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { users } from "./users";
-import { watchlist } from "./watchlist";
+import { users } from "./users.ts";
+import { watchlist } from "./watchlist.ts";
 
 export const usersToWatchlist = pgTable(
   "usersToWatchlist",

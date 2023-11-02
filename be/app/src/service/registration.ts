@@ -1,8 +1,7 @@
 import { Router, Request, Response } from "express";
-import { db } from "../db";
+import { db } from "../db.ts";
 import crypto from "crypto";
 import { users } from "@movieTone/database-schema";
-
 
 let router: any = Router();
 
@@ -14,15 +13,12 @@ Router().post("/", async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
 
-    return await db
-      .insert(users)
-      .values({
-        id: crypto.randomUUID(),
-        name,
-        email,
-        password,
-      })
-      .returning();
+    return await db.insert(users).values({
+      id: crypto.randomUUID(),
+      name,
+      email,
+      password,
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).end();
