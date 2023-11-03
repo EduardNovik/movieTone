@@ -12,7 +12,7 @@ import {
 
 // for query purposes
 const queryClient = postgres(
-  "postgresql://root:root@db-core:5432/supertokensdb"
+  process.env.DB_URL!
 );
 
 export const db = drizzle(queryClient, {

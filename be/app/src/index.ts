@@ -1,26 +1,13 @@
-import express from "express";
+import express, { Router } from "express";
 import type { Request, Response } from "express";
 import cors from "cors";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import Passwordless from "supertokens-node/recipe/passwordless";
 import { middleware, errorHandler } from "supertokens-node/framework/express";
-import { createSchema, createYoga } from "graphql-yoga";
+import { createYoga } from "graphql-yoga";
+import { schema } from "./graphql/shcema.ts";
 import registrationRoute from "./service/registration.ts";
-// const registrationRoute = require("./service/registration");
-
-const schema = createSchema({
-  typeDefs: /* GraphQL */ `
-    type Query {
-      hello: String!
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => "WTF!",
-    },
-  },
-});
 
 const app = express();
 const yoga = createYoga({ schema });
@@ -50,7 +37,6 @@ supertokens.init({
   ],
 });
 
-app.use("/graphql", yoga);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -58,6 +44,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use("/graphql", yoga);
 
 // IMPORTANT: CORS should be before the below line.
 app.use(middleware());
@@ -77,11 +66,9 @@ app.get("/api", (req: Request, res: Response) => {
 
 app.use(errorHandler());
 
+// Routes-----------
+app.use("/registration", registrationRoute);
+
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
-
-// Routes-----------
-app.use("/registration", registrationRoute);
-// app.use("/api/auth", loginRoute);
-// app.use("/api/auth", registerRoute);

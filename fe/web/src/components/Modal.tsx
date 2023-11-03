@@ -11,6 +11,7 @@ interface ModalProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
+  xBtn?: boolean;
 }
 const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -21,6 +22,7 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   actionLabel,
   disabled,
+  xBtn,
 }) => {
   const handleCLose = useCallback(() => {
     if (disabled) {
@@ -97,9 +99,10 @@ const Modal: React.FC<ModalProps> = ({
           "
           >
             <h3 className="text-3xl font-semibold text-white">{title}</h3>
-            <button
-              onClick={handleCLose}
-              className="
+            {xBtn && (
+              <button
+                onClick={handleCLose}
+                className="
                p-1
                ml-auto
                border-0
@@ -107,9 +110,10 @@ const Modal: React.FC<ModalProps> = ({
                hover:opacity-70
                transition
               "
-            >
-              <X size={20} />
-            </button>
+              >
+                <X size={20} />
+              </button>
+            )}
           </div>
           {/* Body */}
           <div className="relative p-10 flex-auto">{body}</div>

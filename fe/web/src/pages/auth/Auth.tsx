@@ -7,7 +7,7 @@ async function hasInitialMagicLinkBeenSent() {
   return (await getLoginAttemptInfo()) !== undefined;
 }
 
-const VerifyLog = () => {
+const Auth = () => {
   const navigate = useNavigate();
 
   const handleMagicLinkClicked = useCallback(async () => {
@@ -26,8 +26,8 @@ const VerifyLog = () => {
         //   // dashboard
         // }
         // window.location.assign('/home');
-        console.log('LOGGED!');
-        void navigate({ to: '/register' });
+
+        void navigate({ to: '/signup' });
       } else {
         // this can happen if the magic link has expired or is invalid
         // or if it was denied due to security reasons in case of automatic account linking
@@ -55,4 +55,4 @@ const VerifyLog = () => {
   return <div>Verify</div>;
 };
 
-export default VerifyLog;
+export default Auth;
