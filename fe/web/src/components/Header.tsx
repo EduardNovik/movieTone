@@ -1,7 +1,7 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 
-import Logo from '../assets/iconfinder1.png';
+import Logo from '../assets/iconfinder6.png';
 import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 

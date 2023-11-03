@@ -3,7 +3,7 @@ import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { useToast } from '@movieTone/ui';
+import { Button, useToast } from '@movieTone/ui';
 
 const RegisterModal = () => {
   const registerModal = useRegisterModalState();
@@ -18,8 +18,7 @@ const RegisterModal = () => {
     try {
       setIsLoading(true);
 
-      //REGISTER AND LOG IN
-      axios.post('http://localhost:4000/registration', {
+      await axios.post(`${window.origin}/api/registration`, {
         email,
         password,
         name,
@@ -50,6 +49,7 @@ const RegisterModal = () => {
       <Input
         disabled={isLoading}
         placeholder="Email"
+        name="email"
         value={email}
         onChange={e => setEmail(e.target.value)}
       />
@@ -62,6 +62,19 @@ const RegisterModal = () => {
       />
     </div>
   );
+
+  const footerContent = (
+    <Button
+      disabled={isLoading}
+      variant="outline"
+      size="lg"
+      onClick={registerModal.onClose}
+      className="text-white"
+    >
+      Cancel
+    </Button>
+  );
+
   // const onToggle = useCallback(() => {
   //   if (isLoading) {
   //     return;
@@ -97,8 +110,23 @@ const RegisterModal = () => {
       onClose={registerModal.onClose}
       onSubmit={onSubmit}
       body={bodyContent}
+      xBtn={false}
+      footer={footerContent}
     />
   );
 };
 
 export default RegisterModal;
+
+//REGISTER AND LOG IN
+
+// await axios.post('http://localhost:4000/registration', {
+//   email,
+//   password,
+//   name,
+// });
+// await axios.post('http://localhost:3000/api/registration', {
+//   email,
+//   password,
+//   name,
+// });

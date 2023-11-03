@@ -5,7 +5,7 @@ import { About } from './pages/about';
 import { ErrorPage } from './pages/404';
 import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { VerifyLog } from './pages/login';
+import { Auth } from './pages/auth/index.ts';
 import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
 import RegisterModal from './components/modals/RegisterModal';
@@ -43,16 +43,10 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-const verifyRoute = new Route({
+const authRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/verify',
-  component: () => <VerifyLog />,
-});
-
-const registerRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: '/register',
-  component: () => <RegisterModal />,
+  component: () => <Auth />,
 });
 
 const errorRoute = new Route({
@@ -61,15 +55,30 @@ const errorRoute = new Route({
   component: () => <ErrorPage />,
 });
 
+const signupRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/signup',
+  component: () => <RegisterModal />,
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   latestRoute,
   watchlistRoute,
   aboutRoute,
   errorRoute,
-  verifyRoute,
-  registerRoute,
+  authRoute,
+  signupRoute,
 ]);
+
+// const routeTree = rootRoute.addChildren([
+//   homeRoute,
+//   latestRoute,
+//   watchlistRoute,
+//   aboutRoute,
+//   errorRoute,
+//   authRoute.addChildren([signupRoute]),
+// ]);
 
 const router = new Router({ routeTree });
 

@@ -94,6 +94,7 @@ const LoginModal = () => {
       onClose={loginModal.onClose}
       onSubmit={onSubmit}
       body={bodyContent}
+      xBtn={true}
     />
   );
 };
