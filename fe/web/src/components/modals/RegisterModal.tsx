@@ -63,17 +63,17 @@ const RegisterModal = () => {
     </div>
   );
 
-  const footerContent = (
-    <Button
-      disabled={isLoading}
-      variant="outline"
-      size="lg"
-      onClick={registerModal.onClose}
-      className="text-white"
-    >
-      Cancel
-    </Button>
-  );
+  // const footerContent = (
+  //   <Button
+  //     disabled={isLoading}
+  //     variant="outline"
+  //     size="lg"
+  //     onClick={registerModal.onClose}
+  //     className="text-white"
+  //   >
+  //     Cancel
+  //   </Button>
+  // );
 
   // const onToggle = useCallback(() => {
   //   if (isLoading) {
@@ -111,7 +111,6 @@ const RegisterModal = () => {
       onSubmit={onSubmit}
       body={bodyContent}
       xBtn={false}
-      footer={footerContent}
     />
   );
 };
