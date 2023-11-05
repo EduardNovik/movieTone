@@ -10,35 +10,41 @@ import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
 import RegisterModal from './components/modals/RegisterModal';
 
-const rootRoute = new RootRoute({
-  component: () => (
-    <App>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </App>
-  ),
-});
+const rootRoute = new RootRoute();
 
-const homeRoute = new Route({
+const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: () => <Home />,
+  component: () => {
+    const { pathname } = window.location;
+    return pathname === '/' ? (
+      <App>
+        <Home />
+        <TanStackRouterDevtools />
+      </App>
+    ) : (
+      <App>
+        <Outlet />
+        <TanStackRouterDevtools />
+      </App>
+    );
+  },
 });
 
 const latestRoute = new Route({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => indexRoute,
   path: '/latest',
   component: () => <Latest />,
 });
 
 const watchlistRoute = new Route({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => indexRoute,
   path: '/watchlist',
   component: () => <Watchlist />,
 });
 
 const aboutRoute = new Route({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => indexRoute,
   path: '/about',
   component: () => <About />,
 });
@@ -62,23 +68,12 @@ const signupRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  homeRoute,
-  latestRoute,
-  watchlistRoute,
-  aboutRoute,
+  indexRoute.addChildren([latestRoute, watchlistRoute, aboutRoute]),
   errorRoute,
   authRoute,
   signupRoute,
 ]);
 
-// const routeTree = rootRoute.addChildren([
-//   homeRoute,
-//   latestRoute,
-//   watchlistRoute,
-//   aboutRoute,
-//   errorRoute,
-//   authRoute.addChildren([signupRoute]),
-// ]);
 
 const router = new Router({ routeTree });
 
