@@ -12,8 +12,8 @@ const Header = () => {
   }, [loginModal]);
 
   return (
-    <header className=" border-b-gray-500 border-b-[1px]">
-      <div className="container py-1 flex flex-row justify-between">
+    <header className="bg-white dark:bg-black border-b-gray-200 dark:border-b-gray-800 border-b-[1px] shadow-md fixed w-full z-50">
+      <div className="container xl:max-w-screen-2xl py-1 flex flex-row justify-between">
         <div className="flex dark:text-white gap-8 items-center">
           <Link to="/">Home</Link>
           <Link to="/latest">Latest</Link>
@@ -23,7 +23,7 @@ const Header = () => {
           <img src={Logo} className="h-12 w-auto"></img>
         </Link>
 
-        <div className="flex  gap-8 items-center dark:text-white">
+        <div className="flex gap-8 items-center dark:text-white">
           <Link to="/watchlist">Watchlist</Link>
           <Link to="/about">About</Link>
           <span

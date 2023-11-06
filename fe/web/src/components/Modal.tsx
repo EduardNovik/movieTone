@@ -12,6 +12,7 @@ interface ModalProps {
   actionLabel: string;
   disabled?: boolean;
   xBtn?: boolean;
+  bg?: string;
 }
 const Modal: React.FC<ModalProps> = ({
   isOpen,

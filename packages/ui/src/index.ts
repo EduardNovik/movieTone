@@ -33,3 +33,5 @@ export {
   ToastClose,
   ToastAction,
 } from "./components/ui/toast.tsx";
+
+export { Skeleton } from "./components/ui/skeleton.tsx";

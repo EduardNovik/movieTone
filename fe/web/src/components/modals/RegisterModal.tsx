@@ -1,10 +1,9 @@
-import Modal from '../Modal';
 import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
-
+import bgPic from '../../assets/bg_1.jpg';
 const RegisterModal = () => {
   const registerModal = useRegisterModalState();
   const { toast } = useToast();
@@ -63,55 +62,84 @@ const RegisterModal = () => {
     </div>
   );
 
-  // const footerContent = (
-  //   <Button
-  //     disabled={isLoading}
-  //     variant="outline"
-  //     size="lg"
-  //     onClick={registerModal.onClose}
-  //     className="text-white"
-  //   >
-  //     Cancel
-  //   </Button>
-  // );
-
-  // const onToggle = useCallback(() => {
-  //   if (isLoading) {
-  //     return;
-  //   }
-  //   registerModal.onClose();
-  //   loginModal.onOpen();
-  // }, [isLoading, registerModal, loginModal]);
-
-  // const footerContent = (
-  //   <div className="text-neutral-400 text-center mt-4">
-  //     <p>
-  //       Already have an account?
-  //       <span
-  //         className="
-  //       text-white
-  //       cursor-pointer
-  //       hover:underline
-  //       "
-  //         onClick={onToggle}
-  //       >
-  //         Sign in
-  //       </span>
-  //     </p>
-  //   </div>
-  // );
-
   return (
-    <Modal
-      disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Create an account"
-      actionLabel="Register"
-      onClose={registerModal.onClose}
-      onSubmit={onSubmit}
-      body={bodyContent}
-      xBtn={false}
-    />
+    <div
+      className="
+      justify-center
+      items-center
+      flex
+      overflow-x-hidden
+      overflow-y-auto
+      fixed
+      inset-0
+      z-50
+      outline-none
+      focus:outline-none
+      bg-[url('https://media.vanityfair.com/photos/59b00a448f880b1dd8acba4a/master/pass/IT-Movie-Review.jpg')]
+      bg-cover
+      bg-no-repeat
+    "
+    >
+      <div
+        className="
+        relative
+        w-full
+        lg:w-3/6
+        my-6
+        mx-auto
+        lg:max-w-3xl
+        h-full
+        lg:h-auto
+      "
+      >
+        {/* Content */}
+        <div
+          className="
+          h-full
+          lg:h-auto
+          border-0
+          rounded-lg
+          shadow-lg
+          relative
+          flex
+          flex-col
+          w-full
+          bg-black
+          outline-none
+          focus:outline-none
+        "
+        >
+          {/* Header */}
+          <div
+            className="
+              flex
+              items-center
+              justify-between
+              p-10
+              rounded-t          
+          "
+          >
+            <h3 className="text-3xl font-semibold text-white">
+              Create an account
+            </h3>
+          </div>
+          {/* Body */}
+          <div className="relative p-10 flex-auto">{bodyContent}</div>
+          {/* Footer */}
+          <div className="flex flex-col gap-2 p-10">
+            <Button
+              disabled={isLoading}
+              variant="outline"
+              size="lg"
+              onClick={onSubmit}
+              className="text-white"
+            >
+              Register
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -129,3 +157,41 @@ export default RegisterModal;
 //   password,
 //   name,
 // });
+
+// const footerContent = (
+//   <Button
+//     disabled={isLoading}
+//     variant="outline"
+//     size="lg"
+//     onClick={registerModal.onClose}
+//     className="text-white"
+//   >
+//     Cancel
+//   </Button>
+// );
+
+// const onToggle = useCallback(() => {
+//   if (isLoading) {
+//     return;
+//   }
+//   registerModal.onClose();
+//   loginModal.onOpen();
+// }, [isLoading, registerModal, loginModal]);
+
+// const footerContent = (
+//   <div className="text-neutral-400 text-center mt-4">
+//     <p>
+//       Already have an account?
+//       <span
+//         className="
+//       text-white
+//       cursor-pointer
+//       hover:underline
+//       "
+//         onClick={onToggle}
+//       >
+//         Sign in
+//       </span>
+//     </p>
+//   </div>
+// );

@@ -13,5 +13,10 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
   ],
+  theme: {
+    extend: {
+      backgroundImage: { regBg: "url('./src/assets/bg_1.jpg')" },
+    },
+  },
   presets: [tailwindConfig],
 };

@@ -4,6 +4,10 @@
 @import 'tailwindcss/utilities';
 @import '@movieTone/ui/src/shared-globals.css';
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 /* can be also */
 /* @import '../../../packages/ui/src/shared-global.css';
 @tailwind base;

@@ -1,16 +1,18 @@
-// import getMovieData from '../graphql/movieAPI';
-// getMovieData();
 import { useEffect, useState } from 'react';
-import trandingMovies from '../../graphql/trandingMovies';
+import { Skeleton } from '@movieTone/ui';
+import Card from '../../components/Card';
+import Pagination from '../../components/Pagination';
+import popularMovies from '../../graphql/popularMovies';
+import usePageState from '../../hooks/usePageState';
 
 const Home = () => {
-  // const tranding = async () => await trandingMovies();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const pageState = usePageState();
 
-  async function tranding() {
+  async function popular() {
     try {
-      const response = await trandingMovies();
+      const response = await popularMovies(pageState.page);
       setData(response.results);
     } catch (error) {
       console.error('Error:', error);
@@ -21,24 +23,25 @@ const Home = () => {
   }
 
   useEffect(() => {
-    tranding();
-  }, []);
+    popular();
+  }, [pageState.page]);
 
   console.log(data);
 
   return (
-    <div className="flex flex-col">
-      {data.length > 0 &&
-        data.map(item => (
-          <div key={item?.id} className=" flex flex-col items-center">
-            <img
-              src={`https://www.themoviedb.org/t/p/original/${item.backdrop_path}`}
-              alt="cover_img"
-            />
-            <p>{item.title ? item.title : item.name}</p>
+    <>
+      <div className="flex md:flex-row flex-col flex-wrap basis-[100%] flex-1 justify-center items-center pt-20">
+        {loading || data.length === 0 ? (
+          <div className="w-full p-4 flex flex-col items-center md:w-1/2 gap-4">
+            <Skeleton className="w-full h-[300px]" />
+            <Skeleton className="w-full h-[40px]" />
           </div>
-        ))}
-    </div>
+        ) : (
+          data.map(item => <Card key={item.id} item={item} />)
+        )}
+      </div>
+      <Pagination />
+    </>
   );
 };
 
