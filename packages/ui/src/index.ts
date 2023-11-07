@@ -35,3 +35,9 @@ export {
 } from "./components/ui/toast.tsx";
 
 export { Skeleton } from "./components/ui/skeleton.tsx";
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "./components/ui/accordion.tsx";

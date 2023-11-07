@@ -6,11 +6,7 @@ import 'dotenv/config';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
+  resolve: {},
   define: {
     'import.meta.env.API': JSON.stringify(process.env.API),
     'import.meta.env.AUTHORIZATION': JSON.stringify(process.env.AUTHORIZATION),
@@ -25,3 +21,9 @@ export default defineConfig({
     },
   },
 });
+
+// resolve: {
+//   alias: {
+//     '@': path.resolve(__dirname, './src'),
+//   },
+// },

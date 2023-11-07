@@ -1,11 +1,18 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@*": ["./src/*"]
-    }
-  },
+  "compilerOptions": {},
   "extends": "@movieTone/tsconfig/vite.json",
   "include": ["src", "vite.config.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }
+
+// {
+//   "compilerOptions": {
+//     "baseUrl": ".",
+//     "paths": {
+//       "@*": ["./src/*"]
+//     }
+//   },
+//   "extends": "@movieTone/tsconfig/vite.json",
+//   "include": ["src", "vite.config.ts"],
+//   "exclude": ["dist", "build", "node_modules"]
+// }
