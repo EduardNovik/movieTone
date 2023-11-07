@@ -8,6 +8,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.animate-in {
+  opacity: 1;
+}
+
 /* can be also */
 /* @import '../../../packages/ui/src/shared-global.css';
 @tailwind base;
