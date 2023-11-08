@@ -41,7 +41,7 @@ const LoginModal = () => {
       void sendMagicLink(email);
 
       loginModal.onClose();
-      toast({ title: 'Account created.' });
+      toast({ title: 'Check your email' });
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });

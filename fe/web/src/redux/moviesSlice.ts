@@ -11,23 +11,14 @@ type MoviesInfoType = {
   loading: boolean;
 };
 
-type PassedData = {
-  url: string;
-  page: number;
-};
-
 const initialState: MoviesInfoType = {
   data: [],
-  loading: false,
+  loading: true,
 };
 
 export const fetchMoviesAsync = createAsyncThunk(
   'movies/fetchMovies',
-  async (
-    { url, page }: PassedData,
-    { rejectWithValue },
-  ): Promise<MoviesInfoType[]> => {
-    const pageString = page.toString();
+  async (url: string, { rejectWithValue }): Promise<MoviesInfoType[]> => {
     const options = {
       method: 'GET',
       url: url,
@@ -39,7 +30,9 @@ export const fetchMoviesAsync = createAsyncThunk(
     };
     try {
       const response = await axios(options);
-      return response.data;
+      console.log(response);
+
+      return response.data.results;
     } catch (error: any) {
       const errorMessage: string =
         error.response.data.message || 'Unknown error';
@@ -64,7 +57,8 @@ export const moviesSlice = createSlice({
     builder.addCase(
       fetchMoviesAsync.rejected,
       (state, action: PayloadAction<any>) => {
-        console.log(action.payload);
+        state.loading = true;
+        console.log(state, action.payload);
       },
     );
     builder.addCase(fetchMoviesAsync.pending, state => {

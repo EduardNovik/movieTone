@@ -814,3 +814,8 @@ Fix:
 Done!
 Now we can connect normaly to docker and also supertokes is running cause its using db which
 was created with docker compose.
+
+[STOP_LISTEN_PORT]
+
+lsof -i :3000 (3000 port number)
+kill -9 <PID>
