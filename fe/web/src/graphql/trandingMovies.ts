@@ -4,7 +4,6 @@ const trandingMovies = () => {
   const url = 'https://api.themoviedb.org/3/trending/all/day?language=en-US';
   const options = {
     method: 'GET',
-    url,
     headers: {
       accept: 'application/json',
       Authorization:
@@ -13,7 +12,7 @@ const trandingMovies = () => {
   };
 
   return axios(options)
-    .then(res => res.data)
+    .then(res => res.data.results)
     .catch(err => console.error('error:' + err));
 };
 

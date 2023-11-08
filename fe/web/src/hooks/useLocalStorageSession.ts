@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useCurrentUser from './useCurrentUser';
+import useCurrentUser from './useCurrentUserSWR';
 import useSessionState from './useSessionState';
 
 const useLocalStorageSession = () => {

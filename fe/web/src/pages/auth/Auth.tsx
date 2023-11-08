@@ -27,7 +27,7 @@ const Auth = () => {
         // }
         // window.location.assign('/home');
 
-        void navigate({ to: '/signup' });
+        await navigate({ to: '/signup' });
       } else {
         // this can happen if the magic link has expired or is invalid
         // or if it was denied due to security reasons in case of automatic account linking

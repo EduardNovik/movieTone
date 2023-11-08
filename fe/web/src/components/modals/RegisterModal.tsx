@@ -1,17 +1,16 @@
-import useRegisterModalState from '../../hooks/useRegisterModalState';
 import Input from '../Input';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
-import bgPic from '../../assets/bg_1.jpg';
-const RegisterModal = () => {
-  const registerModal = useRegisterModalState();
-  const { toast } = useToast();
+import { useNavigate } from '@tanstack/react-router';
 
+const RegisterModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const onSubmit = useCallback(async () => {
     try {
@@ -28,14 +27,15 @@ const RegisterModal = () => {
       setEmail('');
       setPassword('');
       setName('');
-      registerModal.onClose();
+
+      await navigate({ to: '/' });
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal, email, password, name]);
+  }, [email, password, name]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -75,7 +75,7 @@ const RegisterModal = () => {
       z-50
       outline-none
       focus:outline-none
-      bg-[url('https://media.vanityfair.com/photos/59b00a448f880b1dd8acba4a/master/pass/IT-Movie-Review.jpg')]
+      bg-gradient-to-r from-purple-500 to-pink-500
       bg-cover
       bg-no-repeat
     "
@@ -131,7 +131,7 @@ const RegisterModal = () => {
               disabled={isLoading}
               variant="outline"
               size="lg"
-              onClick={onSubmit}
+              onClick={() => onSubmit()}
               className="text-white"
             >
               Register
