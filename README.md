@@ -819,3 +819,48 @@ was created with docker compose.
 
 lsof -i :3000 (3000 port number)
 kill -9 <PID>
+
+[C_H_1]:
+How to make active link with dif color:
+
+const isActive = (path: string) => {
+const pathname = window.location.pathname;
+return pathname === path;
+};
+
+  <Link
+    to="/latest"
+    className={
+      isActive('/latest') ? 'text-black dark:text-white' : 'text-gray-500'
+    }
+  >
+    Latest
+  </Link>;
+
+[C_H_2]:
+
+const fetcher = async (url: string) => {
+const response = await axios.get(url);
+return response.data;
+};
+
+const getFetch = async () => {
+const result = await fetcher('link');
+// Now you can use 'result' here after the promise is resolved
+console.log(result);
+};
+
+// Call the asynchronous function
+await getFetch();
+
+In summary, async/await is used in both functions, but for different reasons. In fetcher, it is used to handle the asynchronous nature of the HTTP request using axios. In getFetch, it is used to handle the asynchronous nature of the fetcher function call, allowing you to work with the result in a more synchronous manner.
+
+Async / await will keep bubbling up. If you don't await the await then what do you expect to get out of it?
+
+Since you await the query; the find function is now async.
+
+Since the find function is async you have to await for it in your 1st snippet.
+
+After that, the router takes care of the final bit of execution so you no longer need to await.
+
+[C_H_3]:

@@ -7,9 +7,9 @@ import { fetchMoviesAsync } from '../../redux/moviesSlice';
 import Card from '../../components/Card';
 import Pagination from '../../components/Pagination';
 import useUrlState from '../../hooks/useUrlState';
-import CardSkeleton from '../../components/CardSkeleton';
+import CardSkeleton from '../../components/skeletons/CardSkeleton';
 import Sidebar from '../../components/Sidebar';
-import Slider from '../../components/Slider';
+import MovieSlider from '../../components/MovieSlider';
 
 const Home = () => {
   const urlState = useUrlState();
@@ -25,11 +25,9 @@ const Home = () => {
     dispatch(fetchMoviesAsync(urlState.url));
   }, [urlState.url]);
 
-  console.log(movies);
-
   return (
     <div>
-      <Slider />
+      <MovieSlider />
       <div className="flex">
         <Sidebar />
         <div className="flex md:flex-row flex-col flex-wrap basis-[100%] flex-1 justify-center items-center pt-20">
