@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const trandingMovies = () => {
-  const url = 'https://api.themoviedb.org/3/trending/all/day?language=en-US';
+const trandingMovies = (url: string) => {
   const options = {
     method: 'GET',
     headers: {
@@ -11,7 +10,7 @@ const trandingMovies = () => {
     },
   };
 
-  return axios(options)
+  return axios(url, options)
     .then(res => res.data.results)
     .catch(err => console.error('error:' + err));
 };

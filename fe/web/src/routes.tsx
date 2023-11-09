@@ -8,6 +8,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Auth } from './pages/auth/index.ts';
 import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
+import { Details } from './pages/details';
 import RegisterModal from './components/modals/RegisterModal';
 
 const rootRoute = new RootRoute();
@@ -49,6 +50,12 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
+const detailsRoute = new Route({
+  getParentRoute: () => indexRoute,
+  path: '/details',
+  component: () => <Details />,
+});
+
 const authRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/verify',
@@ -68,12 +75,16 @@ const signupRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  indexRoute.addChildren([latestRoute, watchlistRoute, aboutRoute]),
+  indexRoute.addChildren([
+    latestRoute,
+    watchlistRoute,
+    aboutRoute,
+    detailsRoute,
+  ]),
   errorRoute,
   authRoute,
   signupRoute,
 ]);
-
 
 const router = new Router({ routeTree });
 

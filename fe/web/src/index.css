@@ -4,6 +4,23 @@
 @import 'tailwindcss/utilities';
 @import '@movieTone/ui/src/shared-globals.css';
 
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+.slick-next::before {
+  color: white;
+}
+.slick-next {
+  right: 10px;
+}
+.slick-prev::before {
+  color: white;
+}
+.slick-prev {
+  left: 10px;
+  z-index: 1;
+}
+
 body::-webkit-scrollbar {
   display: none;
 }

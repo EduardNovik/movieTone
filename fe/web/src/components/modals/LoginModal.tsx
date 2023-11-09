@@ -1,10 +1,8 @@
 import Modal from '../Modal';
-import useLoginModalState from '../../hooks/useLoginModalState';
-
 import Input from '../Input';
+import useLoginModalState from '../../hooks/useLoginModalState';
 import { useState } from 'react';
 import { useToast } from '@movieTone/ui';
-
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
 
 async function sendMagicLink(email: string) {
