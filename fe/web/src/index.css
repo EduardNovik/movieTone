@@ -29,8 +29,29 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
+/* .btn_dark {
+  background-color: transparent;
+  border-color: #374151;
+  color: #ffffff;
+  border: 1px solid gray;
+} */
+
+@layer components {
+  .btn_dark {
+    @apply bg-transparent text-white border-[1px] border-gray-700 hover:bg-gray-800;
+  }
+}
+/* to override original styles we use utilities */
+@layer utilities {
+  .btn_light {
+    @apply bg-transparent text-black border-[1px] shadow-none hover:bg-gray-100 !important;
+  }
+}
+
 /* can be also */
 /* @import '../../../packages/ui/src/shared-global.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities; */
+
+/* border-['hsl(214.3, 31.8%, 91.4%)'] */
