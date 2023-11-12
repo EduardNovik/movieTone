@@ -41,3 +41,5 @@ export {
   AccordionTrigger,
   AccordionContent,
 } from "./components/ui/accordion.tsx";
+
+export { Input } from "./components/ui/input.tsx";

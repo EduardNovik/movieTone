@@ -45,7 +45,7 @@ const Sidebar = () => {
     <Accordion
       type="single"
       collapsible
-      className="w-1/6 pt-[80px] sticky pr-8"
+      className="w-1/6 pt-[80px] sticky pr-8 "
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Movies</AccordionTrigger>

@@ -20,3 +20,10 @@ export default {
   },
   presets: [tailwindConfig],
 };
+// dark: {
+//       '.btn_dark': {
+//         backgroundColor: 'transparent',
+//         borderColor: '#374151',
+//         textColor: '#ffffff',
+//       },
+//     },

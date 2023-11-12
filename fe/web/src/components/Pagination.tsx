@@ -24,16 +24,10 @@ const Pagination = ({}) => {
 
   return (
     <div className="flex gap-6 justify-center my-[60px]">
-      <Button
-        className="bg-white dark:bg-black text-black hover:bg-gray-100"
-        onClick={goPrev}
-      >
+      <Button className="btn_light dark:btn_dark" onClick={goPrev}>
         Prev
       </Button>
-      <Button
-        className="bg-white dark:bg-black text-black hover:bg-gray-100"
-        onClick={goNext}
-      >
+      <Button className="btn_light dark:btn_dark" onClick={goNext}>
         Next
       </Button>
     </div>
