@@ -10,6 +10,6 @@
   "signal": "SIGKILL",
   "watch": ["./**/*.ts"],
   "env": {
-    "DB_URL": "postgresql://root:root@localhost:5432/movietonedb"
+    "DB_URL": "postgresql://root:root@localhost:5433/movietonedb"
   }
 }
