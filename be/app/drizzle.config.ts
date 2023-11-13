@@ -5,6 +5,6 @@ export default {
   schema: "./node_modules/@movieTone/database-schema/src/index.ts",
   driver: "pg",
   dbCredentials: {
-    connectionString: "postgresql://root:root@localhost:5432/movietonedb",
+    connectionString: "postgresql://root:root@localhost:5433/movietonedb",
   },
 } satisfies Config;

@@ -36,8 +36,9 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex w-full max-w-sm items-center space-x-2">
+    <div className="flex w-full max-w-sm items-center space-x-2 relative">
       <Input
+        className="focus:ring-offset-2"
         type="text"
         placeholder="Search"
         value={query}
@@ -45,7 +46,7 @@ const SearchBar = () => {
       />
       <Button
         type="submit"
-        className="dark:btn_dark btn_light"
+        className="dark:btn_dark btn_light absolute right-0"
         onClick={onSearch}
       >
         <Search className="pr-1" size={20} />

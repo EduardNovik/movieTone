@@ -3,10 +3,13 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import * as console from "node:console";
 import postgres from "postgres";
 
-const migrationConnection = postgres("postgresql://root:root@localhost:5432/movietonedb", {
-  max: 1,
-  onnotice: () => {},
-});
+const migrationConnection = postgres(
+  "postgresql://root:root@localhost:5433/movietonedb",
+  {
+    max: 1,
+    onnotice: () => {},
+  }
+);
 
 const connection = drizzle(migrationConnection);
 

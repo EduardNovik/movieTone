@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
@@ -17,7 +17,7 @@ supertokens.init({
   framework: "express",
   supertokens: {
     // https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
-    connectionURI: "http://localhost:3567",
+    connectionURI: "http://localhost:3568",
     apiKey: "core-secret-key-supertokensdb",
   },
   appInfo: {
@@ -65,6 +65,35 @@ app.get("/api", (req: Request, res: Response) => {
 // });
 
 app.use(errorHandler());
+
+const handleSession = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let session = await Session.getSession(req, res, {
+      sessionRequired: false,
+    });
+
+    res.locals.sessionData = {
+      userId: session !== undefined ? session.getUserId() : undefined,
+    };
+
+    next();
+  } catch (err) {
+    if (Session.Error.isErrorFromSuperTokens(err)) {
+      res
+        .status(err.type === Session.Error.INVALID_CLAIMS ? 403 : 401)
+        .send("Session related error");
+    } else {
+      next(err);
+    }
+  }
+};
+
+app.use(express.json());
+app.use(handleSession);
 
 // Routes-----------
 app.use("/registration", registrationRoute);

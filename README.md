@@ -864,3 +864,24 @@ Since the find function is async you have to await for it in your 1st snippet.
 After that, the router takes care of the final bit of execution so you no longer need to await.
 
 [C_H_3]:
+
+ed@Im20yearsold:~/projects/core/be/app$ docker compose up -d
+[+] Running 0/1
+⠹ db Pulling 0.3s
+error getting credentials - err: exec: "docker-credential-secretservice": executable file not found in $PATH, out: ``
+ed@Im20yearsold:~/projects/core/be/app$ echo '{ "credsStore": "" }' > ~/.docker/config.json
+
+sudo lsof -i :6379
+
+kill -9 <PID>
+or
+sudo kill -9 <PID>
+
+docker-compose -f be/app/docker-compose.yml down
+
+pomoglo:
+
+Identify running containers:
+docker ps
+Then stop individual containers:
+docker stop <container_id>

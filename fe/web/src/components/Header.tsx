@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white bg-opacity-50 backdrop-blur-lg border-b-gray-200 dark:border-b-gray-800 border-b-[1px] shadow-md w-full z-50 fixed">
+    <header className="bg-transparent backdrop-blur-lg border-b-gray-200 dark:border-b-gray-800 border-b-[1px] shadow-md w-full z-50 fixed">
       <div className="container xl:max-w-screen-2xl py-1 flex flex-row justify-between items-center">
         <HeaderMenu />
         <Link to="/" className="dark:text-white items-center flex">
