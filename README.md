@@ -885,3 +885,33 @@ Identify running containers:
 docker ps
 Then stop individual containers:
 docker stop <container_id>
+
+all containers stop:
+docker stop $(docker ps -aq)
+
+on container
+docker stop app-db-1
+remove
+docker rm app-db-1
+
+check health:
+docker inspect --format='{{json .State.Health.Status}}' app-db-1
+
+Prune Docker System:
+Clean up unused Docker resources, including stopped containers:
+docker system prune -a
+
+
+--- After performing these steps, the app-db-1 container should be stopped, removed, and prevented from starting automatically. 
+
+Stop and Remove the Container:
+docker stop app-db-1
+docker rm app-db-1
+
+docker-compose down
+
+Remove Docker Compose Volumes:
+docker volume rm app_be-app-data
+
+Clean Docker Environment:
+docker system prune
