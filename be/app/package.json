@@ -7,8 +7,9 @@
   },
   "type": "module",
   "scripts": {
-    "start": "run-s doc-up dev:db-migration dev",
-    "dev": "nodemon ./src/index.ts",
+    "start": "run-s doc-up db-migration dev",
+    "dev": "run-s doc-up nodemon",
+    "nodemon": "nodemon ./src/index.ts",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "doc-up": "docker-compose up -d",
     "doc-down": "docker-compose down -v",

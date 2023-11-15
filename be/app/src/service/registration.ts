@@ -3,7 +3,7 @@ import { db } from "../db.ts";
 import crypto from "crypto";
 import { users, watchlist, usersToWatchlist } from "@movieTone/database-schema";
 
-let router: any = Router();
+let router: Router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   if (req.method !== "POST") {
