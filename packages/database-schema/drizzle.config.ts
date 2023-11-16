@@ -6,6 +6,6 @@ export default {
   out: "./drizzle",
   breakpoints: true,
   dbCredentials: {
-    connectionString: "postgresql://root:root@localhost:5432/movietonedb",
+    connectionString: "postgresql://root:root@localhost:5433/movietonedb",
   },
 } satisfies Config;
