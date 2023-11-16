@@ -4,6 +4,7 @@ import useLoginModalState from '../../hooks/useLoginModalState';
 import { useState } from 'react';
 import { useToast } from '@movieTone/ui';
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
+import axios from 'axios';
 
 async function sendMagicLink(email: string) {
   try {

@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { users } from "./users.ts";
 import { watchlist } from "./watchlist.ts";
 import { usersToWatchlist } from "./users-to-watchlist.ts";
+import { identities } from "./identities.ts";
 
 export const usersToWatchlistRelations = relations(
   usersToWatchlist,
@@ -16,6 +17,13 @@ export const usersToWatchlistRelations = relations(
     }),
   })
 );
+
+export const identitiesRelation = relations(identities, ({ one }) => ({
+  users: one(users, {
+    fields: [identities.userId],
+    references: [users.id],
+  }),
+}));
 
 export const usersRelations = relations(users, ({ many }) => ({
   watchlist: many(watchlist),

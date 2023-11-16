@@ -1,4 +1,4 @@
-import { ModeToggle } from '@movieTone/ui';
+import { Button, ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 import Logo from '../assets/iconfinder6.png';
 import { useCallback } from 'react';
@@ -17,6 +17,24 @@ const Header = () => {
     return pathname === path;
   };
 
+  const fetchSession = () => {
+    fetch(`${window.origin}/api/session`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the server
+        console.log(data);
+        // Now, you can access the context in data.context
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   return (
     <header className="bg-transparent backdrop-blur-lg border-b-gray-200 dark:border-b-gray-800 border-b-[1px] shadow-md w-full z-50 fixed">
       <div className="container xl:max-w-screen-2xl py-1 flex flex-row justify-between items-center">
@@ -31,6 +49,7 @@ const Header = () => {
           >
             Sign in
           </span>
+          <Button onClick={fetchSession}>get</Button>
           <SearchBar />
           <ModeToggle />
         </div>
