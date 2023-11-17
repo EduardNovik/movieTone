@@ -1,8 +1,8 @@
 import Session from "supertokens-node/recipe/session";
 import type { Request, Response, NextFunction, Express } from "express";
+import app from "../app.ts";
 
 export const supertokensSessionMiddleware = async (
-  app: Express,
   req: Request,
   res: Response,
   next: NextFunction
@@ -19,10 +19,10 @@ export const supertokensSessionMiddleware = async (
       : undefined;
 
     // Set session-related information in res.locals
-    res.locals.identityId = session?.getUserId();
-    res.locals.email = sessionInfoFromDb?.email;
-    res.locals.sessionInfo = sessionInfoFromDb;
-    res.locals.session = session;
+    app.locals.identityId = session?.getUserId();
+    app.locals.email = sessionInfoFromDb?.email;
+    app.locals.sessionInfo = sessionInfoFromDb;
+    app.locals.session = session;
 
     next();
   } catch (error) {
@@ -30,7 +30,7 @@ export const supertokensSessionMiddleware = async (
       // return undefined; // ignore ST errors basically.
       return res.json({
         message: "There was ST error, but request handled successfully",
-        context: res.locals,
+        context: app.locals,
       });
     }
     console.error("HI IM ERRROR FROM SUPERTOKENS CONTEXT", error);
