@@ -7,13 +7,15 @@ import Passwordless from "supertokens-node/recipe/passwordless";
 import { middleware, errorHandler } from "supertokens-node/framework/express";
 import { createYoga } from "graphql-yoga";
 import { schema } from "./graphql/shcema.ts";
-import registrationRoute from "./service/registration.ts";
 import Dashboard from "supertokens-node/recipe/dashboard/index.js";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { supertokensSessionMiddleware } from "./middleware/supertokensSessionMiddleware.ts";
+import userRoutes from "./routes/userRoutes.ts";
+// import registrationRoutes from "./routes/registrationRoutes.ts";
+import app from "./app.ts";
 
-const app = express();
+// const app = express();
 const yoga = createYoga({ schema });
 const port = process.env.PORT || 4000;
 
@@ -38,25 +40,6 @@ supertokens.init({
       contactMethod: "EMAIL",
     }),
     Session.init({
-      // override: {
-      //   functions: (originalImplementation) => {
-      //     return {
-      //       ...originalImplementation,
-      //       createNewSession: async function (input) {
-      //         const existingSessions =
-      //           await Session.getAllSessionHandlesForUser(input.userId);
-      //         console.log(existingSessions);
-      //         console.log("USERID>>>>>>>>>>>>>>>>>>>>", input.userId);
-      //         if (existingSessions.length > 0) {
-      //           // this means that the user already has a session on some other device
-      //           throw new Error("Session already exists on another device");
-      //         }
-      //         // no other session exists, and so we can continue with logging in this user
-      //         return originalImplementation.createNewSession(input);
-      //       },
-      //     };
-      //   },
-      // },
       override: {
         functions: (originalImplementation) => {
           return {
@@ -95,7 +78,7 @@ app.use(middleware());
 app.use(express.json());
 
 // Session--------------------------------------
-app.use((req, res, next) => supertokensSessionMiddleware(app, req, res, next));
+app.use((req, res, next) => supertokensSessionMiddleware(req, res, next));
 
 app.use("/graphql", yoga);
 
@@ -115,10 +98,12 @@ app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify("ROOT OF THE SERVER"));
 });
 
-app.use("/registration", registrationRoute);
+// app.use("/registration", registrationRoutes);
+
+app.use("/user", userRoutes);
 
 // Check context route
-app.get("/check-context", async (req: Request, res: Response) => {
+app.get("/context", async (req: Request, res: Response) => {
   const { identityId, email, sessionInfo } = app.locals;
 
   res.json({
