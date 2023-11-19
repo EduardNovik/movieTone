@@ -16,7 +16,7 @@ const RegisterModal = () => {
     try {
       setIsLoading(true);
 
-      await axios.post(`${window.origin}/api/registration`, {
+      await axios.post(`${window.origin}/api/user/onboard`, {
         email,
         password,
         name,

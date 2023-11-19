@@ -12,7 +12,7 @@ import { verifySession } from "supertokens-node/recipe/session/framework/express
 import { SessionRequest } from "supertokens-node/framework/express";
 import { supertokensSessionMiddleware } from "./middleware/supertokensSessionMiddleware.ts";
 import userRoutes from "./routes/userRoutes.ts";
-// import registrationRoutes from "./routes/registrationRoutes.ts";
+import identityRoutes from "./routes/identityRoutes.ts";
 import app from "./app.ts";
 
 // const app = express();
@@ -98,31 +98,19 @@ app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify("ROOT OF THE SERVER"));
 });
 
-// app.use("/registration", registrationRoutes);
-
 app.use("/user", userRoutes);
+app.use("/test", identityRoutes);
 
-// Check context route
-app.get("/context", async (req: Request, res: Response) => {
-  const { identityId, email, sessionInfo } = app.locals;
-
-  res.json({
-    context: "HEY THIS IS YOUR CONTEXT BIAAATCH!!!",
-    identityId: identityId,
-    email: email,
-    sessionInfo: sessionInfo,
-  });
-});
-
-app.get("/protected", verifySession(), (req: SessionRequest, res) => {
-  let userId = req.session!.getUserId();
-  let identityId = app.locals.identityId;
-  res.json({
-    userId: userId,
-    identityId: identityId,
-  });
-});
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
+
+// https://anilist.co/
+// https://rickandmortyapi.com/
+
+// trailer
+// https://api.themoviedb.org/3/movie/${id}/videos?api_key=${YOUR_API}&language=en-US
+
+// how to use tmdb with graphql
+// https://dev.to/aurelkurtula/creating-a-movie-website-with-graphql-and-react-25d4

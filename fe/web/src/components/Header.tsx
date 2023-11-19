@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
+import axios from 'axios';
 
 const Header = () => {
   const loginModal = useLoginModalState();
@@ -18,21 +19,22 @@ const Header = () => {
   };
 
   const fetchSession = () => {
-    fetch(`${window.origin}/api/session`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the server
-        console.log(data);
-        // Now, you can access the context in data.context
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // fetch(`${window.origin}/api/session`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // Handle the response from the server
+    //     console.log(data);
+    //     // Now, you can access the context in data.context
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+    axios.post(`${window.origin}/api/test`);
   };
 
   return (
