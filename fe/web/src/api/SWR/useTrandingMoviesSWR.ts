@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import trandingMovies from '../graphql/trandingMovies';
+import trandingMovies from '../REST/trandingMovies';
 
 const useTrandingMoviesSWR = () => {
   const { data, error, isLoading } = useSWR(
