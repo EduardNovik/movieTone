@@ -2,19 +2,24 @@
 // import { useDispatch, useSelector } from 'react-redux';
 // import trandingMovies from '../graphql/trandingMovies';
 
-import useTrandingMoviesSWR from '../hooks/useTrandingMoviesSWR';
+import useTrandingMoviesSWR from '../api/SWR/useTrandingMoviesSWR';
 import MovieSliderSkeleton from './skeletons/MovieSliderSkeleton';
 import Slider from 'react-slick';
+import { useNavigate } from '@tanstack/react-router';
 
 const MovieSlider = () => {
+  const navigate = useNavigate();
   const { data, error, isLoading } = useTrandingMoviesSWR();
-  console.log(data);
   const settings = {
     fade: true,
     infinite: true,
     speed: 400,
     slidesToShow: 1,
     slidesToScroll: 1,
+  };
+
+  const goToMovieCard = async (id: string) => {
+    await navigate({ to: '/title/$id', params: { id } });
   };
 
   return (
@@ -25,7 +30,13 @@ const MovieSlider = () => {
         <div className="flex justify-center items-center p-6">{error}</div>
       ) : (
         data.map((item: Record<string, any>) => (
-          <div key={item.id} className="relative">
+          <div
+            key={item.id}
+            className="relative cursor-pointer"
+            onClick={() => {
+              goToMovieCard(item.id);
+            }}
+          >
             <img
               src={`https://www.themoviedb.org/t/p/original/${item.backdrop_path}`}
               alt="cover_img"

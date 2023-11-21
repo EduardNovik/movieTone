@@ -3,12 +3,18 @@ import App from './App.tsx';
 import { Home } from './pages/home';
 import { About } from './pages/about';
 import { ErrorPage } from './pages/404';
-import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
+import {
+  Outlet,
+  Router,
+  Route,
+  RootRoute,
+  useParams,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Auth } from './pages/auth/index.ts';
 import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
-import { Details } from './pages/details';
+import { Title } from './pages/title/index.ts';
 import RegisterModal from './components/modals/RegisterModal';
 
 const rootRoute = new RootRoute();
@@ -50,10 +56,19 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-const detailsRoute = new Route({
+// const titleRoute = new Route({
+//   getParentRoute: () => indexRoute,
+//   path: '/title/:id',
+//   component: () => <Title />,
+// });
+
+const titleRoute = new Route({
   getParentRoute: () => indexRoute,
-  path: '/details',
-  component: () => <Details />,
+  path: '/title/$id',
+  component: () => {
+    const id = useParams({ from: titleRoute.id });
+    return <Title id={id} />;
+  },
 });
 
 const authRoute = new Route({
@@ -75,12 +90,7 @@ const signupRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  indexRoute.addChildren([
-    latestRoute,
-    watchlistRoute,
-    aboutRoute,
-    detailsRoute,
-  ]),
+  indexRoute.addChildren([latestRoute, watchlistRoute, aboutRoute, titleRoute]),
   errorRoute,
   authRoute,
   signupRoute,
