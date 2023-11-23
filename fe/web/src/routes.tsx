@@ -56,17 +56,11 @@ const aboutRoute = new Route({
   component: () => <About />,
 });
 
-// const titleRoute = new Route({
-//   getParentRoute: () => indexRoute,
-//   path: '/title/:id',
-//   component: () => <Title />,
-// });
-
 const titleRoute = new Route({
   getParentRoute: () => indexRoute,
   path: '/title/$id',
   component: () => {
-    const id = useParams({ from: titleRoute.id });
+    const { id } = useParams({ from: titleRoute.id });
     return <Title id={id} />;
   },
 });
