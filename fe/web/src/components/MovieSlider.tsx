@@ -1,26 +1,16 @@
 import useTrandingMoviesSWR from '../api/SWR/useTrandingMoviesSWR';
 import MovieSliderSkeleton from './skeletons/MovieSliderSkeleton';
-import Slider from 'react-slick';
 import { useNavigate } from '@tanstack/react-router';
+import Slider from 'react-slick';
 
 const MovieSlider = () => {
-  const navigate = useNavigate();
   const { data, error, isLoading } = useTrandingMoviesSWR();
+  const navigate = useNavigate();
   const settings = {
-    fade: true,
     infinite: true,
     speed: 400,
     slidesToShow: 1,
     slidesToScroll: 1,
-  };
-  const goToMovieCard = (e: any, item: any) => {
-    // e.stopPropagation();
-    console.log(e.target);
-
-    // const { id } = item;
-    // console.log(id);
-    // console.log(item);
-    // navigate({ to: '/title/$id', params: { id } });
   };
 
   return (
@@ -37,13 +27,12 @@ const MovieSlider = () => {
               alt="cover_img"
               className="rounded-lg"
               loading="lazy"
-              onClick={e => {
-                e.stopPropagation(), goToMovieCard(e, item);
-              }}
+              onClick={() =>
+                navigate({ to: '/title/$id', params: { id: item.id } })
+              }
             />
             <p className="text-center absolute top-6 left-[20px] text-white font-bold">
               {item.title ? item.title : item.name}
-              {item.id}
             </p>
           </div>
         ))
