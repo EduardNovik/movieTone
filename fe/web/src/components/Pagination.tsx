@@ -24,10 +24,16 @@ const Pagination = ({}) => {
 
   return (
     <div className="flex gap-6 justify-center my-[60px]">
-      <Button className="btn_light dark:btn_dark" onClick={goPrev}>
+      <Button
+        className="btn_light dark:btn_dark hover:bg-gray-100"
+        onClick={goPrev}
+      >
         Prev
       </Button>
-      <Button className="btn_light dark:btn_dark" onClick={goNext}>
+      <Button
+        className="btn_light dark:btn_dark hover:bg-gray-100"
+        onClick={goNext}
+      >
         Next
       </Button>
     </div>
@@ -35,6 +41,8 @@ const Pagination = ({}) => {
 };
 
 export default Pagination;
+
+// className =' btn_dark dark:border-gray-700  dark:hover:bg-gray-800  dark:text-white';
 
 // import popularMovies from '../graphql/popularMovies';
 // import { useEffect } from 'react';

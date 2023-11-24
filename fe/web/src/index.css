@@ -34,17 +34,71 @@ body::-webkit-scrollbar {
   border-color: #374151;
   color: #ffffff;
   border: 1px solid gray;
+}
+
+.btn_light {
+  background-color: transparent;
+  border-color: rgb(55 65 81);
+  color: black;
+  border: 1px solid gray;
+}
+.btn_light:hover {
+  background-color: rgb(243 244 246);
 } */
 
-@layer components {
-  .btn_dark {
-    @apply bg-transparent text-white border-[1px] border-gray-700 hover:bg-gray-800;
-  }
+.slick-arrow {
+  height: 70px;
+  width: 45px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition:
+    background-color 0.2s,
+    border 0.35s,
+    backdrop-filter 0.2s;
 }
+
+.slick-arrow:hover {
+  background-color: transparent;
+  border: 1px solid teal;
+  backdrop-filter: blur(5px);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.slick-next {
+  background-image: url('./assets/chevron-r.svg');
+}
+.slick-next:hover {
+  background-image: url('./assets/chevron-r.svg');
+}
+.slick-prev {
+  background-image: url('./assets/chevron-l.svg');
+}
+.slick-prev:hover {
+  background-image: url('./assets/chevron-l.svg');
+}
+.slick-next::before,
+.slick-prev::before {
+  content: none;
+}
+
+/* @layer components {
+} */
+
 /* to override original styles we use utilities */
 @layer utilities {
+  .btn_dark {
+    @apply bg-transparent  border-[1px] text-white border-gray-700 shadow-none hover:bg-gray-800;
+  }
   .btn_light {
-    @apply bg-transparent text-black border-[1px] shadow-none hover:bg-gray-100 !important;
+    @apply bg-transparent border-[1px] text-black  shadow-none hover:bg-gray-100;
+  }
+  .search_btn_dark {
+    @apply bg-transparent text-white shadow-none hover:bg-gray-800 rounded-none rounded-e-lg  border-0;
+  }
+  .search_btn_light {
+    @apply bg-transparent text-black  shadow-none hover:bg-gray-100 rounded-none rounded-e-md  border-0;
   }
 }
 

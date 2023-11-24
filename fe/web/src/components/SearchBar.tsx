@@ -46,7 +46,7 @@ const SearchBar = () => {
       />
       <Button
         type="submit"
-        className="dark:btn_dark btn_light absolute right-0"
+        className="dark:search_btn_dark search_btn_light absolute right-0 hover:bg-gray-100"
         onClick={onSearch}
       >
         <Search className="pr-1" size={20} />

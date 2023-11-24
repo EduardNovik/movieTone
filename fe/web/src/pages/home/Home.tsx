@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { MoviesInfoDataType } from '../../redux/moviesSlice';
@@ -33,10 +33,12 @@ const Home = () => {
         <div className="flex md:flex-row flex-col flex-wrap basis-[100%] flex-1 justify-center items-center pt-20">
           {isLoading ? (
             <CardSkeleton numOfCards={20} />
-          ) : (
+          ) : movies ? (
             movies.map((item: Record<string, any>) => (
               <Card key={item.id} item={item} />
             ))
+          ) : (
+            <div>Something went wrong, cant find movies list</div>
           )}
           <Pagination />
         </div>

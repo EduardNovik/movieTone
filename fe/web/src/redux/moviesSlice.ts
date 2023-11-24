@@ -29,8 +29,6 @@ export const fetchMoviesAsync = createAsyncThunk(
     };
     try {
       const response = await axios(options);
-      console.log(response);
-
       return response.data.results;
     } catch (error: any) {
       const errorMessage: string =
