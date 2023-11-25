@@ -17,9 +17,7 @@ const MovieSlider = () => {
     <Slider {...settings} className="mt-20">
       {isLoading ? (
         <MovieSliderSkeleton />
-      ) : error ? (
-        <div className="flex justify-center items-center p-6">{error}</div>
-      ) : (
+      ) : data ? (
         data.map((item: Record<string, any>) => (
           <div key={item.id} className="relative cursor-pointer">
             <img
@@ -36,6 +34,8 @@ const MovieSlider = () => {
             </p>
           </div>
         ))
+      ) : (
+        <div className="flex justify-center items-center p-6">{error}</div>
       )}
     </Slider>
   );
