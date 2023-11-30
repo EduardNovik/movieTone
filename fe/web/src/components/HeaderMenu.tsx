@@ -18,8 +18,11 @@ import {
   DropdownMenuRadioGroup,
 } from '@movieTone/ui';
 import { Menu } from 'lucide-react';
+import { signOut } from '../utils/signOut';
+import userInfoState from '../store/userInfo';
 
 const HeaderMenu = () => {
+  const userInfo = userInfoState();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,6 +46,12 @@ const HeaderMenu = () => {
               <DropdownMenuShortcut>⇧⌘L</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
+          <Link to="/">
+            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
+              Anime
+              <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </Link>
           <Link to="/watchlist">
             <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
               Watchlist
@@ -56,8 +65,9 @@ const HeaderMenu = () => {
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem
-            disabled
+            disabled={!userInfo.user.name}
             className="cursor-pointer hover:bg-gray-200"
+            onClick={signOut}
           >
             Log out
             <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>

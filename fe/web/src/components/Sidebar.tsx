@@ -11,6 +11,7 @@ import { AppDispatch } from '../redux/store';
 
 import usePageState from '../hooks/usePageState';
 import useUrlState from '../hooks/useUrlState';
+import { animeFetch } from '../api/graphql/anime';
 
 const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -68,6 +69,18 @@ const Sidebar = () => {
           onClick={dispatchUpcomingSeries}
           className="cursor-pointer"
         >
+          Upcoming
+        </AccordionContent>
+        <AccordionContent
+          onClick={dispatchPopularSeries}
+          className="cursor-pointer"
+        >
+          Popular
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>Anime</AccordionTrigger>
+        <AccordionContent onClick={animeFetch} className="cursor-pointer">
           Upcoming
         </AccordionContent>
         <AccordionContent

@@ -11,9 +11,9 @@ SuperTokens.init({
     websiteBasePath: '/',
   },
   recipeList: [
+    Session.init(),
     Passwordless.init({
       contactMethod: 'EMAIL',
     }),
-    Session.init(),
   ],
 });

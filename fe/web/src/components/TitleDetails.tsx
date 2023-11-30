@@ -3,10 +3,7 @@ import starIcon from '../assets/iconfinder_star.png';
 import TitleSkeleton from '../components/skeletons/TitleSkeleton';
 
 const TitleDetails = ({ id }: { id: string }) => {
-  console.log(id);
-
   const { data, error, isLoading } = usePopularMovieByIdSWR(id);
-  console.log(data);
 
   return (
     <div className="mt-[100px] flex flex-col justify-center items-center gap-6 relative">

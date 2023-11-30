@@ -2,18 +2,30 @@ import { useCallback, useEffect } from 'react';
 import { getLoginAttemptInfo } from 'supertokens-auth-react/recipe/passwordless';
 import { useNavigate } from '@tanstack/react-router';
 import { consumeCode } from 'supertokens-auth-react/recipe/passwordless';
+import axios from 'axios';
+import userInfoState from '../../store/userInfo';
 
 async function hasInitialMagicLinkBeenSent() {
   return (await getLoginAttemptInfo()) !== undefined;
 }
 
+const isUserExistAndOnboarded = async () => {
+  try {
+    const res = await axios.get(`${window.origin}/api/user/onboarded`);
+    return res.data.onboarded;
+  } catch (error) {
+    console.error('Error checking user onboarded status:', error);
+    return false; // Assuming false when there's an error, you can handle it differently based on your requirements.
+  }
+};
+
 const Auth = () => {
   const navigate = useNavigate();
+  const userInfo = userInfoState();
 
   const handleMagicLinkClicked = useCallback(async () => {
     try {
       let response = await consumeCode();
-
       if (response.status === 'OK') {
         // if (
         //   response.createdNewRecipeUser &&
@@ -26,15 +38,38 @@ const Auth = () => {
         //   // dashboard
         // }
         // window.location.assign('/home');
+        // ------------
+        // const isUserExistAndOnboarded = async () => {
+        //   try {
+        //     const res = await axios.get(`${window.origin}/api/user/onboarded`);
+        //     return res.data.onboarded;
+        //   } catch (error) {
+        //     console.error('Error checking user onboarded status:', error);
+        //     return false; // Assuming false when there's an error, you can handle it differently based on your requirements.
+        //   }
+        // };
 
-        await navigate({ to: '/signup' });
+        // if (await isUserExistAndOnboarded()) {
+        // }
+        // (await isUserExistAndOnboarded())
+        //   ? await navigate({ to: '/' })
+        //   : await navigate({ to: '/signup' });
+        // ------------
+
+        const userOnboarded = await isUserExistAndOnboarded();
+
+        if (userOnboarded) {
+          console.log('ZALUPA ONBOARDED');
+          userInfo.updateUserInfo();
+          await navigate({ to: '/' });
+        } else {
+          await navigate({ to: '/signup' });
+        }
       } else {
         // this can happen if the magic link has expired or is invalid
         // or if it was denied due to security reasons in case of automatic account linking
 
-        // window.alert('Login failed. Please try again');
-        // window.location.assign('/auth');
-        navigate({ to: '/' });
+        window.alert('Login failed. Please try again');
       }
     } catch (err: any) {
       if (err.isSuperTokensGeneralError === true) {
@@ -52,7 +87,7 @@ const Auth = () => {
     });
   }, [handleMagicLinkClicked]);
 
-  return <div>Verify</div>;
+  return <h3 className="text-2xl text-center mt-40">Verify User</h3>;
 };
 
 export default Auth;
