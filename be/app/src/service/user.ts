@@ -1,10 +1,10 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
 import { users, identities } from "@movieTone/database-schema";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import crypto from "crypto";
 
-// userOnboard
-
+// userOnboard----
 export async function userOnboard(
   req: Request,
   res: Response,
@@ -16,20 +16,25 @@ export async function userOnboard(
 
   try {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
-    const userId = crypto.randomUUID();
+    console.log("INPUTED DATA", name, email, password);
 
-    await db.insert(users).values({
-      id: userId,
-      name,
-      email,
-      password,
-    });
+    await db.transaction(async (trx) => {
+      const userId = crypto.randomUUID();
+      const identityId = app.locals.identityId;
 
-    await db.insert(identities).values({
-      id: app.locals.identityId,
-      userId: userId,
-      email,
+      // Insert into 'users' table
+      await trx.insert(users).values({
+        id: userId,
+        name,
+        email,
+        password,
+      });
+      // Insert into 'identities' table
+      await trx.insert(identities).values({
+        id: identityId,
+        userId: userId,
+        email,
+      });
     });
 
     res.status(200).end();
@@ -39,61 +44,54 @@ export async function userOnboard(
   }
 }
 
-// isUserOnboarded
-
-export async function isUserOnboarded(req: Request, res: Response) {
+// isUserOnboarded----
+export async function isUserOnboarded(
+  req: Request,
+  res: Response,
+  app: Application
+) {
   if (req.method !== "GET") {
     return res.status(405).end();
   }
-  const identityId = res.locals.identityId;
+  const identityId = app.locals.identityId;
 
   const [user] = await db
-    .select({ id: users.id })
+    .select()
     .from(users)
     .innerJoin(identities, eq(users.id, identities.userId))
     .where(eq(identities.id, identityId));
-  res.status(200).end();
 
-  return !!user;
+  res.status(200).json({ onboarded: !!user });
 }
 
-// getCurrentUser
-
-export async function getCurrentUser(req: Request, res: Response) {
+// getUserByIdentityId----
+export async function getUserByIdentityId(
+  req: Request,
+  res: Response,
+  app: Application
+) {
   if (req.method !== "GET") {
     return res.status(405).end();
   }
+
+  const identityId = app.locals.identityId;
+
   const [user] = await db
     .select({ id: users.id, name: users.name, email: users.email })
     .from(users)
-    .where(eq(users.id, res.locals.identityId));
-  res.status(200).end();
+    .innerJoin(identities, eq(users.id, identities.userId))
+    .where(eq(identities.id, identityId));
 
-  return user;
+  res.status(200).json({ user: user });
+  console.log(user);
 }
 
 // getAllUsers
-
 export async function getAllUsers(req: Request, res: Response) {
   if (req.method !== "GET") {
     return res.status(405).end();
   }
   const [user] = await db.select().from(users);
-  res.status(200).end();
-
-  return !!user;
-}
-
-// isUserOnboarded2
-
-export async function isUserOnboarded2(req: Request, res: Response) {
-  if (req.method !== "GET") {
-    return res.status(405).end();
-  }
-  const [user] = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, res.locals.identityId));
   res.status(200).end();
 
   return !!user;

@@ -1,5 +1,5 @@
 import Session from "supertokens-node/recipe/session";
-import type { Request, Response, NextFunction, Express } from "express";
+import type { Request, Response, NextFunction } from "express";
 import app from "../app.ts";
 
 export const supertokensSessionMiddleware = async (

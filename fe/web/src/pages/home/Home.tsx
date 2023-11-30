@@ -25,6 +25,7 @@ const Home = () => {
     dispatch(fetchMoviesAsync(urlState.url));
   }, [urlState.url]);
 
+
   return (
     <div>
       <MovieSlider />

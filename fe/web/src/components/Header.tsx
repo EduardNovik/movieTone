@@ -5,17 +5,14 @@ import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
+import userInfoState from '../store/userInfo';
 
 const Header = () => {
   const loginModal = useLoginModalState();
+  const userInfo = userInfoState();
   const openLoginModal = useCallback(() => {
     loginModal.onOpen();
   }, [loginModal]);
-
-  const isActive = (path: string) => {
-    const pathname = window.location.pathname;
-    return pathname === path;
-  };
 
   return (
     <header className="bg-transparent backdrop-blur-3xl border-b-gray-200 dark:border-b-gray-800 border-b-[1px] shadow-md w-full z-50 fixed">
@@ -27,12 +24,18 @@ const Header = () => {
           <HeaderMenu />
         </div>
         <div className="flex gap-2 items-center w-[40%] justify-end">
-          <span
-            className="cursor-pointer min-w-[50px] hover:underline text-gray-500"
-            onClick={openLoginModal}
-          >
-            Sign in
-          </span>
+          {userInfo.user.name ? (
+            <span className="cursor-pointer min-w-[50px] hover:underline text-gray-500">
+              {userInfo.user.name}
+            </span>
+          ) : (
+            <span
+              className="cursor-pointer min-w-[50px] hover:underline text-gray-500"
+              onClick={openLoginModal}
+            >
+              Sign in
+            </span>
+          )}
 
           <SearchBar />
           <ModeToggle />
@@ -43,6 +46,11 @@ const Header = () => {
 };
 
 export default Header;
+
+// const isActive = (path: string) => {
+//   const pathname = window.location.pathname;
+//   return pathname === path;
+// };
 
 // const fetchSession = () => {
 //   fetch(`${window.origin}/api/session`, {

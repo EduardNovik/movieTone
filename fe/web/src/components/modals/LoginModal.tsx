@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useToast } from '@movieTone/ui';
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
 
-
 async function sendMagicLink(email: string) {
   try {
     const response = await createCode({
@@ -38,7 +37,7 @@ const LoginModal = () => {
 
       // LOG IN
       void sendMagicLink(email);
-
+      setEmail('');
       loginModal.onClose();
       toast({ title: 'Check your email' });
     } catch (error) {
