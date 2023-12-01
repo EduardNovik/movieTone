@@ -41,3 +41,59 @@ Type Annotation (:):
 Usage: Used to explicitly specify the type of a variable, function parameter, or return value.
 
 Where to use: In variable declarations, function parameters, and function return types when you want to provide explicit type information.
+
+
+// 3 dealing with async 
+
+// export const useFetchUserInfo = async () => {
+//   try {
+//     const getCurrentUser = await axios.get(`${window.origin}/api/user/current`);
+//     return getCurrentUser.data.user;
+//   } catch (error) {
+//     console.log('here is useFetchUserInfo:', error);
+//     throw new Error(error as any);
+//   }
+// };
+
+// then it should be called this way :
+// useEffect(() => {
+//   const asyncWrapper = async () => {
+//     const data2 = await useFetchUserInfo();
+//     console.log(data2);
+//     setUserData(data2);
+//   };
+
+//   asyncWrapper();
+// }, []);
+
+
+
+
+//4
+
+//-----
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+Only outside of the useEffect
+  useEffect(() => {
+    const [ss, setSS] = useState(null);
+
+    const asyncWrapper = async () => {
+      const manageUser = await manageUserSession();
+      setUserData(manageUser);
+    };
+    asyncWrapper();
+  }, []);
+
+
+//-----
+Invalid hook call.
+Ive called in useEffect with (await) like this : await manageUserSession(); but it wasnt async anymore doesnt return the promise. Second reason Ive used
+useEffect in manageUserSession() but I forgot to change name to start with use useManageUserSession()
+
+// useEffect(() => {
+  //   const asyncWrapper = async () => {
+  //     const manageUser = await manageUserSession();
+  //     setUserData(manageUser);
+  //   };
+  //   asyncWrapper();
+  // }, []);

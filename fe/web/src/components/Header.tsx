@@ -1,15 +1,28 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 import Logo from '../assets/iconfinder6.png';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
-import userInfoState from '../store/userInfo';
+import { useManageUserSession } from '../store/userSessionStore';
 
 const Header = () => {
   const loginModal = useLoginModalState();
-  const userInfo = userInfoState();
+  const [userData, setUserData] = useState<Record<string, string> | null>(null);
+  const manageUser = useManageUserSession();
+
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      const userSessionData = await manageUser;
+      setUserData(userSessionData);
+    };
+
+    asyncWrapper();
+  }, [manageUser]);
+
+  console.log(userData);
+
   const openLoginModal = useCallback(() => {
     loginModal.onOpen();
   }, [loginModal]);
@@ -24,9 +37,9 @@ const Header = () => {
           <HeaderMenu />
         </div>
         <div className="flex gap-2 items-center w-[40%] justify-end">
-          {userInfo.user.name ? (
+          {/* {userData?.name ? (
             <span className="cursor-pointer min-w-[50px] hover:underline text-gray-500">
-              {userInfo.user.name}
+              {userData.name}
             </span>
           ) : (
             <span
@@ -35,7 +48,14 @@ const Header = () => {
             >
               Sign in
             </span>
-          )}
+          )} */}
+
+          <span
+            className="cursor-pointer min-w-[50px] hover:underline text-gray-500"
+            onClick={openLoginModal}
+          >
+            Sign in
+          </span>
 
           <SearchBar />
           <ModeToggle />
