@@ -3,7 +3,7 @@ import { getLoginAttemptInfo } from 'supertokens-auth-react/recipe/passwordless'
 import { useNavigate } from '@tanstack/react-router';
 import { consumeCode } from 'supertokens-auth-react/recipe/passwordless';
 import axios from 'axios';
-import userInfoState from '../../store/userInfo';
+// import { manageUserSession } from '../../store/userSessionStore';
 
 async function hasInitialMagicLinkBeenSent() {
   return (await getLoginAttemptInfo()) !== undefined;
@@ -21,8 +21,6 @@ const isUserExistAndOnboarded = async () => {
 
 const Auth = () => {
   const navigate = useNavigate();
-  const userInfo = userInfoState();
-
   const handleMagicLinkClicked = useCallback(async () => {
     try {
       let response = await consumeCode();
@@ -60,7 +58,7 @@ const Auth = () => {
 
         if (userOnboarded) {
           console.log('ZALUPA ONBOARDED');
-          userInfo.updateUserInfo();
+          // await manageUserSession();
           await navigate({ to: '/' });
         } else {
           await navigate({ to: '/signup' });

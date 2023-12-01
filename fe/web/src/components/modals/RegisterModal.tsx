@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
 import { useNavigate } from '@tanstack/react-router';
-import userInfoState from '../../store/userInfo';
+// import { manageUserSession } from '../../store/userSessionStore';
 
 const RegisterModal = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +12,6 @@ const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const userInfo = userInfoState();
 
   const onSubmit = useCallback(async () => {
     try {
@@ -30,7 +29,7 @@ const RegisterModal = () => {
       setPassword('');
       setName('');
 
-      userInfo.updateUserInfo();
+      // await manageUserSession();
 
       await navigate({ to: '/' });
     } catch (error) {

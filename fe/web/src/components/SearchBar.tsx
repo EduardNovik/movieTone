@@ -15,7 +15,7 @@ const SearchBar = () => {
   const urlState = useUrlState();
   const pageState = usePageState();
 
-  console.log(urlState.url);
+  // console.log(urlState.url);
 
   useEffect(() => {
     dispatch(fetchMoviesAsync(urlState.url));
