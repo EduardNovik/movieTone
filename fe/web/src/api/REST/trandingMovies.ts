@@ -11,7 +11,10 @@ const trandingMovies = (url: string) => {
 
   return axios(url, options)
     .then(res => res.data.results)
-    .catch(err => console.error('error:' + err));
+    .catch(err => {
+      console.error('error:' + err);
+      return Promise.reject(err);
+    });
 };
 
 export default trandingMovies;

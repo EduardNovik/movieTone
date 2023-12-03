@@ -6,6 +6,9 @@ import Slider from 'react-slick';
 const MovieSlider = () => {
   const { data, error, isLoading } = useTrandingMoviesSWR();
   const navigate = useNavigate();
+  console.log(data);
+  console.log('Data type:', Array.isArray(data), data);
+
   const settings = {
     infinite: true,
     speed: 400,
@@ -17,7 +20,7 @@ const MovieSlider = () => {
     <Slider {...settings} className="mt-20">
       {isLoading ? (
         <MovieSliderSkeleton />
-      ) : data ? (
+      ) : data.length === 20 ? (
         data.map((item: Record<string, any>) => (
           <div key={item.id} className="relative cursor-pointer">
             <img
@@ -35,7 +38,9 @@ const MovieSlider = () => {
           </div>
         ))
       ) : (
-        <div className="flex justify-center items-center p-6">{error}</div>
+        <div className="flex justify-center items-center p-6 mt-[60px]">
+          {error}
+        </div>
       )}
     </Slider>
   );
