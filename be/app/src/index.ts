@@ -8,10 +8,10 @@ import { middleware, errorHandler } from "supertokens-node/framework/express";
 import { createYoga } from "graphql-yoga";
 import { schema } from "./graphql/shcema.ts";
 import Dashboard from "supertokens-node/recipe/dashboard/index.js";
-import { verifySession } from "supertokens-node/recipe/session/framework/express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { supertokensSessionMiddleware } from "./middleware/supertokensSessionMiddleware.ts";
 import userRoutes from "./routes/userRoutes.ts";
+import watchlistRoutes from "./routes/watchlistRoutes.ts";
 import identityRoutes from "./routes/identityRoutes.ts";
 import app from "./app.ts";
 
@@ -99,8 +99,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/user", userRoutes);
+app.use("/watchlist", watchlistRoutes);
 app.use("/test", identityRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);

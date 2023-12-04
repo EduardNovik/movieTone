@@ -6,14 +6,27 @@ import Slider from 'react-slick';
 const MovieSlider = () => {
   const { data, error, isLoading } = useTrandingMoviesSWR();
   const navigate = useNavigate();
-  console.log(data);
-  console.log('Data type:', Array.isArray(data), data);
 
   const settings = {
     infinite: true,
     speed: 400,
-    slidesToShow: 1,
+    slidesToShow: 4,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -22,11 +35,11 @@ const MovieSlider = () => {
         <MovieSliderSkeleton />
       ) : data.length === 20 ? (
         data.map((item: Record<string, any>) => (
-          <div key={item.id} className="relative cursor-pointer">
+          <div key={item.id} className="relative cursor-pointer p-2">
             <img
-              src={`https://www.themoviedb.org/t/p/original/${item.backdrop_path}`}
+              src={`https://www.themoviedb.org/t/p/original/${item.poster_path}`}
               alt="cover_img"
-              className="rounded-lg"
+              className="rounded-lg max-h-[650px]"
               loading="lazy"
               onClick={() =>
                 navigate({ to: '/title/$id', params: { id: item.id } })
