@@ -7,8 +7,15 @@ import {
   integer,
 } from "drizzle-orm/pg-core";
 
+import { users } from "./users.ts";
+
+
 export const watchlist = pgTable("watchlist", {
   id: uuid("id").primaryKey(),
+  userId: uuid("userId")
+    .notNull()
+    .references(() => users.id),
+  titleId: integer("titleId"),
   name: varchar("name", { length: 200 }).notNull(),
   img: varchar("img").notNull(),
   imdb: varchar("imdb", { length: 20 }),
@@ -24,3 +31,6 @@ export const watchlist = pgTable("watchlist", {
 
 export type WatchlistSelect = typeof watchlist.$inferSelect;
 export type WatchlistInsert = typeof watchlist.$inferInsert;
+
+
+userId + 

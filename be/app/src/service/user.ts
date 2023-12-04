@@ -84,6 +84,7 @@ export async function getUserByIdentityId(
 
   res.status(200).json({ user: user });
   console.log(user);
+  return user;
 }
 
 // getAllUsers

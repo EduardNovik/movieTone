@@ -1,4 +1,5 @@
-import express from "express";
+import { Router } from "express";
+
 import {
   userOnboard,
   isUserOnboarded,
@@ -7,7 +8,7 @@ import {
 } from "../service/user.ts";
 import app from "../app.ts";
 
-let currentRouter = express.Router();
+let currentRouter = Router();
 
 // getAllUsers
 
