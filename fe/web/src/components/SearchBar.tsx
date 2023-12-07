@@ -2,7 +2,6 @@ import { Button } from '@movieTone/ui';
 import { Input } from '@movieTone/ui';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Selector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchMoviesAsync } from '../redux/moviesSlice';
 import useUrlState from '../hooks/useUrlState';

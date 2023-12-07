@@ -1,10 +1,9 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
-import { watchlist, usersToWatchlist } from "@movieTone/database-schema";
-import { getUserByIdentityId } from "./user.ts";
+import { titlesToWatchlists, titles } from "@movieTone/database-schema";
 
 // addToWathclist----
-export async function addToWatchlist(
+export async function addTitleToWatchlist(
   req: Request,
   res: Response,
   app: Application
@@ -14,43 +13,27 @@ export async function addToWatchlist(
   }
 
   try {
-    const { id, name, img, imdb, year, description } = req.body;
+    const { id, name, img, imdb, year, description, watchlistid } = req.body;
 
     console.log("INPUTED DATA", id, name, img, imdb, year, description);
 
-    const userById = await getUserByIdentityId(req, res, app);
-
-    // const watchlistTitle = await db
-    //   .insert(watchlist)
-    //   .values({
-    //     id,
-    //     name,
-    //     img,
-    //     imdb,
-    //     year,
-    //     description,
-    //   })
-    //   .returning();
-
-    const watchlistTitle = await db.transaction(async (trx) => {
-      const watchlistId = crypto.randomUUID();
-
-      await trx.insert(watchlist).values({
-        id: watchlistId,
+    const addedTitle = await db.transaction(async (trx) => {
+      await trx.insert(titles).values({
+        id: id,
         name,
         img,
         imdb,
         year,
         description,
       });
-      await trx.insert(usersToWatchlist).values({
-        watchlistId: watchlistId,
-        userId: userById,
+      await trx.insert(titlesToWatchlists).values({
+        titleId: id,
+        watchlistId: watchlistid,
       });
     });
 
-    res.status(200).json(watchlistTitle);
-    console.log(watchlistTitle);
+    res.status(200).json(addedTitle);
+    console.log(addedTitle);
 
     res.status(200).end();
   } catch (error) {
