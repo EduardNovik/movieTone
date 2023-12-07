@@ -97,3 +97,35 @@ useEffect in manageUserSession() but I forgot to change name to start with use u
   //   };
   //   asyncWrapper();
   // }, []);
+
+
+//--------- many to many SQL
+
+
+The table userToOrg you mentioned, often referred to as an association table or junction table, is used in database design to represent a many-to-many relationship between two entities. In your case, it helps model the relationship between users and organizations. Let's break down why you might need such a table:
+
+Many-to-Many Relationship:
+
+If a user can belong to many organizations and an organization can have many users, this is a many-to-many relationship.
+In a relational database, directly storing all the related user IDs in the org table or all the related org IDs in the user table is not an efficient or normalized way to represent this relationship.
+Normalization:
+
+Using a separate table (userToOrg) helps in normalizing the database design, which is a best practice in relational databases.
+Normalization helps avoid data redundancy and ensures that changes to the user or organization details only need to be made in one place.
+Flexibility:
+
+The userToOrg table provides flexibility in managing relationships. If, for example, you later need to store additional information about the relationship between a user and an organization (e.g., the date the user joined the organization), you can easily add more columns to the userToOrg table without modifying the existing user or org tables.
+Queries:
+
+Using a junction table makes it easier to perform queries related to the many-to-many relationship. For instance, you can easily find all organizations a user belongs to or all users belonging to a particular organization.
+Here's a simplified example of what the userToOrg table might look like:
+
+sql
+Copy code
+CREATE TABLE userToOrg (
+    userID INT,
+    orgID INT,
+    PRIMARY KEY (userID, orgID),
+    FOREIGN KEY (userID) REFERENCES user(userID),
+    FOREIGN KEY (orgID) REFERENCES org(orgID)
+);

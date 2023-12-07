@@ -165,7 +165,10 @@ export const useLocalStorageSession = () => {
     try {
       setLoggedUserData(() => {
         if (getLoggedUser !== null) {
-          if (JSON.stringify(fetchedUser) !== getLoggedUser) {
+          if (
+            JSON.stringify(fetchedUser) !== getLoggedUser &&
+            fetchedUser !== null
+          ) {
             localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
             userSession.updateUserSession(fetchedUser);
             return fetchedUser;

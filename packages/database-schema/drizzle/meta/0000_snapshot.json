@@ -1,11 +1,11 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "1d95769b-cb22-4f80-8bf7-fb5e752fb96d",
+  "id": "9fe8f725-81a8-412a-a963-1d7541d3c15f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "users": {
-      "name": "users",
+    "identities": {
+      "name": "identities",
       "schema": "",
       "columns": {
         "id": {
@@ -14,20 +14,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(150)",
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "email": {
           "name": "email",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "password": {
-          "name": "password",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
@@ -48,32 +42,10 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "usersToWatchlist": {
-      "name": "usersToWatchlist",
-      "schema": "",
-      "columns": {
-        "userId": {
-          "name": "userId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "watchlistId": {
-          "name": "watchlistId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
       "foreignKeys": {
-        "usersToWatchlist_userId_users_id_fk": {
-          "name": "usersToWatchlist_userId_users_id_fk",
-          "tableFrom": "usersToWatchlist",
+        "identities_userId_users_id_fk": {
+          "name": "identities_userId_users_id_fk",
+          "tableFrom": "identities",
           "tableTo": "users",
           "columnsFrom": [
             "userId"
@@ -83,39 +55,18 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "usersToWatchlist_watchlistId_watchlist_id_fk": {
-          "name": "usersToWatchlist_watchlistId_watchlist_id_fk",
-          "tableFrom": "usersToWatchlist",
-          "tableTo": "watchlist",
-          "columnsFrom": [
-            "watchlistId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "usersToWatchlist_userId_watchlistId": {
-          "name": "usersToWatchlist_userId_watchlistId",
-          "columns": [
-            "userId",
-            "watchlistId"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "watchlist": {
-      "name": "watchlist",
+    "titles": {
+      "name": "titles",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true
         },
@@ -166,6 +117,173 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "titlesToWatchlists": {
+      "name": "titlesToWatchlists",
+      "schema": "",
+      "columns": {
+        "titleId": {
+          "name": "titleId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "watchlistId": {
+          "name": "watchlistId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "titlesToWatchlists_titleId_titles_id_fk": {
+          "name": "titlesToWatchlists_titleId_titles_id_fk",
+          "tableFrom": "titlesToWatchlists",
+          "tableTo": "titles",
+          "columnsFrom": [
+            "titleId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "titlesToWatchlists_watchlistId_watchlists_id_fk": {
+          "name": "titlesToWatchlists_watchlistId_watchlists_id_fk",
+          "tableFrom": "titlesToWatchlists",
+          "tableTo": "watchlists",
+          "columnsFrom": [
+            "watchlistId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "titlesToWatchlists_titleId_watchlistId": {
+          "name": "titlesToWatchlists_titleId_watchlistId",
+          "columns": [
+            "titleId",
+            "watchlistId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "watchlists": {
+      "name": "watchlists",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genre": {
+          "name": "genre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "watchlists_userId_users_id_fk": {
+          "name": "watchlists_userId_users_id_fk",
+          "tableFrom": "watchlists",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
