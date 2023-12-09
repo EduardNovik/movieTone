@@ -71,14 +71,20 @@ export const titlesRelations = relations(watchlists, ({ many }) => ({
   titlesToWatchlists: many(titlesToWatchlists),
 }));
 
+// we define many to many relation by deviding relation into 2 steps: one to many (title, will be with many)
+// and one to many (watchlists, will be with many) and  we will get : t < [titlesToWatchlists] > w
+// titlesToWatchlists will be with one,  so that will be many to many with joining table titlesToWatchlists
+
 export const titlesToWatchlistsRelations = relations(
   titlesToWatchlists,
-  ({ many }) => ({
-    titles: many(titles),
-    watchlists: many(watchlists),
+  ({ one }) => ({
+    titles: one(titles, {
+      fields: [titlesToWatchlists.titleId],
+      references: [titles.id],
+    }),
+    watchlists: one(watchlists, {
+      fields: [titlesToWatchlists.watchlistId],
+      references: [watchlists.id],
+    }),
   })
 );
-
-// =======
-// we need one to many
-// indicates that each watchlist can have one user

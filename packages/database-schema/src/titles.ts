@@ -1,8 +1,15 @@
 import { sql } from "drizzle-orm";
-import { pgTable, timestamp, varchar, integer } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  timestamp,
+  varchar,
+  integer,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 export const titles = pgTable("titles", {
-  id: integer("id").primaryKey(),
+  id: uuid("id").primaryKey(),
+  apiId: integer("apiId"),
   name: varchar("name", { length: 200 }).notNull(),
   img: varchar("img").notNull(),
   imdb: varchar("imdb", { length: 20 }),

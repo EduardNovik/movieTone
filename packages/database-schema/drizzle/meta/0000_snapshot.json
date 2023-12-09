@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "9fe8f725-81a8-412a-a963-1d7541d3c15f",
+  "id": "8425cdf5-87a0-4e53-84cd-03f887db8b54",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "identities": {
@@ -66,9 +66,15 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true
+        },
+        "apiId": {
+          "name": "apiId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "name": {
           "name": "name",
@@ -126,7 +132,7 @@
       "columns": {
         "titleId": {
           "name": "titleId",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },

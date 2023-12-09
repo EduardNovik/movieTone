@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS "identities" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "titles" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
+	"apiId" integer,
 	"name" varchar(200) NOT NULL,
 	"img" varchar NOT NULL,
 	"imdb" varchar(20),
@@ -18,7 +19,7 @@ CREATE TABLE IF NOT EXISTS "titles" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "titlesToWatchlists" (
-	"titleId" integer NOT NULL,
+	"titleId" uuid NOT NULL,
 	"watchlistId" uuid NOT NULL,
 	CONSTRAINT titlesToWatchlists_titleId_watchlistId PRIMARY KEY("titleId","watchlistId")
 );
