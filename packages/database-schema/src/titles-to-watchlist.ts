@@ -1,11 +1,11 @@
-import { pgTable, primaryKey, uuid, integer } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { watchlists } from "./watchlists.ts";
 import { titles } from "./titles.ts";
 
 export const titlesToWatchlists = pgTable(
   "titlesToWatchlists",
   {
-    titleId: integer("titleId")
+    titleId: uuid("titleId")
       .notNull()
       .references(() => titles.id),
     watchlistId: uuid("watchlistId")
