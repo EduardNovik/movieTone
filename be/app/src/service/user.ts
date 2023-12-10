@@ -4,6 +4,17 @@ import { users, identities } from "@movieTone/database-schema";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
 
+// getUserByIdentityIdService
+export async function getUserByIdentityIdService(identityId: string) {
+  const [user] = await db
+    .select({ id: users.id, name: users.name, email: users.email })
+    .from(users)
+    .innerJoin(identities, eq(users.id, identities.userId))
+    .where(eq(identities.id, identityId));
+
+  return user;
+}
+
 // userOnboard----
 export async function userOnboard(
   req: Request,
@@ -54,12 +65,7 @@ export async function isUserOnboarded(
     return res.status(405).end();
   }
   const identityId = app.locals.identityId;
-
-  const [user] = await db
-    .select()
-    .from(users)
-    .innerJoin(identities, eq(users.id, identities.userId))
-    .where(eq(identities.id, identityId));
+  const user = await getUserByIdentityIdService(identityId);
 
   res.status(200).json({ onboarded: !!user });
 }
@@ -75,25 +81,9 @@ export async function getUserByIdentityId(
   }
 
   const identityId = app.locals.identityId;
-
-  const [user] = await db
-    .select({ id: users.id, name: users.name, email: users.email })
-    .from(users)
-    .innerJoin(identities, eq(users.id, identities.userId))
-    .where(eq(identities.id, identityId));
+  const user = await getUserByIdentityIdService(identityId);
 
   res.status(200).json({ user: user });
   console.log(user);
   return user;
-}
-
-// getAllUsers
-export async function getAllUsers(req: Request, res: Response) {
-  if (req.method !== "GET") {
-    return res.status(405).end();
-  }
-  const [user] = await db.select().from(users);
-  res.status(200).end();
-
-  return !!user;
 }

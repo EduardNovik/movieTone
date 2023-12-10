@@ -12,11 +12,11 @@ import {
 } from '@movieTone/ui';
 import { Menu } from 'lucide-react';
 import { signOut } from '../utils/signOut';
-import { userSessionState } from '../store/userSessionStore';
+// import { userSessionState } from '../store/userSessionStore';
 
 const HeaderMenu = () => {
-  const userSessionStateData = userSessionState();
-  console.log(userSessionStateData.user);
+  // const userSessionStateData = userSessionState();
+  // console.log(userSessionStateData.user);
 
   return (
     <DropdownMenu>
