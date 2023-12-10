@@ -4,15 +4,10 @@ import {
   userOnboard,
   isUserOnboarded,
   getUserByIdentityId,
-  getAllUsers,
 } from "../service/user.ts";
 import app from "../app.ts";
 
 let currentRouter = Router();
-
-// getAllUsers
-
-currentRouter.get("/all", (req, res) => getAllUsers(req, res));
 
 // getUserByIdentityId
 
