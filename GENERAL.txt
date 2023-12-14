@@ -129,3 +129,45 @@ CREATE TABLE userToOrg (
     FOREIGN KEY (userID) REFERENCES user(userID),
     FOREIGN KEY (orgID) REFERENCES org(orgID)
 );
+
+
+
+
+
+//--------- then()
+
+//Issue then dont stop the code, doesnt await it so the code continue to move
+// I apologize for any confusion in my previous responses. I'd like to clarify that when you use .then() with an asynchronous function, the function itself is still asynchronous, and the code in the .then() block will execute once the asynchronous operation is complete. However, it won't prevent the subsequent code outside of the .then() block from executing immediately.
+
+// export const useManageUserSession = () => {
+//   const [sessionExistResult, setSessionExistResult] = useState(false);
+//   doesSessionExist().then(res => setSessionExistResult(res));
+
+//   if (sessionExistResult) {
+//     return useLocalStorageSession();
+//   }
+//   return null;
+// };
+
+
+
+
+
+//--------- then()
+
+Cant call hooks or custom hooks inside async functions.
+We can work this out this way:
+
+
+wrong
+export const useManageUserSession = () => {
+  const response = doesSessionExist().then(res =>
+    res ? useLocalStorageSession() : null,
+  );
+
+  return response;
+};
+
+
+
+
