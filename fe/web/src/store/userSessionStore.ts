@@ -6,16 +6,26 @@ import { useEffect, useState } from 'react';
 
 interface UserSessionStateType {
   user: Record<string, string> | null;
-  updateUserSession: (newUser: Record<string, string>) => void;
+  updateUserSession: (newUser: Record<string, string> | null) => void;
 }
 
-export const userSessionState = create<UserSessionStateType>(set => ({
-  user: null,
-  updateUserSession: newUser =>
-    set({
-      user: newUser,
-    }),
-}));
+// use SWR here or we can use combination of localStorage and Zustand to persist state.
+
+// export const userSessionState = create<UserSessionStateType>(set => ({
+//   user: null,
+//   updateUserSession: newUser =>
+//     set({
+//       user: newUser,
+//     }),
+// }));
+
+export const userSessionState = create<UserSessionStateType>(set => {
+  const storedUser = localStorage.getItem('loggedUser');
+  return {
+    user: storedUser ? JSON.parse(storedUser) : null,
+    updateUserSession: newUser => set({ user: newUser }),
+  };
+});
 
 export const useFetchUserInfo = () => {
   const [fetchedUser, setFetchedUser] = useState(null);
@@ -62,15 +72,13 @@ export const useManageUserSession = () => {
     }
 
     if (JSON.stringify(fetchedUser) === getLoggedUser) {
-      userSession.updateUserSession(fetchedUser);
-      setLoggedUserData(fetchedUser);
       return;
     }
 
     try {
       setLoggedUserData(() => {
         localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
-        userSession.updateUserSession(fetchedUser!);
+        userSession.updateUserSession(fetchedUser);
         return fetchedUser;
       });
     } catch (error) {
@@ -139,46 +147,3 @@ export const useManageUserSession = () => {
 // const [fetchedUser, setFetchedUser] = useState(null);
 // const userSession = userSessionState();
 // useFetchUserInfo2().then(data => setFetchedUser(data.data));
-
-// -------------------------------------------------
-
-// export const useLocalStorageSession = () => {
-//   const userSession = userSessionState();
-//   const { fetchedUser } = useFetchUserInfo();
-//   const [loggedUserData, setLoggedUserData] = useState<Record<
-//     string,
-//     string
-//   > | null>(null);
-
-//   useEffect(() => {
-//     const getLoggedUser = localStorage.getItem('loggedUser');
-//     try {
-//       setLoggedUserData(() => {
-//         if (getLoggedUser !== null) {
-//           if (
-//             JSON.stringify(fetchedUser) !== getLoggedUser &&
-//             fetchedUser !== null
-//           ) {
-//             localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
-//             userSession.updateUserSession(fetchedUser);
-//             return fetchedUser;
-//           }
-//           userSession.updateUserSession(JSON.parse(getLoggedUser));
-//           return JSON.parse(getLoggedUser);
-//         } else if (fetchedUser) {
-//           localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
-//           userSession.updateUserSession(fetchedUser);
-//           return fetchedUser;
-//         } else {
-//           return null;
-//         }
-//       });
-//     } catch (error) {
-//       console.error('Error accessing localStorage:', error);
-//     }
-//   }, [fetchedUser]);
-
-//   return loggedUserData;
-// };
-
-// -------------------------------------------------

@@ -5,5 +5,6 @@ export const isSuperTokensGeneralError = STGeneralError.isThisError;
 
 export const signOut = async () => {
   await stSignOut();
+
   window.location.href = '/';
 };

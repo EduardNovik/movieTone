@@ -1,12 +1,36 @@
 import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
-
+import { Button, useToast } from '@movieTone/ui';
+import axios from 'axios';
 interface cardProps {
   item: Record<string, any>;
 }
 
 const Card = ({ item }: cardProps) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  console.log(item);
+
+  const addTitleToWatchlist = async () => {
+    try {
+      await axios.post(`${window.origin}/watchlist/addTitle`, {
+        id: item.id,
+        name: item.title ? item.title : item.name,
+        img: item.backdrop_path,
+        imdb: item.vote_average,
+        year: item.release_date,
+        description: item.overview,
+        watchlistid,
+        watchlistName,
+        watchlistGenre,
+      });
+      toast({ title: 'Title added' });
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Something went wrong.' });
+      console.log(error);
+    }
+  };
   return (
     <div className="content w-full flex flex-col items-center md:w-1/2 relative p-4 ease-in-out duration-300 cursor-pointer">
       <img
@@ -23,6 +47,7 @@ const Card = ({ item }: cardProps) => {
         </p>
         <img src={starIcon} alt="" className="w-4 h-4" />
       </span>
+      <Button onClick={addTitleToWatchlist}>ADD</Button>
     </div>
   );
 };
