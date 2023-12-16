@@ -12,11 +12,14 @@ import {
 } from '@movieTone/ui';
 import { Menu } from 'lucide-react';
 import { signOut } from '../utils/signOut';
-// import { userSessionState } from '../store/userSessionStore';
+import { userSessionState } from '../store/userSessionStore';
 
 const HeaderMenu = () => {
-  // const userSessionStateData = userSessionState();
-  // console.log(userSessionStateData.user);
+  const { updateUserSession } = userSessionState();
+  const userSignOut = () => {
+    signOut();
+    updateUserSession(null);
+  };
 
   return (
     <DropdownMenu>
@@ -62,7 +65,7 @@ const HeaderMenu = () => {
           <DropdownMenuItem
             // disabled={!userSessionStateData.user.name}
             className="cursor-pointer hover:bg-gray-200"
-            onClick={signOut}
+            onClick={userSignOut}
           >
             Log out
             <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>

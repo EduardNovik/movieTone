@@ -12,8 +12,21 @@ const TitleDetails = ({ id }: { id: string }) => {
       {isLoading ? (
         <TitleSkeleton numOfCards={1} />
       ) : data ? (
-        <div>
-          {data?.results.map((trailer: Record<string, any>) => (
+        // <div>
+        //   {data?.results.map((trailer: Record<string, any>) => (
+        //     <div key={trailer.id}>
+        //       <iframe
+        //         width="560"
+        //         height="315"
+        //         src={`https://www.youtube.com/embed/${trailer.key}`}
+        //         title={trailer.name}
+        //         allowFullScreen
+        //       ></iframe>
+        //     </div>
+        //   ))}
+        // </div>
+        <div className="flex flex-col gap-2">
+          {data?.results.slice(0, 3).map((trailer: Record<string, any>) => (
             <div key={trailer.id}>
               <iframe
                 width="560"

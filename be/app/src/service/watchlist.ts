@@ -4,9 +4,12 @@ import {
   titlesToWatchlists,
   titles,
   watchlists,
+  users,
+  identities,
 } from "@movieTone/database-schema";
 import crypto from "crypto";
 import { getUserByIdentityIdService } from "./user.ts";
+import { eq } from "drizzle-orm";
 
 // addTitleToExistingWatchlist----
 export async function addTitleToExistingWatchlist(
@@ -78,6 +81,8 @@ export async function addWatchlist(
   app: Application
 ) {
   if (req.method !== "POST") {
+    console.log("not post");
+
     return res.status(405).end();
   }
 
@@ -85,7 +90,16 @@ export async function addWatchlist(
     const { name, genre } = req.body;
     const identityId = app.locals.identityId;
 
-    const { id: userId } = await getUserByIdentityIdService(identityId);
+    console.log(name, "ssssssssssssssssssssssssssssssss");
+    console.log("ssssssssssssssssssssssssssssssss");
+
+    // const { id: userId } = await getUserByIdentityIdService(identityId);
+
+    const [user] = await db
+      .select({ id: users.id, name: users.name, email: users.email })
+      .from(users)
+      .innerJoin(identities, eq(users.id, identities.userId))
+      .where(eq(identities.id, identityId));
 
     console.log("INPUTED DATA", name, genre);
 
@@ -93,7 +107,7 @@ export async function addWatchlist(
       await trx.insert(watchlists).values({
         id: crypto.randomUUID(),
         name,
-        userId,
+        userId: user.id,
         genre,
       });
     });

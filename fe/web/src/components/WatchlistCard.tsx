@@ -5,10 +5,24 @@ import { useToast } from '@movieTone/ui';
 const WatchlistCard = () => {
   const { toast } = useToast();
 
-  const addWatchlist = useCallback(async () => {
+  // const addWatchlist = useCallback(async () => {
+  //   try {
+  //     await axios.post(`${window.origin}/watchlist/addWatchlist`, {
+  //       name: 'My List',
+  //       genre: 'Horror',
+  //     });
+
+  //     toast({ title: 'Watchlist created.' });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast({ variant: 'destructive', title: 'Something went wrong.' });
+  //   }
+  // }, []);
+
+  const addWatchlist = async () => {
     try {
-      await axios.post(`${window.origin}/watchlist/addWatchlist`, {
-        name: 'My List',
+      await axios.post(`${window.origin}/api/watchlist/addWatchlist`, {
+        name: 'List',
         genre: 'Horror',
       });
 
@@ -17,7 +31,7 @@ const WatchlistCard = () => {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
     }
-  }, []);
+  };
 
   return (
     <div className="w-[300px] h-[300px] border-2  border-teal-500 items-center flex flex-col rounded-lg justify-center">
