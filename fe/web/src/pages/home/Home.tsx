@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { MoviesInfoDataType } from '../../redux/moviesSlice';
 import { fetchMoviesAsync } from '../../redux/moviesSlice';
+import { useManageUserSession } from '../../store/userSession';
 
 import Card from '../../components/Card';
 import Pagination from '../../components/Pagination';
@@ -13,6 +14,7 @@ import MovieSlider from '../../components/MovieSlider';
 
 const Home = () => {
   const urlState = useUrlState();
+  useManageUserSession();
   const dispatch = useDispatch<AppDispatch>();
   const movies = useSelector<RootState, MoviesInfoDataType>(
     state => state.movies.data,
@@ -24,7 +26,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchMoviesAsync(urlState.url));
   }, [urlState.url]);
-
 
   return (
     <div>

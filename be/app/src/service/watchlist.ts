@@ -81,38 +81,53 @@ export async function addWatchlist(
   app: Application
 ) {
   if (req.method !== "POST") {
-    console.log("not post");
-
     return res.status(405).end();
   }
 
   try {
     const { name, genre } = req.body;
     const identityId = app.locals.identityId;
-
-    console.log(name, "ssssssssssssssssssssssssssssssss");
-    console.log("ssssssssssssssssssssssssssssssss");
-
-    // const { id: userId } = await getUserByIdentityIdService(identityId);
-
-    const [user] = await db
-      .select({ id: users.id, name: users.name, email: users.email })
-      .from(users)
-      .innerJoin(identities, eq(users.id, identities.userId))
-      .where(eq(identities.id, identityId));
+    const { id: userId } = await getUserByIdentityIdService(identityId);
 
     console.log("INPUTED DATA", name, genre);
 
     const addedWatchlist = await db.transaction(async (trx) => {
-      await trx.insert(watchlists).values({
-        id: crypto.randomUUID(),
-        name,
-        userId: user.id,
-        genre,
-      });
+      return await trx
+        .insert(watchlists)
+        .values({
+          id: crypto.randomUUID(),
+          name,
+          userId,
+          genre,
+        })
+        .returning();
     });
     console.log(addedWatchlist);
     res.status(200).end();
+  } catch (error) {
+    console.log(error);
+    return res.status(400).end();
+  }
+}
+
+export async function getUsersWatchlists(
+  req: Request,
+  res: Response,
+  app: Application
+) {
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+  const identityId = app.locals.identityId;
+  const { id: userId } = await getUserByIdentityIdService(identityId);
+
+  try {
+    const watchlistsData = await db
+      .select()
+      .from(watchlists)
+      .where(eq(watchlists.userId, userId));
+    res.status(200).json(watchlistsData);
+    return watchlistsData;
   } catch (error) {
     console.log(error);
     return res.status(400).end();

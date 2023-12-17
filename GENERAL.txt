@@ -170,4 +170,20 @@ export const useManageUserSession = () => {
 
 
 
+//--------- custom hooks
 
+You cant call custom hooks outside of component top level 
+like here :
+
+ const HeaderMenu = () => {
+  const action = () => {
+    useSignOut();
+  };
+
+  return ()
+ }
+
+ or like this:
+ useEffect(() => {
+    useManageUserSession();
+  }, []);

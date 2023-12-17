@@ -3,22 +3,12 @@ import '../services/supertokens';
 import { create } from 'zustand';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 interface UserSessionStateType {
   user: Record<string, string> | null;
   updateUserSession: (newUser: Record<string, string> | null) => void;
 }
 
 // use SWR here or we can use combination of localStorage and Zustand to persist state.
-
-// export const userSessionState = create<UserSessionStateType>(set => ({
-//   user: null,
-//   updateUserSession: newUser =>
-//     set({
-//       user: newUser,
-//     }),
-// }));
-
 export const userSessionState = create<UserSessionStateType>(set => {
   const storedUser = localStorage.getItem('loggedUser');
   return {
@@ -64,10 +54,12 @@ export const useManageUserSession = () => {
     string
   > | null>(null);
 
+  console.log(fetchedUser);
+
   useEffect(() => {
     const getLoggedUser = localStorage.getItem('loggedUser');
 
-    if (!fetchedUser) {
+    if (fetchedUser === null) {
       return;
     }
 
@@ -88,6 +80,42 @@ export const useManageUserSession = () => {
 
   return loggedUserData;
 };
+
+// export const useSignoutUserSession = () => {
+//   const userSession = userSessionState();
+//   const { fetchedUser } = useFetchUserInfo();
+//   const [loggedUserData, setLoggedUserData] = useState<Record<
+//     string,
+//     string
+//   > | null>(null);
+
+//   console.log(fetchedUser);
+
+//   useEffect(() => {
+//     const getLoggedUser = localStorage.getItem('loggedUser');
+
+//     const asyncWraper = async () => {
+//       await stSignOut();
+//       window.location.href = '/';
+//     };
+
+//     // for logout
+//     if (fetchedUser === null && getLoggedUser !== null) {
+//       try {
+//         setLoggedUserData(() => {
+//           userSession.updateUserSession(null);
+//           localStorage.removeItem('loggedUser');
+//           asyncWraper();
+//           return null;
+//         });
+//       } catch (error) {
+//         console.error('Error accessing localStorage:', error);
+//       }
+//     }
+//   }, [fetchedUser]);
+
+//   return loggedUserData;
+// };
 
 // alternative---------------------------------------
 // Overcomplicated useLocalStorageSession with if()----------------------------------------------

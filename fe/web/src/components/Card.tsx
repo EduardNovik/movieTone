@@ -2,6 +2,8 @@ import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
 import { Button, useToast } from '@movieTone/ui';
 import axios from 'axios';
+
+import useUserWatchlistsSWR from '../api/SWR/useUserWatchlistsSWR';
 interface cardProps {
   item: Record<string, any>;
 }
@@ -9,12 +11,13 @@ interface cardProps {
 const Card = ({ item }: cardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { data } = useUserWatchlistsSWR();
 
-  console.log(item);
+  console.log(data);
 
   const addTitleToWatchlist = async () => {
     try {
-      await axios.post(`${window.origin}/watchlist/addTitle`, {
+      await axios.post(`${window.origin}/app/watchlist/addTitle`, {
         id: item.id,
         name: item.title ? item.title : item.name,
         img: item.backdrop_path,
