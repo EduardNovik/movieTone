@@ -11,14 +11,13 @@ import {
   DropdownMenuGroup,
 } from '@movieTone/ui';
 import { Menu } from 'lucide-react';
-import { signOut } from '../utils/signOut';
-import { userSessionState } from '../store/userSessionStore';
+import { useLogout } from '../utils/useLogout';
 
 const HeaderMenu = () => {
-  const { updateUserSession } = userSessionState();
-  const userSignOut = () => {
-    signOut();
-    updateUserSession(null);
+  const logoutAndCleanState = useLogout();
+
+  const logoutHandler = () => {
+    logoutAndCleanState();
   };
 
   return (
@@ -62,10 +61,16 @@ const HeaderMenu = () => {
               <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
+          <Link to="/signup">
+            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
+              Register
+              <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem
             // disabled={!userSessionStateData.user.name}
             className="cursor-pointer hover:bg-gray-200"
-            onClick={userSignOut}
+            onClick={logoutHandler}
           >
             Log out
             <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>

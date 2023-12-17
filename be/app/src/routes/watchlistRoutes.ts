@@ -5,6 +5,7 @@ import { verifySession } from "supertokens-node/recipe/session/framework/express
 import {
   addTitleToExistingWatchlist,
   addWatchlist,
+  getUsersWatchlists,
 } from "../service/watchlist.ts";
 
 let currentRouter = Router();
@@ -19,6 +20,10 @@ currentRouter.post(
   "/addWatchlist",
   verifySession(),
   (req: Request, res: Response) => addWatchlist(req, res, app)
+);
+
+currentRouter.post("/all", verifySession(), (req: Request, res: Response) =>
+  getUsersWatchlists(req, res, app)
 );
 
 export default currentRouter;

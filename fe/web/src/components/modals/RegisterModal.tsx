@@ -3,7 +3,8 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
 import { useNavigate } from '@tanstack/react-router';
-// import { manageUserSession } from '../../store/userSessionStore';
+
+// Add useForms
 
 const RegisterModal = () => {
   const [email, setEmail] = useState('');

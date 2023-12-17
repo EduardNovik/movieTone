@@ -1,19 +1,15 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 import Logo from '../assets/iconfinder6.png';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
-import {
-  useManageUserSession,
-  userSessionState,
-} from '../store/userSessionStore';
+import { useManageUserSession, userSessionState } from '../store/userSession';
 
 const Header = () => {
   const loginModal = useLoginModalState();
-  const userSession = userSessionState();
-  useManageUserSession();
+  const { user } = userSessionState();
 
   const openLoginModal = useCallback(() => {
     loginModal.onOpen();
@@ -29,16 +25,16 @@ const Header = () => {
           <HeaderMenu />
         </div>
         <div className="flex gap-2 items-center w-[40%] justify-end">
-          {userSession.user?.name ? (
+          {user?.name ? (
             <span className="cursor-pointer min-w-[50px] hover:underline text-gray-500">
-              {userSession.user.name}
+              {user.name}
             </span>
           ) : (
             <span
               className="cursor-pointer min-w-[50px] hover:underline text-gray-500"
               onClick={openLoginModal}
             >
-              Sign in
+              Log in
             </span>
           )}
           <SearchBar />
