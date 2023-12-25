@@ -118,14 +118,14 @@ export async function getUsersWatchlists(
   if (req.method !== "GET") {
     return res.status(405).end();
   }
-  const identityId = app.locals.identityId;
-  const { id: userId } = await getUserByIdentityIdService(identityId);
+  // const identityId = app.locals.identityId;
+  // const { id: userId } = await getUserByIdentityIdService(identityId);
 
   try {
     const watchlistsData = await db
-      .select()
-      .from(watchlists)
-      .where(eq(watchlists.userId, userId));
+      .select({ genre: watchlists.genre })
+      .from(watchlists);
+    // .where(eq(watchlists.userId, userId));
     res.status(200).json(watchlistsData);
     return watchlistsData;
   } catch (error) {

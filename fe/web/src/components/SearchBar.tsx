@@ -21,7 +21,6 @@ const SearchBar = () => {
   }, [urlState.url]);
 
   const onSearch = () => {
-    console.log('heyyy');
 
     urlState.updateUrl(
       `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${pageState.page}`,
