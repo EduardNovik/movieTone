@@ -12,9 +12,11 @@ import {
 } from '@movieTone/ui';
 import { Menu } from 'lucide-react';
 import { useLogout } from '../utils/useLogout';
+import { userSessionState } from '../store/userSession';
 
 const HeaderMenu = () => {
   const logoutAndCleanState = useLogout();
+  const { user } = userSessionState();
 
   const logoutHandler = () => {
     logoutAndCleanState();
@@ -68,7 +70,7 @@ const HeaderMenu = () => {
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem
-            // disabled={!userSessionStateData.user.name}
+            disabled={!user?.name}
             className="cursor-pointer hover:bg-gray-200"
             onClick={logoutHandler}
           >

@@ -187,3 +187,18 @@ like here :
  useEffect(() => {
     useManageUserSession();
   }, []);
+
+
+  
+// custom hook cant be async 
+// in order to use useLogout in on click, we need to return fun logoutAndCleanState without calling it (do like this:   return logoutAndCleanState;)
+// So then in component we can normaly declare custom hook logoutAndCleanState in top layer of component without calling it (becuse we return logoutAndCleanState without ())
+// Here how it will look like in component:
+
+// const HeaderMenu = () => {
+//   const logoutAndCleanState = useLogout();
+
+//   const logoutHandler = () => {
+//     logoutAndCleanState();
+//   };
+// }
