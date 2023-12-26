@@ -23,7 +23,7 @@ const WatchlistCard = () => {
     try {
       await axios.post(`${window.origin}/api/watchlist/addWatchlist`, {
         name: 'List',
-        genre: 'Horror',
+        genre: 'Drama',
       });
 
       toast({ title: 'Watchlist created.' });
