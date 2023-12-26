@@ -22,7 +22,7 @@ currentRouter.post(
   (req: Request, res: Response) => addWatchlist(req, res, app)
 );
 
-currentRouter.post("/all", verifySession(), (req: Request, res: Response) =>
+currentRouter.get("/all", verifySession(), (req: Request, res: Response) =>
   getUsersWatchlists(req, res, app)
 );
 

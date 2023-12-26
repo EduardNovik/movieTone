@@ -12,6 +12,7 @@ const Card = ({ item }: cardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { data } = useUserWatchlistsSWR();
+  console.log(data);
 
   console.log(data);
 
@@ -24,9 +25,9 @@ const Card = ({ item }: cardProps) => {
         imdb: item.vote_average,
         year: item.release_date,
         description: item.overview,
-        watchlistid,
-        watchlistName,
-        watchlistGenre,
+        watchlistid: data[0].id,
+        watchlistName: data[0].name,
+        watchlistGenre: data[0].ganre,
       });
       toast({ title: 'Title added' });
     } catch (error: any) {
