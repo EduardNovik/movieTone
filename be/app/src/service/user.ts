@@ -26,8 +26,10 @@ export async function userOnboard(
   }
 
   try {
-    const { name, email, password } = req.body;
-    console.log("INPUTED DATA", name, email, password);
+    const email = app.locals.email;
+    const { name, password } = req.body;
+
+    console.log("PASSED DATA", name, email, password);
 
     await db.transaction(async (trx) => {
       const userId = crypto.randomUUID();
@@ -37,14 +39,14 @@ export async function userOnboard(
       await trx.insert(users).values({
         id: userId,
         name,
-        email,
+        email: email,
         password,
       });
       // Insert into 'identities' table
       await trx.insert(identities).values({
         id: identityId,
         userId: userId,
-        email,
+        email: email,
       });
     });
 
