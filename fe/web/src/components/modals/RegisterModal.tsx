@@ -7,7 +7,6 @@ import { useNavigate } from '@tanstack/react-router';
 // Add useForms
 
 const RegisterModal = () => {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,14 +18,12 @@ const RegisterModal = () => {
       setIsLoading(true);
 
       await axios.post(`${window.origin}/api/user/onboard`, {
-        email,
         password,
         name,
       });
 
       toast({ title: 'Account created.' });
 
-      setEmail('');
       setPassword('');
       setName('');
 
@@ -39,7 +36,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, name]);
+  }, [password, name]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -48,13 +45,6 @@ const RegisterModal = () => {
         placeholder="Name"
         value={name}
         onChange={e => setName(e.target.value)}
-      />
-      <Input
-        disabled={isLoading}
-        placeholder="Email"
-        name="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
       />
       <Input
         disabled={isLoading}

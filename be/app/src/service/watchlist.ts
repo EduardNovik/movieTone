@@ -1,4 +1,5 @@
 import { Request, Response, Application } from "express";
+
 import { db } from "../db.ts";
 import {
   titlesToWatchlists,
@@ -37,7 +38,7 @@ export async function addTitleToExistingWatchlist(
     console.log("INPUTED DATA", id, name, img, imdb, year, description);
 
     const identityId = app.locals.identityId;
-    const { id: userId } = await getUserByIdentityIdService(identityId);
+    const { id: userId} = await getUserByIdentityIdService(identityId);
     const titleId = crypto.randomUUID();
 
     const addedTitle = await db.transaction(async (trx) => {

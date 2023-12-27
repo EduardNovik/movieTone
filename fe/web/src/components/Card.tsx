@@ -2,32 +2,50 @@ import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
 import { Button, useToast } from '@movieTone/ui';
 import axios from 'axios';
+import { doesSessionExist } from 'supertokens-auth-react/recipe/session';
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+} from '@movieTone/ui';
 
 import useUserWatchlistsSWR from '../api/SWR/useUserWatchlistsSWR';
 interface cardProps {
   item: Record<string, any>;
 }
 
+interface Watchlist {
+  id: string;
+  name: string;
+  ganre: string;
+  userId: string;
+}
+
 const Card = ({ item }: cardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+
   const { data } = useUserWatchlistsSWR();
   console.log(data);
 
-  console.log(data);
-
-  const addTitleToWatchlist = async () => {
+  const addTitleToWatchlist = async (watchlist: Watchlist) => {
     try {
-      await axios.post(`${window.origin}/app/watchlist/addTitle`, {
+      await axios.post(`${window.origin}/api/watchlist/addTitle`, {
         id: item.id,
         name: item.title ? item.title : item.name,
         img: item.backdrop_path,
         imdb: item.vote_average,
-        year: item.release_date,
+        year: parseInt(item.release_date.replace(/-/g, '')),
         description: item.overview,
-        watchlistid: data[0].id,
-        watchlistName: data[0].name,
-        watchlistGenre: data[0].ganre,
+        watchlistid: watchlist.id,
+        watchlistName: watchlist.name,
+        watchlistGenre: watchlist.ganre,
       });
       toast({ title: 'Title added' });
     } catch (error: any) {
@@ -51,7 +69,30 @@ const Card = ({ item }: cardProps) => {
         </p>
         <img src={starIcon} alt="" className="w-4 h-4" />
       </span>
-      <Button onClick={addTitleToWatchlist}>ADD</Button>
+      {Array.isArray(data) && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">ADD</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuGroup>
+              {data?.map((watchlist: Watchlist) => {
+                return (
+                  <DropdownMenuItem>
+                    {watchlist.name}
+                    <DropdownMenuShortcut
+                      className="cursor-pointer hover:bg-gray-200"
+                      onClick={() => addTitleToWatchlist(watchlist)}
+                    >
+                      +
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
   );
 };
