@@ -2,21 +2,21 @@ import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
 import { Button, useToast } from '@movieTone/ui';
 import axios from 'axios';
-import { doesSessionExist } from 'supertokens-auth-react/recipe/session';
+import { Check, Plus, ScrollText } from 'lucide-react';
+// import { doesSessionExist } from 'supertokens-auth-react/recipe/session';
 
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuGroup,
 } from '@movieTone/ui';
 
 import useUserWatchlistsSWR from '../api/SWR/useUserWatchlistsSWR';
-interface cardProps {
+
+interface CardProps {
   item: Record<string, any>;
 }
 
@@ -27,12 +27,10 @@ interface Watchlist {
   userId: string;
 }
 
-const Card = ({ item }: cardProps) => {
+const Card = ({ item }: CardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
-
   const { data } = useUserWatchlistsSWR();
-  console.log(data);
 
   const addTitleToWatchlist = async (watchlist: Watchlist) => {
     try {
@@ -44,8 +42,24 @@ const Card = ({ item }: cardProps) => {
         year: parseInt(item.release_date.replace(/-/g, '')),
         description: item.overview,
         watchlistid: watchlist.id,
-        watchlistName: watchlist.name,
-        watchlistGenre: watchlist.ganre,
+      });
+      toast({ title: 'Title added' });
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Something went wrong.' });
+      console.log(error);
+    }
+  };
+
+  const addTitleAndCreateWatchlist = async (watchlist: Watchlist) => {
+    try {
+      await axios.post(`${window.origin}/api/watchlist/addTitle`, {
+        id: item.id,
+        name: item.title ? item.title : item.name,
+        img: item.backdrop_path,
+        imdb: item.vote_average,
+        year: parseInt(item.release_date.replace(/-/g, '')),
+        description: item.overview,
+        watchlistid: watchlist.id,
       });
       toast({ title: 'Title added' });
     } catch (error: any) {
@@ -72,19 +86,22 @@ const Card = ({ item }: cardProps) => {
       {Array.isArray(data) && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">ADD</Button>
+            <Button variant="outline" className="py-0 px-2">
+              <ScrollText size={15} />
+            </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="max-w-xs">
             <DropdownMenuGroup>
               {data?.map((watchlist: Watchlist) => {
                 return (
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    key={watchlist.id}
+                    className="cursor-pointer hover:bg-gray-200"
+                    onClick={() => addTitleToWatchlist(watchlist)}
+                  >
                     {watchlist.name}
-                    <DropdownMenuShortcut
-                      className="cursor-pointer hover:bg-gray-200"
-                      onClick={() => addTitleToWatchlist(watchlist)}
-                    >
-                      +
+                    <DropdownMenuShortcut>
+                      <Plus size={15} />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 );
@@ -98,6 +115,8 @@ const Card = ({ item }: cardProps) => {
 };
 
 export default Card;
+
+// For the future ==========================================================
 
 // const contentRef = useRef(null);
 
