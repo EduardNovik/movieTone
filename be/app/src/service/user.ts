@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
-import { users, identities } from "@movieTone/database-schema";
+import { users, identities, watchlists } from "@movieTone/database-schema";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -13,6 +13,16 @@ export async function getUserByIdentityIdService(identityId: string) {
     .where(eq(identities.id, identityId));
 
   return user;
+}
+
+// getUserWatchlistsdService
+export async function getUserWatchlistsService(identityId: string) {
+  const usersWatchlists = await db
+    .select({ watchlistId: watchlists.id, userId: watchlists.userId })
+    .from(watchlists)
+    .where(eq(watchlists.userId, identityId));
+
+  return usersWatchlists;
 }
 
 // userOnboard----
