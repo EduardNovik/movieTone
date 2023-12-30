@@ -7,6 +7,7 @@ import {
   addTitleAndCreateWatchlist,
   addWatchlist,
   getUsersWatchlists,
+  deleteWatchlist,
 } from "../service/watchlist.ts";
 
 let currentRouter = Router();
@@ -31,6 +32,12 @@ currentRouter.post(
 
 currentRouter.get("/all", verifySession(), (req: Request, res: Response) =>
   getUsersWatchlists(req, res, app)
+);
+
+currentRouter.delete(
+  "/deleteWatchlist",
+  verifySession(),
+  (req: Request, res: Response) => deleteWatchlist(req, res, app)
 );
 
 export default currentRouter;

@@ -202,3 +202,9 @@ like here :
 //     logoutAndCleanState();
 //   };
 // }
+
+
+//---------useEffect() and async functions 
+
+
+If asyncWrapper initiates an asynchronous operation (e.g., a network request), and you call it directly in the component body without useEffect, the component may not behave as expected. The asynchronous operation might not complete before the component finishes rendering, leading to potential race conditions or incorrect data

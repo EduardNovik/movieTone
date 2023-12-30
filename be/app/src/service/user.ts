@@ -15,15 +15,7 @@ export async function getUserByIdentityIdService(identityId: string) {
   return user;
 }
 
-// getUserWatchlistsdService
-export async function getUserWatchlistsService(identityId: string) {
-  const usersWatchlists = await db
-    .select({ watchlistId: watchlists.id, userId: watchlists.userId })
-    .from(watchlists)
-    .where(eq(watchlists.userId, identityId));
 
-  return usersWatchlists;
-}
 
 // userOnboard----
 export async function userOnboard(
