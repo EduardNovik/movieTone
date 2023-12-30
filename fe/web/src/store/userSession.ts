@@ -54,12 +54,13 @@ export const useManageUserSession = () => {
     string
   > | null>(null);
 
-  console.log(fetchedUser);
+  console.log('that is fetchedUser from userSession', fetchedUser);
 
   useEffect(() => {
     const getLoggedUser = localStorage.getItem('loggedUser');
 
     if (fetchedUser === null) {
+      localStorage.removeItem('loggedUser');
       return;
     }
 
@@ -80,42 +81,6 @@ export const useManageUserSession = () => {
 
   return loggedUserData;
 };
-
-// export const useSignoutUserSession = () => {
-//   const userSession = userSessionState();
-//   const { fetchedUser } = useFetchUserInfo();
-//   const [loggedUserData, setLoggedUserData] = useState<Record<
-//     string,
-//     string
-//   > | null>(null);
-
-//   console.log(fetchedUser);
-
-//   useEffect(() => {
-//     const getLoggedUser = localStorage.getItem('loggedUser');
-
-//     const asyncWraper = async () => {
-//       await stSignOut();
-//       window.location.href = '/';
-//     };
-
-//     // for logout
-//     if (fetchedUser === null && getLoggedUser !== null) {
-//       try {
-//         setLoggedUserData(() => {
-//           userSession.updateUserSession(null);
-//           localStorage.removeItem('loggedUser');
-//           asyncWraper();
-//           return null;
-//         });
-//       } catch (error) {
-//         console.error('Error accessing localStorage:', error);
-//       }
-//     }
-//   }, [fetchedUser]);
-
-//   return loggedUserData;
-// };
 
 // alternative---------------------------------------
 // Overcomplicated useLocalStorageSession with if()----------------------------------------------

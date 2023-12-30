@@ -1,43 +1,35 @@
-import { useCallback } from 'react';
 import axios from 'axios';
-import { useToast } from '@movieTone/ui';
+import { useEffect, useState } from 'react';
 
 const WatchlistCard = () => {
-  const { toast } = useToast();
+  const [watchlistsData, setWatchlistsData] = useState([]);
 
-  // const addWatchlist = useCallback(async () => {
-  //   try {
-  //     await axios.post(`${window.origin}/watchlist/addWatchlist`, {
-  //       name: 'My List',
-  //       genre: 'Horror',
-  //     });
+  useEffect(() => {
+    const asyncWraper = async () => {
+      try {
+        const fetchedWatchlists = await axios.get(
+          `${window.origin}/api/watchlist/all`,
+        );
+        setWatchlistsData(fetchedWatchlists.data);
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+    asyncWraper();
+  }, []);
 
-  //     toast({ title: 'Watchlist created.' });
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast({ variant: 'destructive', title: 'Something went wrong.' });
-  //   }
-  // }, []);
-
-  const addWatchlist = async () => {
-    try {
-      await axios.post(`${window.origin}/api/watchlist/addWatchlist`, {
-        name: 'List',
-        genre: 'Drama',
-      });
-
-      toast({ title: 'Watchlist created.' });
-    } catch (error) {
-      console.log(error);
-      toast({ variant: 'destructive', title: 'Something went wrong.' });
-    }
-  };
+  console.log(watchlistsData);
 
   return (
-    <div className="w-[300px] h-[300px] border-2  border-teal-500 items-center flex flex-col rounded-lg justify-center">
-      <p>Create Watchlist</p>
-      <button onClick={addWatchlist}>+</button>
-    </div>
+    Array.isArray(watchlistsData) &&
+    watchlistsData.length > 0 &&
+    watchlistsData.map(watchlist => (
+      <div className="w-[200px] h-[200px] border-2  border-teal-500 items-center flex flex-col rounded-lg justify-center">
+        <p>{watchlist.name}</p>
+        <p>{watchlist.genre}</p>
+        <p>{watchlist.id}</p>
+      </div>
+    ))
   );
 };
 

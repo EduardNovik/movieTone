@@ -9,11 +9,24 @@ import {
   identities,
 } from "@movieTone/database-schema";
 import crypto from "crypto";
-import {
-  getUserByIdentityIdService,
-  getUserWatchlistsService,
-} from "./user.ts";
+import { getUserByIdentityIdService } from "./user.ts";
 import { eq } from "drizzle-orm";
+
+// getUsersWatchlistsdService
+export async function getUsersWatchlistsService(identityId: string) {
+  const { id: userId } = await getUserByIdentityIdService(identityId);
+  const usersWatchlists = await db
+    .select({
+      watchlistId: watchlists.id,
+      userId: watchlists.userId,
+      watchlistGenre: watchlists.genre,
+      watchlistName: watchlists.name,
+    })
+    .from(watchlists)
+    .where(eq(watchlists.userId, userId));
+
+  return usersWatchlists;
+}
 
 // addTitleAndCreateWatchlist-----------------------------
 
@@ -232,7 +245,7 @@ export async function deleteWatchlist(
 
     console.log("[DELETED WATCHLIST]", watchlistId);
 
-    const usersWatchlists = await getUserWatchlistsService(identityId);
+    const usersWatchlists = await getUsersWatchlistsService(identityId);
 
     // const [titlesOfWatchlist] = await db
     //   .select({ titles: titlesToWatchlists.titleId})
