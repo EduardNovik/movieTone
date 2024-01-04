@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const WatchlistCard = () => {
-  const [watchlistsData, setWatchlistsData] = useState([]);
+  const [watchlistsData, setWatchlistsData] = useState<
+    Record<string, any>[] | []
+  >([]);
 
   useEffect(() => {
     const asyncWraper = async () => {
