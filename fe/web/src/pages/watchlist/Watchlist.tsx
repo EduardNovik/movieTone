@@ -3,9 +3,9 @@ import WatchlistCard from '../../components/WatchlistCard';
 
 const Watchlist = () => {
   return (
-    <div className="mt-20 flex gap-10">
-      <CreateWatchlistBtn />
+    <div className="mt-24 flex flex-wrap gap-4 items-center">
       <WatchlistCard />
+      <CreateWatchlistBtn />
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import { useCallback } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
+import { useSWRConfig } from 'swr';
 
 const CreateWatchlistBtn = () => {
   const { toast } = useToast();
+  const { mutate } = useSWRConfig();
 
   const addWatchlist = useCallback(async () => {
     try {
@@ -11,7 +13,7 @@ const CreateWatchlistBtn = () => {
         name: 'List',
         genre: 'Drama',
       });
-
+      mutate(`${window.origin}/api/watchlist/addWatchlist`);
       toast({ title: 'Watchlist created.' });
     } catch (error) {
       console.log(error);
