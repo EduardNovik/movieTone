@@ -4,7 +4,6 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { MoviesInfoDataType } from '../../redux/moviesSlice';
 import { fetchMoviesAsync } from '../../redux/moviesSlice';
 import { useManageUserSession } from '../../store/userSession';
-import useUserWatchlistsSWR from '../../api/SWR/useUserWatchlistsSWR';
 import Card from '../../components/Card';
 import Pagination from '../../components/Pagination';
 import useUrlState from '../../hooks/useUrlState';
@@ -22,9 +21,6 @@ const Home = () => {
   const isLoading = useSelector<RootState, boolean>(
     state => state.movies.loading,
   );
-
-  const { data, error } = useUserWatchlistsSWR();
-  console.log(data, 'watchlist');
 
   useEffect(() => {
     dispatch(fetchMoviesAsync(urlState.url));
