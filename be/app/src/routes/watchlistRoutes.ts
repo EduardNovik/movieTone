@@ -8,6 +8,7 @@ import {
   addWatchlist,
   getUsersWatchlists,
   deleteWatchlist,
+  getTitlesInWathclist,
 } from "../service/watchlist.ts";
 
 let currentRouter = Router();
@@ -38,6 +39,10 @@ currentRouter.delete(
   "/deleteWatchlist",
   verifySession(),
   (req: Request, res: Response) => deleteWatchlist(req, res, app)
+);
+
+currentRouter.post("/titles", verifySession(), (req: Request, res: Response) =>
+  getTitlesInWathclist(req, res)
 );
 
 export default currentRouter;

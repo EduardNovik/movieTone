@@ -1,5 +1,5 @@
-import CreateWatchlistBtn from '../../components/CreateWatchlistBtn';
-import WatchlistCard from '../../components/WatchlistCard';
+import CreateWatchlistBtn from '../../components/watchlist/CreateWatchlistBtn';
+import WatchlistCard from '../../components/watchlist/WatchlistCard';
 
 const Watchlist = () => {
   return (
