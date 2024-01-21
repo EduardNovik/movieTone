@@ -268,3 +268,29 @@ export async function deleteWatchlist(
     return res.status(400).end();
   }
 }
+
+// getTitlesInWathclist-----------------------------------------------------------
+
+export async function getTitlesInWathclist(req: Request, res: Response) {
+  if (req.method !== "POST") {
+    return res.status(405).end();
+  }
+
+  try {
+    const { watchlistId } = req.body;
+
+    console.log("[Passed watchlist ID]", watchlistId);
+
+    const fetchedTitlesInWatchlist = await db
+      .select()
+      .from(titlesToWatchlists)
+      .where(eq(titlesToWatchlists.watchlistId, watchlistId))
+      .innerJoin(titles, eq(titles.id, titlesToWatchlists.titleId));
+
+    console.log(fetchedTitlesInWatchlist);
+    res.status(200).json({ titles: fetchedTitlesInWatchlist });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).end();
+  }
+}

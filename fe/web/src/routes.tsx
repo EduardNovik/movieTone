@@ -15,6 +15,7 @@ import { Auth } from './pages/auth/index.ts';
 import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
 import { Title } from './pages/title/index.ts';
+import { WatchlistDetails } from './pages/watchlist/watchlistDetails/watchlistDetails.tsx';
 import RegisterModal from './components/modals/RegisterModal';
 
 const rootRoute = new RootRoute();
@@ -48,6 +49,12 @@ const watchlistRoute = new Route({
   getParentRoute: () => indexRoute,
   path: '/watchlist',
   component: () => <Watchlist />,
+});
+
+const titlesInWatchlistRoute = new Route({
+  getParentRoute: () => indexRoute,
+  path: '/watchlist/$id',
+  component: () => <WatchlistDetails />,
 });
 
 const aboutRoute = new Route({
@@ -84,7 +91,12 @@ const signupRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  indexRoute.addChildren([latestRoute, watchlistRoute, aboutRoute, titleRoute]),
+  indexRoute.addChildren([
+    latestRoute,
+    watchlistRoute.addChildren([titlesInWatchlistRoute]),
+    aboutRoute,
+    titleRoute,
+  ]),
   errorRoute,
   authRoute,
   signupRoute,

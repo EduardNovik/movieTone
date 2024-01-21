@@ -208,3 +208,7 @@ like here :
 
 
 If asyncWrapper initiates an asynchronous operation (e.g., a network request), and you call it directly in the component body without useEffect, the component may not behave as expected. The asynchronous operation might not complete before the component finishes rendering, leading to potential race conditions or incorrect data
+
+
+//---------axios get
+If you want to send something within request body with GET requests, params won't work - and neither will data, as it's only taken into account for PUT, POST, DELETE, and PATCH requests. There're several lengthy discussions about this feature, and here's the telling quote:
