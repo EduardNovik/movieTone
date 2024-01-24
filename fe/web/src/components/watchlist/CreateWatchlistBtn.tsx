@@ -25,7 +25,7 @@ const CreateWatchlistBtn = () => {
     <Button
       onClick={addWatchlist}
       variant="outline"
-      className="w-[200px] h-[200px] rounded-lg text-sm"
+      className="w-[200px] h-[200px] rounded-lg text-sm text-teal-700"
     >
       Create Watchlist
     </Button>
