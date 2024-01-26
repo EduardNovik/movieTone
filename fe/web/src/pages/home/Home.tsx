@@ -39,7 +39,9 @@ const Home = () => {
               <Card key={item.id} item={item} />
             ))
           ) : (
-            <div>Something went wrong, cant find movies list</div>
+            <div className="font-bold">
+              Something went wrong, cant find movies list
+            </div>
           )}
           <Pagination />
         </div>
