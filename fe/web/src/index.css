@@ -29,23 +29,6 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
-/* .btn_dark {
-  background-color: transparent;
-  border-color: #374151;
-  color: #ffffff;
-  border: 1px solid gray;
-}
-
-.btn_light {
-  background-color: transparent;
-  border-color: rgb(55 65 81);
-  color: black;
-  border: 1px solid gray;
-}
-.btn_light:hover {
-  background-color: rgb(243 244 246);
-} */
-
 .slick-arrow {
   height: 70px;
   width: 45px;
