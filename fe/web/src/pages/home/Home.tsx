@@ -39,7 +39,7 @@ const Home = () => {
               <Card key={item.id} item={item} />
             ))
           ) : (
-            <div className="font-bold">
+            <div>
               Something went wrong, cant find movies list
             </div>
           )}
