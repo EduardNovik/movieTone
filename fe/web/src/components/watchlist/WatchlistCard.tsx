@@ -3,6 +3,7 @@ import useUserWatchlistsSWR from '../../api/SWR/useUserWatchlistsSWR';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
 import { useNavigate, useParams } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 interface Watchlist {
   id: string;
@@ -13,6 +14,8 @@ interface Watchlist {
 const WatchlistCard = () => {
   const { mutate } = useSWRConfig();
   const navigate = useNavigate();
+  const { data, error } = useUserWatchlistsSWR();
+
   const deleteWatchlist = async (watchlist: Watchlist) => {
     try {
       await axios.delete(`${window.origin}/api/watchlist/deleteWatchlist`, {
@@ -26,7 +29,12 @@ const WatchlistCard = () => {
     }
   };
 
-  const { data, error } = useUserWatchlistsSWR();
+  // const navigateToWatchlistDetails = (watchlist: Watchlist) => {
+  //   navigate({
+  //     to: `/watchlist/$id`,
+  //     params: { id: watchlist.id },
+  //   });
+  // };
 
   return error ? (
     <p>Something went wrong</p>
@@ -34,13 +42,8 @@ const WatchlistCard = () => {
     data.map((watchlist: Watchlist) => (
       <div
         key={watchlist.id}
-        className="w-[200px] h-[200px] border-2  border-teal-500 items-center flex flex-col rounded-lg justify-center cursor-pointer"
-        onClick={() =>
-          navigate({
-            to: `/watchlist/$id`,
-            params: { id: watchlist.id },
-          })
-        }
+        className="w-[200px] h-[200px] border-2 border-myViolet items-center flex flex-col rounded-lg justify-center cursor-pointer p-4"
+        // onClick={() => navigateToWatchlistDetails(watchlist)}
       >
         <p>{watchlist.name}</p>
         <p>{watchlist.genre}</p>

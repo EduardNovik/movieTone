@@ -13,8 +13,8 @@ const CreateWatchlistBtn = () => {
         name: 'List',
         genre: 'Drama',
       });
-      mutate(`${window.origin}/api/watchlist/addWatchlist`);
       toast({ title: 'Watchlist created.' });
+      mutate(`${window.origin}/api/watchlist/all`);
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
@@ -25,7 +25,7 @@ const CreateWatchlistBtn = () => {
     <Button
       onClick={addWatchlist}
       variant="outline"
-      className="w-[200px] h-[200px] rounded-lg text-sm text-teal-700"
+      className="w-[200px] h-[200px] rounded-lg text-sm text-myViolet"
     >
       Create Watchlist
     </Button>

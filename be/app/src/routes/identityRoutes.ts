@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addIdentity } from "../service/identity.ts";
+import { addIdentity } from "../handlers/identity.ts";
 
 let currentRouter: Router = Router();
 

@@ -1,32 +1,16 @@
 import { Request, Response, Application } from "express";
-
 import { db } from "../db.ts";
 import {
   titlesToWatchlists,
   titles,
   watchlists,
-  users,
-  identities,
 } from "@movieTone/database-schema";
 import crypto from "crypto";
-import { getUserByIdentityIdService } from "./user.ts";
 import { eq } from "drizzle-orm";
-
-// getUsersWatchlistsdService
-export async function getUsersWatchlistsService(identityId: string) {
-  const { id: userId } = await getUserByIdentityIdService(identityId);
-  const usersWatchlists = await db
-    .select({
-      watchlistId: watchlists.id,
-      userId: watchlists.userId,
-      watchlistGenre: watchlists.genre,
-      watchlistName: watchlists.name,
-    })
-    .from(watchlists)
-    .where(eq(watchlists.userId, userId));
-
-  return usersWatchlists;
-}
+import {
+  getUserByIdentityIdService,
+  getUsersWatchlistsService,
+} from "../services/userService.ts";
 
 // addTitleAndCreateWatchlist-----------------------------
 
@@ -241,27 +225,38 @@ export async function deleteWatchlist(
   try {
     const { watchlistId } = req.body;
     const identityId = app.locals.identityId;
-    const { id: userId } = await getUserByIdentityIdService(identityId);
-
     console.log("[DELETED WATCHLIST]", watchlistId);
 
-    const usersWatchlists = await getUsersWatchlistsService(identityId);
+    // Check if there are related entries in titlesToWatchlists
+    const relatedTitlesToWatchlists = await db
+      .select()
+      .from(titlesToWatchlists)
+      .where(eq(titlesToWatchlists.watchlistId, watchlistId));
 
-    // const [titlesOfWatchlist] = await db
-    //   .select({ titles: titlesToWatchlists.titleId})
-    //   .from(titlesToWatchlists)
-    //   .where(eq(titlesToWatchlists.watchlistId, watchlistId))
-    //   .innerJoin(titles, eq(titles.id))
+    if (relatedTitlesToWatchlists.length === 0) {
+      console.log(
+        "No related titles found. Skipping deletion of titlesToWatchlists and titles."
+      );
+      const deletedWatchlist = await db.transaction(async (trx) => {
+        return await trx
+          .delete(watchlists)
+          .where(eq(watchlists.id, watchlistId))
+          .returning();
+      });
+      console.log("deletedWatchlist", deletedWatchlist);
+    } else {
+      console.log("Related entries found, proceed with deletion");
 
-    const deletedWatchlist = await db.transaction(async (trx) => {
-      await trx
-        .delete(titlesToWatchlists)
-        .where(eq(titlesToWatchlists.watchlistId, watchlistId));
+      const deletedWatchlist = await db.transaction(async (trx) => {
+        await trx
+          .delete(titlesToWatchlists)
+          .where(eq(titlesToWatchlists.watchlistId, watchlistId));
 
-      await trx.delete(watchlists).where(eq(watchlists.id, watchlistId));
-      await trx.delete(titles).where(eq(titles.id, watchlistId));
-    });
-    console.log(deletedWatchlist);
+        await trx.delete(watchlists).where(eq(watchlists.id, watchlistId));
+        await trx.delete(titles).where(eq(titles.id, watchlistId));
+      });
+      console.log("deletedWatchlist", deletedWatchlist);
+    }
     res.status(200).end();
   } catch (error) {
     console.log(error);

@@ -29,7 +29,7 @@ const Header = () => {
             <span className="min-w-[50px] hover:none">{user.name}</span>
           ) : (
             <span
-              className="cursor-pointer min-w-[50px] text-black hover:text-gray-500"
+              className="cursor-pointer min-w-[50px] text-black dark:text-myGray dark:hover:text-myViolet"
               onClick={openLoginModal}
             >
               Log in
