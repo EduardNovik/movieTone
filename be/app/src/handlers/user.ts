@@ -1,20 +1,9 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
 import { users, identities, watchlists } from "@movieTone/database-schema";
-import { eq } from "drizzle-orm";
 import crypto from "crypto";
 import { SessionRequest } from "supertokens-node/framework/express";
-
-// getUserByIdentityIdService
-export async function getUserByIdentityIdService(identityId: string) {
-  const [user] = await db
-    .select({ id: users.id, name: users.name, email: users.email })
-    .from(users)
-    .innerJoin(identities, eq(users.id, identities.userId))
-    .where(eq(identities.id, identityId));
-
-  return user;
-}
+import { getUserByIdentityIdService } from "../services/userService.ts";
 
 // userOnboard----
 export async function userOnboard(

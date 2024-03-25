@@ -9,7 +9,7 @@ import {
   getUsersWatchlists,
   deleteWatchlist,
   getTitlesInWathclist,
-} from "../service/watchlist.ts";
+} from "../handlers/watchlist.ts";
 
 let currentRouter = Router();
 

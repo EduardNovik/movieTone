@@ -7,22 +7,26 @@
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
 
-.slick-next::before {
-  color: white;
+body::-webkit-scrollbar {
+  display: none;
 }
+
 .slick-next {
   right: 10px;
 }
-.slick-prev::before {
-  color: white;
-}
+
 .slick-prev {
+  top: calc(50% - 35px);
   left: 10px;
   z-index: 1;
 }
+.slick-prev {
+  transform: rotate(180deg);
+}
 
-body::-webkit-scrollbar {
-  display: none;
+.slick-next::before,
+.slick-prev::before {
+  content: none;
 }
 
 .animate-in {
@@ -36,6 +40,7 @@ body::-webkit-scrollbar {
   border-radius: 10px;
   background-repeat: no-repeat;
   background-position: center;
+  background-image: url('./assets/chevron-r.svg');
   transition:
     background-color 0.2s,
     border 0.35s,
@@ -43,27 +48,17 @@ body::-webkit-scrollbar {
 }
 
 .slick-arrow:hover {
-  background-color: transparent;
-  border: 1px solid teal;
+  border: 1px solid #ee82ee;
   backdrop-filter: blur(5px);
   background-repeat: no-repeat;
   background-position: center;
-}
-.slick-next {
   background-image: url('./assets/chevron-r.svg');
 }
-.slick-next:hover {
+
+.slick-arrow:focus {
+  background-repeat: no-repeat;
+  background-position: center;
   background-image: url('./assets/chevron-r.svg');
-}
-.slick-prev {
-  background-image: url('./assets/chevron-l.svg');
-}
-.slick-prev:hover {
-  background-image: url('./assets/chevron-l.svg');
-}
-.slick-next::before,
-.slick-prev::before {
-  content: none;
 }
 
 /* @layer components {
@@ -72,16 +67,24 @@ body::-webkit-scrollbar {
 /* to override original styles we use utilities */
 @layer utilities {
   .btn_dark {
-    @apply bg-transparent  border-[1px] text-white border-gray-700 shadow-none hover:bg-gray-800;
+    @apply backdrop-blur-xl bg-transparent border text-white border-gray-700 shadow-none hover:bg-gray-800 hover:border-myViolet transition-all duration-500 ease-in-out;
   }
   .btn_light {
-    @apply bg-transparent border-[1px] text-black  shadow-none hover:bg-gray-100;
+    @apply backdrop-blur-xl bg-transparent border text-black  shadow-none hover:bg-gray-100 transition-all duration-500 ease-in-out;
   }
   .search_btn_dark {
     @apply bg-transparent text-white shadow-none hover:bg-gray-800 rounded-none rounded-e-lg  border-0;
   }
   .search_btn_light {
     @apply bg-transparent text-black  shadow-none hover:bg-gray-100 rounded-none rounded-e-md  border-0;
+  }
+  .bg-gradient-dark {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      4deg,
+      rgba(0, 0, 0, 1) 40%,
+      rgba(103, 103, 103, 1) 100%
+    );
   }
 }
 

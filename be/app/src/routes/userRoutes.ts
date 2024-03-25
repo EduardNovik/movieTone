@@ -4,7 +4,7 @@ import {
   userOnboard,
   isUserOnboarded,
   getUserByIdentityId,
-} from "../service/user.ts";
+} from "../handlers/user.ts";
 import app from "../app.ts";
 
 let currentRouter = Router();

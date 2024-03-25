@@ -1,8 +1,12 @@
 import { Button } from '@movieTone/ui';
 import { ChevronUp } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useRouterState } from '@tanstack/react-router';
 
 const UpDown = () => {
+  const location = useRouterState({ select: s => s.location });
+
   function goUp() {
     window.scrollTo({
       top: 0,
@@ -15,21 +19,48 @@ const UpDown = () => {
       behavior: 'smooth',
     });
   }
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const contentHeight = document.documentElement.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      setIsVisible(contentHeight > viewportHeight);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Initial check on component mount
+    handleScroll();
+
+    // Remove scroll event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsVisible(false);
+  }, [location]);
+
   return (
-    <div className="flex flex-col gap-6 fixed bottom-10 right-8 z-50">
-      <Button
-        onClick={goUp}
-        className="rounded-lg w-10 h-10 bg-transparent backdrop-blur-xl hover:bg-gray-100 dark:hover:bg-gray-800 dark:border-gray-700 border-[1px] p-1 shadow-none"
-      >
-        <ChevronUp className="text-black dark:text-white" size={14} />
-      </Button>
-      <Button
-        onClick={goDown}
-        className="rounded-lg w-10 h-10 bg-transparent backdrop-blur-xl hover:bg-gray-100 dark:hover:bg-gray-800 dark:border-gray-700 border-[1px] p-1 shadow-none"
-      >
-        <ChevronDown className="text-black dark:text-white" size={14} />
-      </Button>
-    </div>
+    isVisible && (
+      <div className="flex flex-col gap-6 fixed bottom-24 right-8 z-50">
+        <Button
+          onClick={goUp}
+          className="rounded-lg w-10 h-10 btn_light dark:btn_dark p-1"
+        >
+          <ChevronUp className="text-black dark:text-white" size={14} />
+        </Button>
+        <Button
+          onClick={goDown}
+          className="rounded-lg w-10 h-10 btn_light dark:btn_dark p-1"
+        >
+          <ChevronDown className="text-black dark:text-white" size={14} />
+        </Button>
+      </div>
+    )
   );
 };
 

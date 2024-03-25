@@ -25,7 +25,10 @@ const HeaderMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button
+          variant="outline"
+          className="border dark:border-gray-700 dark:hover:border-myViolet transition-all duration-500 ease-in-out dark:hover:text-myViolet"
+        >
           <Menu className="pr-1" size={20} /> Menu
         </Button>
       </DropdownMenuTrigger>

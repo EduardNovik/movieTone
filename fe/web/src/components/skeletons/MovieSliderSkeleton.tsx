@@ -1,7 +1,11 @@
 import { Skeleton } from '@movieTone/ui';
 
-const MovieSliderSkeleton = () => {
-  return <Skeleton className="w-full aspect-video" />;
+const MovieSliderSkeleton = ({
+  classNameCustom,
+}: {
+  classNameCustom: string;
+}) => {
+  return <Skeleton className={`${classNameCustom} w-full `} />;
 };
 
 export default MovieSliderSkeleton;

@@ -16,14 +16,13 @@ export default {
   theme: {
     extend: {
       backgroundImage: { regBg: "url('./src/assets/bg_1.jpg')" },
+      colors: {
+        'gradient-dark':
+          'linear-gradient(0deg, rgba(0,0,0,1) 1%, rgba(117,63,0,1) 100%)',
+        myViolet: '#ee82ee',
+        myGray: '#e1e7ef',
+      },
     },
   },
   presets: [tailwindConfig],
 };
-// dark: {
-//       '.btn_dark': {
-//         backgroundColor: 'transparent',
-//         borderColor: '#374151',
-//         textColor: '#ffffff',
-//       },
-//     },
