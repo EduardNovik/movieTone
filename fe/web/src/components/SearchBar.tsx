@@ -1,7 +1,7 @@
 import { Button } from '@movieTone/ui';
 import { Input } from '@movieTone/ui';
 import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchMoviesAsync } from '../redux/moviesSlice';
 import useUrlState from '../hooks/useUrlState';
@@ -14,21 +14,24 @@ const SearchBar = () => {
   const urlState = useUrlState();
   const pageState = usePageState();
 
-  // console.log(urlState.url);
-
-  useEffect(() => {
-    dispatch(fetchMoviesAsync(urlState.url));
-  }, [urlState.url]);
-
   const onSearch = () => {
-
     urlState.updateUrl(
       `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${pageState.page}`,
+    );
+    dispatch(
+      fetchMoviesAsync(
+        `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${pageState.page}`,
+      ),
     );
 
     if (query == '') {
       urlState.updateUrl(
         'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+      );
+      dispatch(
+        fetchMoviesAsync(
+          'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+        ),
       );
     }
   };

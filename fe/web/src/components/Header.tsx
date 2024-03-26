@@ -1,7 +1,7 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 import Logo from '../assets/iconfinder6.png';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
@@ -14,6 +14,8 @@ const Header = () => {
   const openLoginModal = useCallback(() => {
     loginModal.onOpen();
   }, [loginModal]);
+
+  useEffect(() => {}, [user]);
 
   return (
     <header className="bg-transparent backdrop-blur-3xl shadow-md w-full z-50 fixed">

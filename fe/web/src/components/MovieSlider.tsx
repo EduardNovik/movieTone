@@ -37,8 +37,7 @@ const MovieSlider = () => {
       }
     },
   };
-
-  console.log(data);
+  console.log('Slider Component');
 
   return (
     <Slider {...settings} className="mt-20 max-h-[650px]">
