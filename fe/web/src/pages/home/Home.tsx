@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { MoviesInfoDataType } from '../../redux/moviesSlice';
-import { fetchMoviesAsync } from '../../redux/moviesSlice';
-import { useManageUserSession } from '../../store/userSession';
 import Card from '../../components/Card';
 import Pagination from '../../components/Pagination';
-import useUrlState from '../../hooks/useUrlState';
 import CardSkeleton from '../../components/skeletons/CardSkeleton';
 import Sidebar from '../../components/Sidebar';
 import MovieSlider from '../../components/MovieSlider';
+import { fetchMoviesAsync } from '../../redux/moviesSlice';
 
 const Home = () => {
-  useManageUserSession();
-  const urlState = useUrlState();
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(
+      fetchMoviesAsync(
+        'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+      ),
+    );
+  }, []);
   const movies = useSelector<RootState, MoviesInfoDataType>(
     state => state.movies.data,
   );
@@ -22,9 +25,7 @@ const Home = () => {
     state => state.movies.loading,
   );
 
-  useEffect(() => {
-    dispatch(fetchMoviesAsync(urlState.url));
-  }, [urlState.url]);
+  console.log('Home Component');
 
   return (
     <div>
@@ -39,9 +40,7 @@ const Home = () => {
               <Card key={item.id} item={item} />
             ))
           ) : (
-            <div>
-              Something went wrong, cant find movies list
-            </div>
+            <div>Something went wrong, can't find movies list</div>
           )}
           <Pagination />
         </div>

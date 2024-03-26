@@ -54,7 +54,7 @@ export const useManageUserSession = () => {
     string
   > | null>(null);
 
-  console.log('that is fetchedUser from userSession', fetchedUser);
+  console.log(fetchedUser, 'fetchedUser');
 
   useEffect(() => {
     const getLoggedUser = localStorage.getItem('loggedUser');

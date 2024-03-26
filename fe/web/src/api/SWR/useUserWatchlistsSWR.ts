@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import axios from 'axios';
+import { userSessionState } from '../../store/userSession';
 
 const usersWatchlistsFetcher = (url: string) => {
   return axios
@@ -9,15 +10,23 @@ const usersWatchlistsFetcher = (url: string) => {
 };
 
 const useUserWatchlistsSWR = () => {
-  const { data, error, isLoading } = useSWR(
-    `${window.origin}/api/watchlist/all`,
-    usersWatchlistsFetcher,
-  );
+  const { user } = userSessionState();
+  if (user) {
+    const { data, error, isLoading } = useSWR(
+      `${window.origin}/api/watchlist/all`,
+      usersWatchlistsFetcher,
+    );
 
+    return {
+      data,
+      error,
+      isLoading,
+    };
+  }
   return {
-    data,
-    error,
-    isLoading,
+    data: null,
+    error: null,
+    isLoading: false,
   };
 };
 
