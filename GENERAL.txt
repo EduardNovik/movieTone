@@ -212,3 +212,181 @@ If asyncWrapper initiates an asynchronous operation (e.g., a network request), a
 
 //---------axios get
 If you want to send something within request body with GET requests, params won't work - and neither will data, as it's only taken into account for PUT, POST, DELETE, and PATCH requests. There're several lengthy discussions about this feature, and here's the telling quote:
+
+
+
+//------no conditional hook rendering
+Even here in useSWR:
+// const useUserWatchlistsSWR = () => {
+//   const { user } = userSessionState();
+
+//   if (user) {
+//     const { data, error, isLoading } = useSWR(
+//       `${window.origin}/api/watchlist/all`,
+//       usersWatchlistsFetcher,
+//     );
+
+//     return {
+//       data,
+//       error,
+//       isLoading,
+//     };
+//   }
+//   return {
+//     data: null,
+//     error: null,
+//     isLoading: false,
+//   };
+// };
+
+It will cause the error in react 
+
+
+//--------Async handling issue (there was exec twice) 
+It doesnt wait for useFetchUserInfo finish fetch and
+there was dependency [useFetchUserInfo] in useManageUserSession 
+
+Yes, you're correct. If you call useFetchUserInfo directly within useManageUserSession without using a Promise or any other mechanism to wait for the data to be fetched, it will not wait for the data to be fetched and will proceed with the rest of the code execution.
+
+In this case, when useFetchUserInfo is called, it starts fetching data asynchronously, but useManageUserSession continues executing immediately without waiting for the data to be available. This can lead to fetchedUser being null initially until the data is fetched and useEffect updates the state with the fetched user data.
+
+To ensure that useManageUserSession waits for the data to be fetched before proceeding, you need to make use of asynchronous mechanisms such as Promise or async/await to wait for the data to be available before continuing with the rest of the code execution. This ensures that fetchedUser will contain the fetched data when it is used in the subsequent code.
+
+
+export const useFetchUserInfo = () => {
+  const [fetchedUser, setFetchedUser] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const asyncWraper = async () => {
+      try {
+        const sessionCheck = await doesSessionExist();
+        if (!sessionCheck) {
+          return;
+        }
+
+        const response = await axios.get(`${window.origin}/api/user/current`);
+        setFetchedUser(response.data.user);
+      } catch (error: any) {
+        console.error('Error fetching user info:', error);
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    asyncWraper();
+  }, []);
+
+  return { fetchedUser, isLoading, error };
+};
+
+export const useManageUserSession = () => {
+  const userSession = userSessionState();
+  const { fetchedUser } = useFetchUserInfo();
+  const [loggedUserData, setLoggedUserData] = useState<Record<
+    string,
+    string
+  > | null>(null);
+
+  console.log(fetchedUser, 'fetchedUser');
+
+  useEffect(() => {
+    const getLoggedUser = localStorage.getItem('loggedUser');
+
+    if (fetchedUser === null) {
+      localStorage.removeItem('loggedUser');
+      return;
+    }
+
+    if (JSON.stringify(fetchedUser) === getLoggedUser) {
+      return;
+    }
+
+    try {
+      setLoggedUserData(() => {
+        localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
+        userSession.updateUserSession(fetchedUser);
+        return fetchedUser;
+      });
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
+    }
+  }, [fetchedUser]);
+
+  return loggedUserData;
+};
+
+
+The issue with your code is likely due to the fact that the useFetchUserInfo hook is not blocking the execution of the useManageUserSession hook until the data is fetched. This happens because useEffect runs asynchronously after the component has rendered, and it doesn't block the rendering process.
+
+To ensure that useManageUserSession waits for the data to be fetched before proceeding, you can modify it to wait for the isLoading state to change to false before processing the fetched user data. Here's how you can do it:
+
+
+===or in other way with promise (so we dont brake the rule of React hooks and doesnt make it async): 
+
+
+export const useFetchUserInfo = () => {
+  return new Promise<Record<string, any> | null>((resolve, reject) => {
+    const fetchData = async () => {
+      try {
+        const sessionCheck = await doesSessionExist();
+        if (!sessionCheck) {
+          resolve(null);
+          return;
+        }
+
+        const response = await axios.get(`${window.origin}/api/user/current`);
+        resolve(response.data.user);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        reject(error);
+      }
+    };
+
+    fetchData();
+  });
+};
+
+export const useManageUserSession = () => {
+  const userSession = userSessionState();
+
+  const [loggedUserData, setLoggedUserData] = useState<Record<
+    string,
+    string
+  > | null>(null);
+
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      try {
+        const getLoggedUser = localStorage.getItem('loggedUser');
+        const fetchedUser = await useFetchUserInfo();
+        console.log(fetchedUser, 'fetchedUser');
+
+        if (fetchedUser === null) {
+          localStorage.removeItem('loggedUser');
+          return;
+        }
+
+        if (JSON.stringify(fetchedUser) === getLoggedUser) {
+          return;
+        }
+
+        setLoggedUserData(() => {
+          localStorage.setItem('loggedUser', JSON.stringify(fetchedUser));
+          userSession.updateUserSession(fetchedUser);
+          return fetchedUser;
+        });
+      } catch (error) {
+        console.error(
+          'Error in useManageUserSession during exec of  useFetchUserInfo():',
+          error,
+        );
+      }
+    };
+    asyncWrapper();
+  }, []);
+
+  return loggedUserData;
+};
