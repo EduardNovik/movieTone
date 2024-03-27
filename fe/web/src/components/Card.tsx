@@ -2,8 +2,7 @@ import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
 import { Button, useToast } from '@movieTone/ui';
 import axios from 'axios';
-import { Check, Plus, ScrollText } from 'lucide-react';
-// import { doesSessionExist } from 'supertokens-auth-react/recipe/session';
+import { Plus, ScrollText } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -15,6 +14,7 @@ import {
 } from '@movieTone/ui';
 
 import useUserWatchlistsSWR from '../api/SWR/useUserWatchlistsSWR';
+import { useRef } from 'react';
 
 interface CardProps {
   item: Record<string, any>;
@@ -67,8 +67,29 @@ const Card = ({ item }: CardProps) => {
       console.log(error);
     }
   };
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const showCurtain = () => {
+    const currentElement = ref.current;
+    if (currentElement) {
+      currentElement.style.opacity = '50%';
+    }
+  };
+
+  const hideCurtain = () => {
+    const currentElement = ref.current;
+    if (currentElement) {
+      currentElement.style.opacity = '0%';
+    }
+  };
+
   return (
-    <div className="content w-full flex flex-col items-center md:w-1/2 relative p-4 ease-in-out duration-300 cursor-pointer">
+    <div
+      className="content w-full flex flex-col items-center md:w-1/2 relative ease-in-out duration-300 cursor-pointer hover:scale-105 shadow-lg hover:shadow-myViolet rounded-lg"
+      onMouseEnter={showCurtain}
+      onMouseLeave={hideCurtain}
+    >
       <img
         src={`https://www.themoviedb.org/t/p/original/${item.backdrop_path}`}
         alt="cover_img"
@@ -76,13 +97,24 @@ const Card = ({ item }: CardProps) => {
         loading="lazy"
         onClick={() => navigate({ to: '/title/$id', params: { id: item.id } })}
       />
-      <p className="text-center">{item.title ? item.title : item.name}</p>
-      <span className="flex gap-2 absolute top-8 right-8 items-center">
+      <p className="text-center absolute top-4 left-8 text-white">
+        {item.title ? item.title : item.name}
+      </p>
+      <span className="flex gap-2 absolute top-4 right-8 items-center">
         <p className="text-yellow-500">
           {Math.round(item.vote_average * 10) / 10}
         </p>
         <img src={starIcon} alt="" className="w-4 h-4" />
       </span>
+      <div
+        ref={ref}
+        className="opacity-0 absolute bottom-0 left-0 right-0 bg-black h-20 z-20 rounded-b-lg transition-all duration-300"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <p className="text-white">{item.title ? item.title : item.name}</p>
+        </div>
+      </div>
+
       {Array.isArray(data) && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

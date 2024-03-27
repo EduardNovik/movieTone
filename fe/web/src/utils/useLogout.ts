@@ -12,7 +12,7 @@ export const useLogout = () => {
       await signOut();
       localStorage.removeItem('loggedUser');
       updateUserSession(null);
-      window.location.href = '/';
+      // window.location.href = '/';
     } catch (error) {
       console.error('Error during sign out:', error);
     }

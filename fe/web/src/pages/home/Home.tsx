@@ -32,7 +32,7 @@ const Home = () => {
       <MovieSlider />
       <div className="flex">
         <Sidebar />
-        <div className="flex md:flex-row flex-col flex-wrap basis-[100%] flex-1 justify-center items-center pt-20">
+        <div className="flex md:flex-row flex-col flex-wrap basis-full flex-1 justify-center items-center pt-20 gap-4">
           {isLoading ? (
             <CardSkeleton numOfCards={20} />
           ) : movies ? (
@@ -42,9 +42,9 @@ const Home = () => {
           ) : (
             <div>Something went wrong, can't find movies list</div>
           )}
-          <Pagination />
         </div>
       </div>
+      <Pagination />
     </div>
   );
 };

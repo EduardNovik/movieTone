@@ -6,8 +6,8 @@
   ],
   "sqltools.connections": [],
   "launch": {
-    
     "configurations": [],
     "compounds": []
-  }
+  },
+  "cSpell.words": ["Watchlist"]
 }

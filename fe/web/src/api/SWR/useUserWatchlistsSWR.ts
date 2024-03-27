@@ -11,22 +11,15 @@ const usersWatchlistsFetcher = (url: string) => {
 
 const useUserWatchlistsSWR = () => {
   const { user } = userSessionState();
-  if (user) {
-    const { data, error, isLoading } = useSWR(
-      `${window.origin}/api/watchlist/all`,
-      usersWatchlistsFetcher,
-    );
 
-    return {
-      data,
-      error,
-      isLoading,
-    };
-  }
+  const { data, error, isLoading } = useSWR(
+    user ? `${window.origin}/api/watchlist/all` : null,
+    usersWatchlistsFetcher,
+  );
   return {
-    data: null,
-    error: null,
-    isLoading: false,
+    data,
+    error,
+    isLoading,
   };
 };
 
