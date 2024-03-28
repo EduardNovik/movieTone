@@ -11,10 +11,11 @@ import {
   useParams,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { Auth } from './pages/auth/index.ts';
+import { Auth } from './pages/auth';
 import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
-import { Title } from './pages/title/index.ts';
+import { Title } from './pages/title';
+import { User } from './pages/user';
 import { WatchlistDetails } from './pages/watchlist/watchlistDetails/watchlistDetails.tsx';
 import RegisterModal from './components/modals/RegisterModal';
 
@@ -72,6 +73,12 @@ const titleRoute = new Route({
   },
 });
 
+const userRoute = new Route({
+  getParentRoute: () => indexRoute,
+  path: '/user',
+  component: () => <User />,
+});
+
 const authRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/verify',
@@ -96,6 +103,7 @@ const routeTree = rootRoute.addChildren([
     watchlistRoute.addChildren([titlesInWatchlistRoute]),
     aboutRoute,
     titleRoute,
+    userRoute,
   ]),
   errorRoute,
   authRoute,

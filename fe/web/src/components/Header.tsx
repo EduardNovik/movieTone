@@ -6,6 +6,7 @@ import useLoginModalState from '../hooks/useLoginModalState';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
 import { userSessionState } from '../store/userSession';
+import UserMenu from './UserMenu';
 
 const Header = () => {
   const loginModal = useLoginModalState();
@@ -27,16 +28,7 @@ const Header = () => {
           <HeaderMenu />
         </div>
         <div className="flex gap-2 items-center w-[40%] justify-end">
-          {user?.name ? (
-            <span className="min-w-[50px] hover:none">{user.name}</span>
-          ) : (
-            <span
-              className="cursor-pointer min-w-[50px] text-black dark:text-myGray dark:hover:text-myViolet"
-              onClick={openLoginModal}
-            >
-              Log in
-            </span>
-          )}
+          <UserMenu />
           <SearchBar />
           <ModeToggle />
         </div>
