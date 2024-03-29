@@ -10,11 +10,11 @@ import {
   DropdownMenuShortcut,
   DropdownMenuGroup,
 } from '@movieTone/ui';
-import { Menu } from 'lucide-react';
 import { useLogout } from '../utils/useLogout';
 import { userSessionState } from '../store/userSession';
 import { useCallback } from 'react';
 import useLoginModalState from '../hooks/useLoginModalState';
+import { UserCheck } from 'lucide-react';
 
 const UserMenu = () => {
   const logoutAndCleanState = useLogout();
@@ -36,7 +36,7 @@ const UserMenu = () => {
           variant="outline"
           className="border dark:border-gray-700 dark:hover:border-myViolet transition-all duration-500 ease-in-out dark:hover:text-myViolet"
         >
-          <Menu className="pr-1" size={20} />
+          <UserCheck className="pr-1" size={20} />
           {user.name}
         </Button>
       </DropdownMenuTrigger>
@@ -63,8 +63,8 @@ const UserMenu = () => {
     </DropdownMenu>
   ) : (
     <Button
-      className="cursor-pointer min-w-[50px] text-black dark:text-myGray dark:hover:text-myViolet"
-      variant="outline"
+      className="cursor-pointer min-w-[80px] text-black dark:text-myGray dark:hover:text-myViolet"
+      variant="ghost"
       onClick={openLoginModal}
     >
       Log in

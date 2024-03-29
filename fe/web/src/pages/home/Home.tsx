@@ -32,7 +32,7 @@ const Home = () => {
       <MovieSlider />
       <div className="flex">
         <Sidebar />
-        <div className="flex md:flex-row flex-col flex-wrap basis-full flex-1 justify-center items-center pt-20 gap-4">
+        <div className="flex md:flex-row flex-col flex-wrap basis-full flex-1 justify-center items-center pt-20">
           {isLoading ? (
             <CardSkeleton numOfCards={20} />
           ) : movies ? (
