@@ -16,34 +16,39 @@ export async function userOnboard(
   }
 
   try {
-    const email = app.locals.email;
-    const { name, password } = req.body;
+    // const email = app.locals.email;
+    const { name, email, password } = req.body;
+    console.log("THIS IS EMAIL", email);
 
-    console.log("PASSED DATA", name, email, password);
+    console.log("UserOnboard PASSED DATA ", name, email, password);
+    const userId = crypto.randomUUID();
+    const identityId = app.locals.identityId;
+
+    console.log("userId PASSED DATA ", userId);
+
+    console.log("identityId PASSED DATA ", identityId);
 
     await db.transaction(async (trx) => {
-      const userId = crypto.randomUUID();
-      const identityId = app.locals.identityId;
-
       // Insert into 'users' table
       await trx.insert(users).values({
         id: userId,
         name,
-        email: email,
+        email,
         password,
       });
       // Insert into 'identities' table
       await trx.insert(identities).values({
         id: identityId,
         userId: userId,
-        email: email,
+        email,
       });
     });
 
     res.status(200).end();
-  } catch (error) {
+  } catch (error: any) {
+    console.log("HEY WE ARE IN CATCH");
     console.log(error);
-    return res.status(400).end();
+    res.status(400).json({ error: error });
   }
 }
 

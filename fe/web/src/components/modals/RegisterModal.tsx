@@ -3,12 +3,13 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Button, useToast } from '@movieTone/ui';
 import { useNavigate } from '@tanstack/react-router';
-
+import { ArrowLeft } from 'lucide-react';
 // Add useForms
 
 const RegisterModal = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -20,12 +21,14 @@ const RegisterModal = () => {
       await axios.post(`${window.origin}/api/user/onboard`, {
         password,
         name,
+        email,
       });
 
       toast({ title: 'Account created.' });
 
       setPassword('');
       setName('');
+      setEmail('');
 
       // await manageUserSession();
 
@@ -48,6 +51,12 @@ const RegisterModal = () => {
       />
       <Input
         disabled={isLoading}
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+      />
+      <Input
+        disabled={isLoading}
         placeholder="Password"
         type="password"
         value={password}
@@ -66,7 +75,7 @@ const RegisterModal = () => {
       overflow-y-auto
       fixed
       inset-0
-      z-50
+      z-40
       outline-none
       focus:outline-none
       bg-gradient-to-r from-purple-500 to-pink-500
@@ -113,6 +122,9 @@ const RegisterModal = () => {
               rounded-t          
           "
           >
+            <Button variant="ghost" onClick={() => navigate({ to: '/' })}>
+              <ArrowLeft size={20} className="mr-2" /> Back
+            </Button>
             <h3 className="text-3xl font-semibold text-white">
               Create an account
             </h3>
