@@ -23,14 +23,11 @@ const RegisterModal = () => {
         name,
         email,
       });
-
       toast({ title: 'Account created.' });
 
       setPassword('');
       setName('');
       setEmail('');
-
-      // await manageUserSession();
 
       await navigate({ to: '/' });
     } catch (error) {
@@ -122,7 +119,7 @@ const RegisterModal = () => {
               rounded-t          
           "
           >
-            <Button variant="ghost" onClick={() => navigate({ to: '/' })}>
+            <Button variant="outline" onClick={() => navigate({ to: '/' })}>
               <ArrowLeft size={20} className="mr-2" /> Back
             </Button>
             <h3 className="text-3xl font-semibold text-white">

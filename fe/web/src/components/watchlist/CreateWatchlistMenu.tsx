@@ -14,18 +14,20 @@ import {
 } from '@movieTone/ui';
 import { useSWRConfig } from 'swr';
 import { Library } from 'lucide-react';
+import { userSessionState } from '../../store/userSession';
 
 const CreateWatchlistMenu = () => {
   const { toast } = useToast();
   const { mutate } = useSWRConfig();
   const [watchlistName, setWatchlistName] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('Other');
+  const { user } = userSessionState();
 
   const addWatchlist = useCallback(async () => {
-    // if (!watchlistName || !selectedGenre) {
-    //   toast({ variant: 'destructive', title: 'Name and genre required.' });
-    //   return;
-    // }
+    if (watchlistName.length > 200) {
+      toast({ variant: 'destructive', title: 'Watchlist name is too long.' });
+      return;
+    }
     try {
       await axios.post(`${window.origin}/api/watchlist/addWatchlist`, {
         name: watchlistName,
@@ -45,11 +47,13 @@ const CreateWatchlistMenu = () => {
         type="text"
         placeholder="Watchlist name"
         value={watchlistName}
+        required
         onChange={event => setWatchlistName(event.target.value)}
       />
       <Select
         value={selectedGenre}
         onValueChange={value => setSelectedGenre(value)}
+        required
       >
         <SelectTrigger className="max-w-[190px] w-full">
           <SelectValue placeholder="Select a genre" />
@@ -67,7 +71,12 @@ const CreateWatchlistMenu = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Button type="submit" onClick={addWatchlist} variant="secondary">
+      <Button
+        type="submit"
+        onClick={addWatchlist}
+        variant="secondary"
+        disabled={!user}
+      >
         <Library className="mr-2" />
         <span className="mr-1">New</span>
         <span>Watchlist</span>

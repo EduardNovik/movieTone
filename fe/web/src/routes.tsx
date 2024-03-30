@@ -16,8 +16,8 @@ import { Latest } from './pages/latest';
 import { Watchlist } from './pages/watchlist';
 import { Title } from './pages/title';
 import { User } from './pages/user';
+import { Signup } from './pages/signup';
 import { WatchlistDetails } from './pages/watchlist/watchlistDetails/watchlistDetails.tsx';
-import RegisterModal from './components/modals/RegisterModal';
 
 const rootRoute = new RootRoute();
 
@@ -94,7 +94,7 @@ const errorRoute = new Route({
 const signupRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/signup',
-  component: () => <RegisterModal />,
+  component: () => <Signup />,
 });
 
 const routeTree = rootRoute.addChildren([

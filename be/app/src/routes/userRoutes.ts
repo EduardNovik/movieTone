@@ -4,6 +4,7 @@ import {
   userOnboard,
   isUserOnboarded,
   getUserByIdentityId,
+  isUserRegistered,
 } from "../handlers/user.ts";
 import app from "../app.ts";
 
@@ -20,5 +21,9 @@ currentRouter.get("/onboarded", (req, res) => isUserOnboarded(req, res, app));
 // userOnboard
 
 currentRouter.post("/onboard", (req, res) => userOnboard(req, res, app));
+
+// isUserRegistered
+
+currentRouter.post("/registered", (req, res) => isUserRegistered(req, res));
 
 export default currentRouter;
