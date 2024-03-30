@@ -1,9 +1,10 @@
 import Modal from '../Modal';
 import Input from '../Input';
 import useLoginModalState from '../../hooks/useLoginModalState';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useToast } from '@movieTone/ui';
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
+import axios from 'axios';
 
 async function sendMagicLink(email: string) {
   try {
@@ -31,22 +32,33 @@ const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
+      const isRegistered = await axios.post(
+        `${window.origin}/api/user/registered`,
+        {
+          email,
+        },
+      );
+      console.log(isRegistered);
 
-      // LOG IN
-      void sendMagicLink(email);
-      setEmail('');
-      loginModal.onClose();
-      toast({ title: 'Check your email' });
+      if (isRegistered) {
+        void sendMagicLink(email);
+        setEmail('');
+        loginModal.onClose();
+        toast({ title: 'Check your email' });
+      } else {
+        setEmail('');
+        toast({ title: 'User doesnt exist' });
+      }
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

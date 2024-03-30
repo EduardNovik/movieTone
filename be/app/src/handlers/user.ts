@@ -4,6 +4,7 @@ import { users, identities, watchlists } from "@movieTone/database-schema";
 import crypto from "crypto";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { getUserByIdentityIdService } from "../services/userService.ts";
+import { eq } from "drizzle-orm";
 
 // userOnboard----
 export async function userOnboard(
@@ -53,6 +54,8 @@ export async function userOnboard(
 }
 
 // isUserOnboarded----
+// its fit when you already logged in and have a session, so then you can retrieve identityId
+// I haven't use it yet
 export async function isUserOnboarded(
   req: Request,
   res: Response,
@@ -61,10 +64,17 @@ export async function isUserOnboarded(
   if (req.method !== "GET") {
     return res.status(405).end();
   }
-  const identityId = app.locals.identityId;
-  const user = await getUserByIdentityIdService(identityId);
-
-  res.status(200).json({ onboarded: !!user });
+  try {
+    const identityId = app.locals.identityId;
+    if (!identityId) {
+      throw new Error("identityId is undefined");
+    }
+    const user = await getUserByIdentityIdService(identityId);
+    res.status(200).json({ onboarded: !!user });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
 }
 
 // getUserByIdentityId----
@@ -99,4 +109,23 @@ export async function protectedContext(
     userId: userId,
     identityId: identityId,
   });
+}
+
+// isUserRegistered----
+
+export async function isUserRegistered(req: Request, res: Response) {
+  if (req.method !== "POST") {
+    return res.status(405).end();
+  }
+  const email = req.body.email;
+  try {
+    const user = await db
+      .select({ id: users.id, name: users.name, email: users.email })
+      .from(users)
+      .where(eq(users.email, email));
+    return res.status(200).json({ registered: !!user });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
 }
