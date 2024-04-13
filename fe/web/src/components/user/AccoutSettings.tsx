@@ -1,26 +1,17 @@
-import { useCallback, useState } from 'react';
-import axios from 'axios';
-import {
-  Button,
-  useToast,
-  Input,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@movieTone/ui';
-import { useSWRConfig } from 'swr';
+import { useState } from 'react';
+// import axios from 'axios';
+import { Button, useToast, Input } from '@movieTone/ui';
+
 import { Library } from 'lucide-react';
 
 const AccoutSettings = () => {
   const [username, setUsername] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const { toast } = useToast();
 
   const updateUsernameHandler = () => {
     console.log('update username');
+    toast({ variant: 'destructive', title: 'Username updated' });
   };
 
   const updateUserEmailHandler = () => {

@@ -50,23 +50,23 @@ const Card = ({ item }: CardProps) => {
     }
   };
 
-  const addTitleAndCreateWatchlist = async (watchlist: Watchlist) => {
-    try {
-      await axios.post(`${window.origin}/api/watchlist/addTitle`, {
-        id: item.id,
-        name: item.title ? item.title : item.name,
-        img: item.backdrop_path,
-        imdb: item.vote_average,
-        year: parseInt(item.release_date.replace(/-/g, '')),
-        description: item.overview,
-        watchlistid: watchlist.id,
-      });
-      toast({ title: 'Title added' });
-    } catch (error: any) {
-      toast({ variant: 'destructive', title: 'Something went wrong.' });
-      console.log(error);
-    }
-  };
+  // const addTitleAndCreateWatchlist = async (watchlist: Watchlist) => {
+  //   try {
+  //     await axios.post(`${window.origin}/api/watchlist/addTitle`, {
+  //       id: item.id,
+  //       name: item.title ? item.title : item.name,
+  //       img: item.backdrop_path,
+  //       imdb: item.vote_average,
+  //       year: parseInt(item.release_date.replace(/-/g, '')),
+  //       description: item.overview,
+  //       watchlistid: watchlist.id,
+  //     });
+  //     toast({ title: 'Title added' });
+  //   } catch (error: any) {
+  //     toast({ variant: 'destructive', title: 'Something went wrong.' });
+  //     console.log(error);
+  //   }
+  // };
 
   const ref = useRef<HTMLDivElement>(null);
 

@@ -118,6 +118,8 @@ export async function isUserRegistered(req: Request, res: Response) {
     return res.status(405).end();
   }
   const email = req.body.email;
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAA", email);
+
   try {
     const user = await db
       .select({ id: users.id, name: users.name, email: users.email })

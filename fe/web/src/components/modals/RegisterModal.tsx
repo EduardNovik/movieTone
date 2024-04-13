@@ -119,7 +119,11 @@ const RegisterModal = () => {
               rounded-t          
           "
           >
-            <Button variant="outline" onClick={() => navigate({ to: '/' })}>
+            <Button
+              variant="outline"
+              onClick={() => navigate({ to: '/' })}
+              className="text-white"
+            >
               <ArrowLeft size={20} className="mr-2" /> Back
             </Button>
             <h3 className="text-3xl font-semibold text-white">
