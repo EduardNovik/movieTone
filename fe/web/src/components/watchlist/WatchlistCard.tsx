@@ -2,9 +2,8 @@ import { Button } from '@movieTone/ui';
 import useUserWatchlistsSWR from '../../api/SWR/useUserWatchlistsSWR';
 import axios from 'axios';
 import { useSWRConfig } from 'swr';
-import { useNavigate, useParams } from '@tanstack/react-router';
-import { useEffect } from 'react';
-
+import { useNavigate } from '@tanstack/react-router';
+import { MouseEvent } from 'react';
 interface Watchlist {
   id: string;
   name: string;
@@ -16,7 +15,8 @@ const WatchlistCard = () => {
   const navigate = useNavigate();
   const { data, error } = useUserWatchlistsSWR();
 
-  const deleteWatchlist = async (watchlist: Watchlist) => {
+  const deleteWatchlist = async (watchlist: Watchlist, event: MouseEvent) => {
+    event.stopPropagation();
     try {
       await axios.delete(`${window.origin}/api/watchlist/deleteWatchlist`, {
         data: {
@@ -29,12 +29,12 @@ const WatchlistCard = () => {
     }
   };
 
-  // const navigateToWatchlistDetails = (watchlist: Watchlist) => {
-  //   navigate({
-  //     to: `/watchlist/$id`,
-  //     params: { id: watchlist.id },
-  //   });
-  // };
+  const navigateToWatchlistDetails = (watchlist: Watchlist) => {
+    navigate({
+      to: `/watchlist/$id`,
+      params: { id: watchlist.id },
+    });
+  };
 
   return error ? (
     <p>Something went wrong</p>
@@ -43,14 +43,16 @@ const WatchlistCard = () => {
       <div
         key={watchlist.id}
         className="w-[200px] h-[200px] border-2 border-myViolet items-center flex flex-col rounded-lg justify-center cursor-pointer p-4"
-        // onClick={() => navigateToWatchlistDetails(watchlist)}
+        onClick={() => navigateToWatchlistDetails(watchlist)}
       >
         <p>{watchlist.name}</p>
         <p>{watchlist.genre}</p>
         <p>{watchlist.id}</p>
         <Button
           variant="destructive"
-          onClick={() => deleteWatchlist(watchlist)}
+          onClick={(event: MouseEvent<HTMLButtonElement>) =>
+            deleteWatchlist(watchlist, event)
+          }
         >
           Delete watchlist
         </Button>

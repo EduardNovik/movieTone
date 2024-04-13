@@ -1,6 +1,9 @@
-import React from 'react';
-// import WatchlistDetailsList from '../../../components/watchlist/WatchlistDetailsList';
+import WatchlistDetailsList from '../../../components/watchlist/WatchlistDetailsList';
 
 export const WatchlistDetails = () => {
-  return <div>{/* <WatchlistDetailsList /> */}</div>;
+  return (
+    <div>
+      <WatchlistDetailsList />
+    </div>
+  );
 };

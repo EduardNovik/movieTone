@@ -1,21 +1,14 @@
 import { ModeToggle } from '@movieTone/ui';
 import { Link } from '@tanstack/react-router';
 import Logo from '../assets/iconfinder6.png';
-import { useCallback, useEffect } from 'react';
-import useLoginModalState from '../hooks/useLoginModalState';
+import { useEffect } from 'react';
 import HeaderMenu from './HeaderMenu';
 import SearchBar from './SearchBar';
 import { userSessionState } from '../store/userSession';
 import UserMenu from './UserMenu';
 
 const Header = () => {
-  const loginModal = useLoginModalState();
   const { user } = userSessionState();
-
-  const openLoginModal = useCallback(() => {
-    loginModal.onOpen();
-  }, [loginModal]);
-
   useEffect(() => {}, [user]);
 
   return (

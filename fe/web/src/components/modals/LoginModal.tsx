@@ -7,11 +7,19 @@ import { createCode } from 'supertokens-auth-react/recipe/passwordless';
 import axios from 'axios';
 
 async function sendMagicLink(email: string) {
+  console.log('hey');
+  const response = await createCode({
+    email,
+  });
+  console.log('ssss', response);
+
   try {
     const response = await createCode({
       email,
     });
+
     if (response.status === 'SIGN_IN_UP_NOT_ALLOWED') {
+      console.log('Supertokens error in sign in process');
       // this can happen due to automatic account linking. See that section in our docs.
     } else {
       // Magic link sent successfully.
@@ -26,6 +34,17 @@ async function sendMagicLink(email: string) {
   }
 }
 
+async function isRegistered(email: string) {
+  try {
+    const response = await axios.post(`${window.origin}/api/user/registered`, {
+      email,
+    });
+    return response.data.registered;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const LoginModal = () => {
   const loginModal = useLoginModalState();
   const [email, setEmail] = useState('');
@@ -35,30 +54,29 @@ const LoginModal = () => {
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
     try {
-      const isRegistered = await axios.post(
-        `${window.origin}/api/user/registered`,
-        {
-          email,
-        },
-      );
-      console.log(isRegistered);
+      // const validation = void isRegistered(email);
 
-      if (isRegistered) {
-        void sendMagicLink(email);
-        setEmail('');
-        loginModal.onClose();
-        toast({ title: 'Check your email' });
-      } else {
-        setEmail('');
-        toast({ title: 'User doesnt exist' });
-      }
+      await sendMagicLink(email);
+      setEmail('');
+      loginModal.onClose();
+      toast({ title: 'Check your email' });
+
+      // if (validation) {
+      //   void sendMagicLink(email);
+      //   setEmail('');
+      //   loginModal.onClose();
+      //   toast({ title: 'Check your email' });
+      // } else {
+      //   setEmail('');
+      //   toast({ title: 'User doesnt exist' });
+      // }
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [email]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -71,30 +89,6 @@ const LoginModal = () => {
       />
     </div>
   );
-  // const onToggle = useCallback(() => {
-  //   loginModal.onClose();
-  //   registerModal.onOpen();
-  // }, [loginModal, registerModal]);
-
-  // const footerContent = (
-  //   <div className="text-neutral-400 text-center mt-4">
-  //     <p>
-  //       First time using Twitter?
-  //       <span
-  //         onClick={onToggle}
-  //         className="
-  //           text-white
-  //           cursor-pointer
-  //           hover:underline
-  //         "
-  //       >
-  //         {' '}
-  //         Create an account
-  //       </span>
-  //     </p>
-  //   </div>
-  // );
-
   return (
     <Modal
       disabled={isLoading}
