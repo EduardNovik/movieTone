@@ -54,22 +54,17 @@ const LoginModal = () => {
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
     try {
-      // const validation = void isRegistered(email);
-
-      await sendMagicLink(email);
-      setEmail('');
-      loginModal.onClose();
-      toast({ title: 'Check your email' });
-
-      // if (validation) {
-      //   void sendMagicLink(email);
-      //   setEmail('');
-      //   loginModal.onClose();
-      //   toast({ title: 'Check your email' });
-      // } else {
-      //   setEmail('');
-      //   toast({ title: 'User doesnt exist' });
-      // }
+      const validation = void isRegistered(email);
+      if (validation) {
+        void sendMagicLink(email);
+        setEmail('');
+        loginModal.onClose();
+        toast({ title: 'Check your email' });
+      } else {
+        setEmail('');
+        toast({ variant: 'destructive', title: "User doesn't exist" });
+        loginModal.onClose();
+      }
     } catch (error) {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
