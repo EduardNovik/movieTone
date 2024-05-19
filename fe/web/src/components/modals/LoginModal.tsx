@@ -4,15 +4,8 @@ import useLoginModalState from '../../hooks/useLoginModalState';
 import { useCallback, useState } from 'react';
 import { useToast } from '@movieTone/ui';
 import { createCode } from 'supertokens-auth-react/recipe/passwordless';
-import axios from 'axios';
 
 async function sendMagicLink(email: string) {
-  console.log('hey');
-  const response = await createCode({
-    email,
-  });
-  console.log('ssss', response);
-
   try {
     const response = await createCode({
       email,
@@ -34,16 +27,16 @@ async function sendMagicLink(email: string) {
   }
 }
 
-async function isRegistered(email: string) {
-  try {
-    const response = await axios.post(`${window.origin}/api/user/registered`, {
-      email,
-    });
-    return response.data.registered;
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function isRegistered(email: string) {
+//   try {
+//     const response = await axios.post(`${window.origin}/api/user/registered`, {
+//       email,
+//     });
+//     return response.data.registered;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 const LoginModal = () => {
   const loginModal = useLoginModalState();

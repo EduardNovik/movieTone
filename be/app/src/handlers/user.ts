@@ -16,10 +16,12 @@ export async function userOnboard(
     return res.status(405).end();
   }
 
+  console.log("THIS IS REGISTRATION");
+
   try {
     // const email = app.locals.email;
     const { name, email, password } = req.body;
-    console.log("THIS IS EMAIL", email);
+    console.log("THIS IS ALL DATA", name, email, password);
 
     console.log("UserOnboard PASSED DATA ", name, email, password);
     const userId = crypto.randomUUID();
