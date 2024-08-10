@@ -23,6 +23,7 @@ const RegisterModal = () => {
         name,
         email,
       });
+
       toast({ title: 'Account created.' });
 
       setPassword('');
@@ -41,15 +42,18 @@ const RegisterModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
+        name="name"
         disabled={isLoading}
         placeholder="Name"
         value={name}
         onChange={e => setName(e.target.value)}
       />
       <Input
+        type="email"
         disabled={isLoading}
         placeholder="Email"
         value={email}
+        name="email"
         onChange={e => setEmail(e.target.value)}
       />
       <Input

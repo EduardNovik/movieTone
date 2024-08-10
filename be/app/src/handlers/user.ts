@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
-import { users, identities, watchlists } from "@movieTone/database-schema";
+import { users, identities } from "@movieTone/database-schema";
 import crypto from "crypto";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { getUserByIdentityIdService } from "../services/userService.ts";
@@ -16,10 +16,12 @@ export async function userOnboard(
     return res.status(405).end();
   }
 
+  console.log("THIS IS REGISTRATION");
+
   try {
     // const email = app.locals.email;
     const { name, email, password } = req.body;
-    console.log("THIS IS EMAIL", email);
+    console.log("THIS IS ALL DATA", name, email, password);
 
     console.log("UserOnboard PASSED DATA ", name, email, password);
     const userId = crypto.randomUUID();

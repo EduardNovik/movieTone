@@ -8,26 +8,21 @@ import { middleware, errorHandler } from "supertokens-node/framework/express";
 import { createYoga } from "graphql-yoga";
 import { schema } from "./graphql/shcema.ts";
 import Dashboard from "supertokens-node/recipe/dashboard/index.js";
-import { SessionRequest } from "supertokens-node/framework/express";
 import { supertokensSessionMiddleware } from "./middleware/supertokensSessionMiddleware.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import watchlistRoutes from "./routes/watchlistRoutes.ts";
 import identityRoutes from "./routes/identityRoutes.ts";
 import app from "./app.ts";
-
-// const app = express();
 const yoga = createYoga({ schema });
 const port = process.env.PORT || 4000;
 
 supertokens.init({
   framework: "express",
   supertokens: {
-    // https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
     connectionURI: "http://localhost:3568",
     apiKey: "core-secret-key-supertokensdb",
   },
   appInfo: {
-    // learn more about this on https://supertokens.com/docs/session/appinfo
     appName: "movietonebe",
     apiDomain: "http://localhost:4000",
     websiteDomain: "http://localhost:3000",
@@ -48,12 +43,10 @@ supertokens.init({
               const user = await supertokens.getUser(input.userId);
               input.sessionDataInDatabase = user?.loginMethods.find(
                 (it) => it.recipeId === "passwordless"
-              )
-                ? {
-                    type: "passwordless",
-                    email: user.emails[0],
-                  }
-                : {};
+              ) && {
+                type: "passwordless",
+                email: user.emails[0],
+              };
               return originalImplementation.createNewSession(input);
             },
           };
@@ -101,6 +94,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/user", userRoutes);
 app.use("/watchlist", watchlistRoutes);
 app.use("/test", identityRoutes);
+
+app.use(errorHandler());
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
