@@ -15,7 +15,8 @@
     "doc-down": "docker-compose down -v",
     "db-migration": "node --loader @swc-node/register/esm ./scripts/migrate.ts",
     "db-migration2": "nodemon ./scripts/migrate.ts",
-    "dev:db-migration3": "ENVIRONMENT=local NODE_ENV=development pnpm db-migration"
+    "dev:db-migration3": "ENVIRONMENT=local NODE_ENV=development pnpm db-migration",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@movieTone/database-schema": "workspace:*",

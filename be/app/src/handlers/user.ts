@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { db } from "../db.ts";
-import { users, identities, watchlists } from "@movieTone/database-schema";
+import { users, identities } from "@movieTone/database-schema";
 import crypto from "crypto";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { getUserByIdentityIdService } from "../services/userService.ts";

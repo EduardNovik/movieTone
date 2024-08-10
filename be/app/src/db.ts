@@ -3,6 +3,8 @@ import postgres from "postgres";
 
 import {
   users,
+  identities,
+  identitiesRelations,
   usersRelations,
   watchlists,
   watchlistsRelations,
@@ -19,6 +21,8 @@ export const db = drizzle(queryClient, {
   schema: {
     users,
     usersRelations,
+    identities,
+    identitiesRelations,
     watchlists,
     watchlistsRelations,
     titles,
