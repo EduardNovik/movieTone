@@ -9,7 +9,7 @@ import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import {
   getUserByIdentityIdService,
-  getUsersWatchlistsService,
+  // getUsersWatchlistService,
 } from "../services/userService.ts";
 
 // addTitleAndCreateWatchlist-----------------------------
@@ -182,7 +182,7 @@ export async function addWatchlist(
 
 // getUsersWatchlists-----------------------------------------------------------
 
-export async function getUsersWatchlists(
+export async function getUsersWatchlist(
   req: Request,
   res: Response,
   app: Application
@@ -266,7 +266,7 @@ export async function deleteWatchlist(
 
 // getTitlesInWathclist-----------------------------------------------------------
 
-export async function getTitlesInWathclist(req: Request, res: Response) {
+export async function getTitlesInWatchlist(req: Request, res: Response) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -285,7 +285,7 @@ export async function getTitlesInWathclist(req: Request, res: Response) {
     console.log(fetchedTitlesInWatchlist);
     res.status(200).json({ titles: fetchedTitlesInWatchlist });
   } catch (error) {
-    console.log(error);
-    return res.status(400).end();
+    console.error("Error fetching titles in watchlist:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }

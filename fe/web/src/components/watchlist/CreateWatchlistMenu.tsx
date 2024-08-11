@@ -24,7 +24,7 @@ const CreateWatchlistMenu = () => {
   const { user } = userSessionState();
 
   const addWatchlist = useCallback(async () => {
-    if (watchlistName.length > 200) {
+    if (watchlistName.length > 150) {
       toast({ variant: 'destructive', title: 'Watchlist name is too long.' });
       return;
     }
@@ -39,7 +39,7 @@ const CreateWatchlistMenu = () => {
       console.log(error);
       toast({ variant: 'destructive', title: 'Something went wrong.' });
     }
-  }, []);
+  }, [watchlistName, selectedGenre, mutate]);
 
   return (
     <div className="flex w-full items-center space-x-2">

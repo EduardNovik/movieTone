@@ -18,8 +18,10 @@ interface Watchlist {
   ganre: string;
   userId: string;
 }
-
-const AddToWatchlist = () => {
+interface CardProps {
+  item: Record<string, any>;
+}
+const AddToWatchlist = ({ item }: CardProps) => {
   const { data } = useUserWatchlistsSWR();
   const { toast } = useToast();
   console.log(data);
