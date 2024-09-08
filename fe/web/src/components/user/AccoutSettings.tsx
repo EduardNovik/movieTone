@@ -18,7 +18,7 @@ const AccoutSettings = () => {
     console.log('update user email');
   };
   return (
-    <div className="flex flex-col max-w-2xl items-center space-x-2 gap-8">
+    <div className="flex flex-col w-full max-w-lg items-center gap-8">
       <div className="flex w-full items-center space-x-2">
         <Input
           type="text"

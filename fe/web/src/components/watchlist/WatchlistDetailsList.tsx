@@ -29,16 +29,14 @@ const WatchlistDetailsList = () => {
     <ul>
       {watchlistData.map((item: any) => {
         return (
-          <li key={item.titles.id} className="mt-20">
-            <div>
-              <img
-                src={`https://www.themoviedb.org/t/p/original/${item.titles.img}`}
-              />
-              <p>Watchlist details</p>
-              <p>{item.titles.name}</p>
-              <p>{item.titles.imdb}</p>
-              <p>{item.titles.year}</p>
-            </div>
+          <li key={item.titles.id} className="mt-20 w-1/2 mx-auto">
+            <img
+              src={`https://www.themoviedb.org/t/p/original/${item.titles.img}`}
+            />
+            <p>Watchlist details</p>
+            <p>{item.titles.name}</p>
+            <p>{item.titles.imdb}</p>
+            <p>{item.titles.year}</p>
           </li>
         );
       })}

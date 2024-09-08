@@ -2,7 +2,7 @@ import WatchlistDetailsList from '../../../components/watchlist/WatchlistDetails
 
 export const WatchlistDetails = () => {
   return (
-    <div>
+    <div className="m-auto flex justify-center">
       <WatchlistDetailsList />
     </div>
   );
