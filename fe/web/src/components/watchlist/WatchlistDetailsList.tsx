@@ -6,39 +6,37 @@ const WatchlistDetailsList = () => {
   const [watchlistData, setWatchlistData] = useState([]);
   const params = useParams({ strict: false });
 
-  console.log(params.id);
-
   useEffect(() => {
-    const getTitlesInWathclist = async () => {
+    const getTitlesInWatchlist = async () => {
       try {
         const response = await axios.post(
           `${window.origin}/api/watchlist/titles`,
           {
-            data: {
-              watchlistId: params.id,
-            },
+            watchlistId: params.id, // Correct structure
           },
         );
+
         setWatchlistData(response.data.titles);
       } catch (error: any) {
         console.log(error);
       }
     };
 
-    getTitlesInWathclist();
+    getTitlesInWatchlist();
   }, []);
 
   return (
     <ul>
-      {watchlistData.map((title: any) => {
+      {watchlistData.map((item: any) => {
         return (
-          <li key={title.id} className="mt-20">
-            <div>
-              <p>Watchlist details</p>
-              <p>{title.name}</p>
-              <p>{title.imdb}</p>
-              <p>{title.year}</p>
-            </div>
+          <li key={item.titles.id} className="mt-20 w-1/2 mx-auto">
+            <img
+              src={`https://www.themoviedb.org/t/p/original/${item.titles.img}`}
+            />
+            <p>Watchlist details</p>
+            <p>{item.titles.name}</p>
+            <p>{item.titles.imdb}</p>
+            <p>{item.titles.year}</p>
           </li>
         );
       })}

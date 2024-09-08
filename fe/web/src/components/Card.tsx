@@ -1,72 +1,14 @@
 import starIcon from '../assets/iconfinder_star.png';
 import { useNavigate } from '@tanstack/react-router';
-import { Button, useToast } from '@movieTone/ui';
-import axios from 'axios';
-import { Plus, ScrollText } from 'lucide-react';
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-} from '@movieTone/ui';
-
-import useUserWatchlistsSWR from '../api/SWR/useUserWatchlistsSWR';
 import { useRef } from 'react';
-
+import AddToWatchlist from './AddToWatchlist';
 interface CardProps {
   item: Record<string, any>;
 }
 
-interface Watchlist {
-  id: string;
-  name: string;
-  ganre: string;
-  userId: string;
-}
-
 const Card = ({ item }: CardProps) => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const { data } = useUserWatchlistsSWR();
-
-  const addTitleToWatchlist = async (watchlist: Watchlist) => {
-    try {
-      await axios.post(`${window.origin}/api/watchlist/addTitle`, {
-        id: item.id,
-        name: item.title ? item.title : item.name,
-        img: item.backdrop_path,
-        imdb: item.vote_average,
-        year: parseInt(item.release_date.replace(/-/g, '')),
-        description: item.overview,
-        watchlistid: watchlist.id,
-      });
-      toast({ title: 'Title added' });
-    } catch (error: any) {
-      toast({ variant: 'destructive', title: 'Something went wrong.' });
-      console.log(error);
-    }
-  };
-
-  // const addTitleAndCreateWatchlist = async (watchlist: Watchlist) => {
-  //   try {
-  //     await axios.post(`${window.origin}/api/watchlist/addTitle`, {
-  //       id: item.id,
-  //       name: item.title ? item.title : item.name,
-  //       img: item.backdrop_path,
-  //       imdb: item.vote_average,
-  //       year: parseInt(item.release_date.replace(/-/g, '')),
-  //       description: item.overview,
-  //       watchlistid: watchlist.id,
-  //     });
-  //     toast({ title: 'Title added' });
-  //   } catch (error: any) {
-  //     toast({ variant: 'destructive', title: 'Something went wrong.' });
-  //     console.log(error);
-  //   }
-  // };
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -85,12 +27,12 @@ const Card = ({ item }: CardProps) => {
   };
 
   return (
-    <div
-      className="content w-full flex flex-col items-center lg:w-1/3  ease-in-out duration-300 cursor-pointer hover:scale-105 p-3"
-      onMouseEnter={showCurtain}
-      onMouseLeave={hideCurtain}
-    >
-      <div className="relative dark:shadow-2xl hover:drop-shadow-2xl drop-shadow-md rounded-md dark:hover:shadow-myViolet ease-in-out duration-300">
+    <div className="content w-full flex flex-col items-center lg:w-1/3 p-3 space-y-2">
+      <div
+        className="relative dark:shadow-2xl hover:drop-shadow-2xl drop-shadow-md rounded-md dark:hover:shadow-myViolet ease-in-out duration-300 hover:scale-105 cursor-pointer"
+        onMouseEnter={showCurtain}
+        onMouseLeave={hideCurtain}
+      >
         <img
           src={`https://www.themoviedb.org/t/p/original/${item.backdrop_path}`}
           alt="cover_img"
@@ -117,35 +59,8 @@ const Card = ({ item }: CardProps) => {
             <p className="text-white">{item.title ? item.title : item.name}</p>
           </div>
         </div>
-
-        {Array.isArray(data) && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="py-0 px-2">
-                <ScrollText size={15} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="max-w-xs">
-              <DropdownMenuGroup>
-                {data?.map((watchlist: Watchlist) => {
-                  return (
-                    <DropdownMenuItem
-                      key={watchlist.id}
-                      className="cursor-pointer hover:bg-gray-200"
-                      onClick={() => addTitleToWatchlist(watchlist)}
-                    >
-                      {watchlist.name}
-                      <DropdownMenuShortcut>
-                        <Plus size={15} />
-                      </DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
       </div>
+      <AddToWatchlist item={item} />
     </div>
   );
 };
