@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useSWRConfig } from 'swr';
 import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent } from 'react';
+import PopcornIcon from 'lucide-static/icons/popcorn.svg';
+import SVG from 'react-inlinesvg';
 interface Watchlist {
   id: string;
   name: string;
@@ -45,6 +47,7 @@ const WatchlistCard = () => {
         className="w-[200px] h-[200px] border-2 border-myViolet items-center flex flex-col rounded-lg justify-center cursor-pointer p-4"
         onClick={() => navigateToWatchlistDetails(watchlist)}
       >
+        <SVG src={PopcornIcon} className="w-14" />
         <p>{watchlist.name}</p>
         <p>{watchlist.genre}</p>
         <p>{watchlist.id}</p>
