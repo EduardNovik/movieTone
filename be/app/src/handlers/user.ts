@@ -120,7 +120,7 @@ export async function isUserRegistered(req: Request, res: Response) {
     return res.status(405).end();
   }
   const email = req.body.email;
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAA", email);
+  console.log("isUserRegistered ?????????????", email);
 
   try {
     const user = await db
